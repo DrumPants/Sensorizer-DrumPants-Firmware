@@ -32,24 +32,28 @@
  
  */
  /* NEEDED??
-#include "WProgram.h"
-#include "HardwareSerial.h"
-#include "WConstants.h" 
+
  */
  
 #include "SensorizerServer.h"
 
+//SoftwareSerial mySerial(2, 3);
 
+SensorizerServer::SensorizerServer() {
+	this->mySerial = &SoftwareSerial(2, 3, false); //Soft TX on 3, we don't use RX in this code
+}
+
+SensorizerServer::~SensorizerServer() {
+	delete this->mySerial;
+}
 
 void SensorizerServer::setup() {
 	int instrument = 0; //does this need to be a member?
-	
-	this.mySerial = SoftwareSerial(2, 3); //Soft TX on 3, we don't use RX in this code
-	
+
 	Serial.begin(57600);
 	
 	//Setup soft serial for MIDI control
-	mySerial.begin(31250);
+	mySerial->begin(31250);
 	
 	//Reset the VS1053
 	pinMode(RESET_MIDI_PIN, OUTPUT);
@@ -103,14 +107,14 @@ void SensorizerServer::noteOff(byte channel, byte note, byte release_velocity) {
 //Plays a MIDI note. Doesn't check to see that cmd is greater than 127, or that data values are less than 127
 void SensorizerServer::talkMIDI(byte cmd, byte data1, byte data2) {
   digitalWrite(LED_PIN, HIGH);
-  mySerial.write(cmd);//print(cmd, BYTE);
-  mySerial.write(data1);//print(data1, BYTE);
+  mySerial->write(cmd);//print(cmd, BYTE);
+  mySerial->write(data1);//print(data1, BYTE);
 
   //Some commands only have one data byte. All cmds less than 0xBn have 2 data bytes 
   //(sort of: http://253.ccarh.org/handout/midiprotocol/)
   //if( (cmd & 0xF0) <= 0xB0)
   if( (cmd & 0xF0) <= 0xB0 || (cmd & 0xF0) == 0xE0)
-    mySerial.write(data2);//print(data2, BYTE);
+    mySerial->write(data2);//print(data2, BYTE);
 
   digitalWrite(LED_PIN, LOW);
 }

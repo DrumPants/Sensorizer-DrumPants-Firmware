@@ -34,6 +34,11 @@
 #ifndef SensorizerServer_h
 #define SensorizerServer_h
 
+#include <Arduino.h>
+/*
+# include <HardwareSerial.h>
+# include <WConstants.h> 
+*/
 #include <SoftwareSerial.h>
 
 
@@ -47,7 +52,7 @@ class SensorizerServer {
 
 private: 
 
-	SoftwareSerial mySerial;//(2, 3); //Soft TX on 3, we don't use RX in this code
+	SoftwareSerial* mySerial;//(2, 3); //Soft TX on 3, we don't use RX in this code
 
 
 	//Plays a MIDI note. Doesn't check to see that cmd is greater than 127, or that data values are less than 127
@@ -55,6 +60,9 @@ private:
 	
 	
 public:
+	
+	SensorizerServer();
+	~SensorizerServer();
 	
 	//sets us up the server for playing notes
 	void setup();
@@ -66,7 +74,7 @@ public:
 	//Send a MIDI note-off message.  Like releasing a piano key
 	void noteOff(byte channel, byte note, byte release_velocity);
 
-}
+};
 
 #endif
 
