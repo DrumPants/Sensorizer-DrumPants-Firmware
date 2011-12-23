@@ -48,7 +48,7 @@
 	double MidiMapping::valuesHistory[2][1] = {NULL, NULL};
 */		
 	
-	MidiMapping::MidiMapping(SensorizerServer* midiDevice) {
+	MidiMapping::MidiMapping(MidiDevice* midiDevice) {
 		this->msgType = MidiMapping::NOTE_ONE_ONLY;
 		this->channel = 1;
 		this->note = 60;

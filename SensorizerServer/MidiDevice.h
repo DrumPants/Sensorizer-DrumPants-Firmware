@@ -31,30 +31,52 @@
  noteOn(0, 31, 60);
  
  */
-#ifndef SensorizerServer_h
-#define SensorizerServer_h
+#ifndef MidiDevice_h
+#define MidiDevice_h
 
 #include <Arduino.h>
 /*
 # include <HardwareSerial.h>
 # include <WConstants.h> 
 */
+#include <SoftwareSerial.h>
 
-#include "MidiDevice.h"
 
-class SensorizerServer {
+//Tied to VS1053 Reset line
+#define RESET_MIDI_PIN 4
+
+//MIDI traffic inidicator
+#define LED_PIN 13
+
+class MidiDevice {
 
 private: 
 
-	MidiDevice* midiDevice;
+	SoftwareSerial* mySerial;//(2, 3); //Soft TX on 3, we don't use RX in this code
 
+
+	//Plays a MIDI note. Doesn't check to see that cmd is greater than 127, or that data values are less than 127
+	void talkMIDI(byte cmd, byte data1, byte data2);
+	
+	
 public:
 	
 	static const double SENSOR_VALUE_NULL = -1.0;
 	
-	SensorizerServer();
-	~SensorizerServer();
+	MidiDevice();
+	~MidiDevice();
 	
+	//sets us up the server for playing notes
+	void setup();
+	
+	//Send a MIDI note-on message.  Like pressing a piano key
+	//channel ranges from 0-15
+	void noteOn(byte channel, byte note, byte attack_velocity);
+	
+	//Send a MIDI note-off message.  Like releasing a piano key
+	void noteOff(byte channel, byte note, byte release_velocity);
+	
+	void note(bool isOn, int channel, int note, int velocity);
 };
 
 #endif

@@ -10,6 +10,8 @@ using namespace std;
 //import com.odbol.sensorizer.devices.MidiDevice;
 
 #include "SensorizerServer.h"
+
+#include "MidiDevice.h"
 #include "OutputMapping.h"
 
 #define VALUES_HISTORY_LENGTH 2
@@ -40,7 +42,7 @@ class MidiMapping : public OutputMapping {
 	public: int duration;
 	
 	////@Expose
-	public: string midiDeviceName;
+	//public: string midiDeviceName;
 	
 	
 	private: bool isNoteOn;
@@ -49,9 +51,9 @@ class MidiMapping : public OutputMapping {
 	//TODO: add adjustable threshold
 	private: double valuesHistory[VALUES_HISTORY_LENGTH][1];
 		
-	public: SensorizerServer* midiDevice;
+	public: MidiDevice* midiDevice;
 	
-	public: MidiMapping(SensorizerServer* midiDevice);
+	public: MidiMapping(MidiDevice* midiDevice);
 
 	//@Override
 	public: void init();

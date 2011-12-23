@@ -37,89 +37,14 @@
  
 #include "SensorizerServer.h"
 
-//SoftwareSerial mySerial(2, 3);
 
 SensorizerServer::SensorizerServer() {
-	this->mySerial = &SoftwareSerial(2, 3, false); //Soft TX on 3, we don't use RX in this code
+	this->midiDevice = new MidiDevice(); //Soft TX on 3, we don't use RX in this code
 }
 
 SensorizerServer::~SensorizerServer() {
-	delete this->mySerial;
+	delete this->midiDevice;
 }
-
-void SensorizerServer::setup() {
-	int instrument = 0; //does this need to be a member?
-
-	Serial.begin(57600);
-	
-	//Setup soft serial for MIDI control
-	mySerial->begin(31250);
-	
-	//Reset the VS1053
-	pinMode(RESET_MIDI_PIN, OUTPUT);
-	digitalWrite(RESET_MIDI_PIN, LOW);
-	delay(100);
-	digitalWrite(RESET_MIDI_PIN, HIGH);
-	delay(100);
-	
-	talkMIDI(0xB0, 0x07, 120); //0xB0 is channel message, set channel volume to near max (127)
-	
-	talkMIDI(0xB0, 0, 0x78); //Select the bank of really fun sounds
-	
-	//For this bank 0x78, the instrument does not matter, only the note
-	talkMIDI(0xC0, instrument, 0); //Set instrument number. 0xC0 is a 1 data byte command
-	
-	
-	Serial.println("Press a letter and press enter");
-}
-
-/*
-void loop() {
-  while(Serial.available() == 0) ;
-
-  int note = Serial.read();
-  //Good sounding notes range from 27 to 87
-  //So let's take the letter and range it to 27
-  note -= 'a';
-  note += 57;
-
-  Serial.print("Note=");
-  Serial.println(note, DEC);
-
-  //For this bank 0x78, the instrument does not matter, only the note
-  noteOn(0, note, 60);
-
-  //Note will dissapate automatically
-}
-*/
-
-//Send a MIDI note-on message.  Like pressing a piano key
-//channel ranges from 0-15
-void SensorizerServer::noteOn(byte channel, byte note, byte attack_velocity) {
-  talkMIDI( (0x90 | channel), note, attack_velocity);
-}
-
-//Send a MIDI note-off message.  Like releasing a piano key
-void SensorizerServer::noteOff(byte channel, byte note, byte release_velocity) {
-  talkMIDI( (0x80 | channel), note, release_velocity);
-}
-
-//Plays a MIDI note. Doesn't check to see that cmd is greater than 127, or that data values are less than 127
-void SensorizerServer::talkMIDI(byte cmd, byte data1, byte data2) {
-  digitalWrite(LED_PIN, HIGH);
-  mySerial->write(cmd);//print(cmd, BYTE);
-  mySerial->write(data1);//print(data1, BYTE);
-
-  //Some commands only have one data byte. All cmds less than 0xBn have 2 data bytes 
-  //(sort of: http://253.ccarh.org/handout/midiprotocol/)
-  //if( (cmd & 0xF0) <= 0xB0)
-  if( (cmd & 0xF0) <= 0xB0 || (cmd & 0xF0) == 0xE0)
-    mySerial->write(data2);//print(data2, BYTE);
-
-  digitalWrite(LED_PIN, LOW);
-}
-
-
 
 
 
