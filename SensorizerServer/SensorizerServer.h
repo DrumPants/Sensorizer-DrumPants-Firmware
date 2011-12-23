@@ -61,6 +61,8 @@ private:
 	
 public:
 	
+	static const double SENSOR_VALUE_NULL = -1.0;
+	
 	SensorizerServer();
 	~SensorizerServer();
 	
