@@ -10,6 +10,9 @@ using namespace std;
 #include "MidiMapping.h"
 #include "RangePreset.h"
 
+#define MIDI_MAPPINGS_LENGTH 1
+#define OUTPUT_FITLERS_LENGTH 1
+
 class SensorOutput {
 	
 	//cutoff dropdown items
@@ -63,15 +66,14 @@ class SensorOutput {
 
 
 	////@Expose
-	public: MidiMapping[] dropdownMidiMappings;
-	
-	
+	public: MidiMapping* dropdownMidiMappings[MIDI_MAPPINGS_LENGTH];
+
 	//current, calculated output 
 	private: double outputValue;
 	private: double inputValue;
 
 	////@Expose
-	public: OutputFilter[] outputFilters;
+	public: OutputFilter* outputFilters[OUTPUT_FITLERS_LENGTH];
 	
 	public: SensorOutput();
 	
@@ -119,13 +121,13 @@ class SensorOutput {
 	public: void removeOutputFilter(OutputFilter filter);
 
 	
-	public: MidiMapping addMidiMapping(string deviceName);
+	public: MidiMapping* addMidiMapping(string deviceName);
 
 	/***
 	 * assumes m has already been added.
 	 * //@param m
 	 */
-	public: void removeMidiMapping(MidiMapping m);
+	public: void removeMidiMapping(MidiMapping* m);
 	
 };
 

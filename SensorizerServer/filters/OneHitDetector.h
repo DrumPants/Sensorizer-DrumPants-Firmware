@@ -17,7 +17,7 @@ class OneHitDetector : OutputFilter {
 
 	private: bool isRising;
 
-	private: OneHitListener triggerListener;
+	//private: OneHitListener triggerListener;
 	
 	
 	/* (non-Javadoc)
@@ -39,7 +39,7 @@ class OneHitDetector : OutputFilter {
 	 * Adds a listener for the trigger event. Note that this does not support multiple listeners!
 	 * //@param l
 	 */
-	public: void addListener(OneHitListener l);
+	//public: void addListener(OneHitListener l);
 };
 
 

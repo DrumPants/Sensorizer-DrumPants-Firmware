@@ -7,6 +7,8 @@ using namespace std;
 #include "../SensorizerServer.h"
 ////import com.odbol.sensorizer.server.SensorizerServer;
 
+//same as MATRIX_CELL in java version
+#define FRAME_LENGTH 20
 
 class OneHitEnvelope : OneHitDetector {
 	////@Expose
@@ -36,7 +38,7 @@ class OneHitEnvelope : OneHitDetector {
 	
 	//holds the sequence of values of the envelope
 	////@Expose
-	public: double[] frames;
+	public: double frames[FRAME_LENGTH];
 
 	//@Override
 	public: void trigger();
@@ -51,11 +53,13 @@ class OneHitEnvelope : OneHitDetector {
 	//loads predefined functions for presets
 	public: void loadFramesPreset(int presetIdx);
 
-	public: void resetFramesLength(int length);
+	//public: void resetFramesLength(int length);
 
 	//loads cells retreived from a matrix into the frames buffer
-	public: void loadFrames(Integer[] newVals, double scale);
+	public: void loadFrames(int newVals[], double scale);
 
+
+	public: OneHitEnvelope::OneHitEnvelope();
 };
 
 

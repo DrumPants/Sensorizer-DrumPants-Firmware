@@ -5,13 +5,14 @@
 #include "OutputFilter.h"
 
 
+
+	//OneHitListener OneHitDetector::triggerListener;
 	
-	//for peak detector in setValue()
-	double OneHitDetector::lastVal = SensorizerServer.SENSOR_VALUE_NULL;
-
-	bool OneHitDetector::isRising = false;
-
-	OneHitListener OneHitDetector::triggerListener;
+	
+	OneHitDetector::OneHitDetector() {
+		this->lastVal = SensorizerServer.SENSOR_VALUE_NULL;
+		this->isRising = false
+	}
 	
 	
 	/* (non-Javadoc)
@@ -35,21 +36,21 @@
 
 	
 	void OneHitDetector::trigger() {
-		if (triggerListener != null) {
-			triggerListener.onTrigger();
-		}
+		// if (triggerListener != null) {
+// 			triggerListener.onTrigger();
+// 		}
 	}
 	
 	/* (non-Javadoc)
 	 * //@see OutputFilter#value()
 	 */
 	//@Override
-	public: virtual double value();
+	//public: virtual double value();
 	
 	/** 
 	 * Adds a listener for the trigger event. Note that this does not support multiple listeners!
 	 * //@param l
 	 */
-	void OneHitDetector::addListener(OneHitListener l) {
-		triggerListener = l;
-	}
+	//void OneHitDetector::addListener(OneHitListener l) {
+	//	triggerListener = l;
+	//}

@@ -8,71 +8,30 @@
 	static const string SensorOutput::CUTOFF_TYPE_NONE = "No Cutoff";
 	static const string SensorOutput::CUTOFF_TYPE_HARD = "Hard Cutoff";
 	static const string SensorOutput::CUTOFF_TYPE_CLIP = "Clip";
-	static const string SensorOutput::CUTOFF_TYPE_NULLABLE = "Nullable";
+	static const string SensorOutput::CUTOFF_TYPE_NULLABLE = "NULLable";
 	//static const string SensorOutput::CUTOFF_TYPE_ONEHIT = "One-Hit";
 	*/
-	static const int SensorOutput::CUTOFF_TYPE_VAL_NONE = 0;
-	static const int SensorOutput::CUTOFF_TYPE_VAL_HARD = 1;
-	static const int SensorOutput::CUTOFF_TYPE_VAL_CLIP = 2;
-	static const int SensorOutput::CUTOFF_TYPE_VAL_NULLABLE = 3;
+	const int SensorOutput::CUTOFF_TYPE_VAL_NONE = 0;
+	const int SensorOutput::CUTOFF_TYPE_VAL_HARD = 1;
+	const int SensorOutput::CUTOFF_TYPE_VAL_CLIP = 2;
+	const int SensorOutput::CUTOFF_TYPE_VAL_NULLABLE = 3;
 	//static const int SensorOutput::CUTOFF_TYPE_VAL_ONEHIT = 3;
 	
 	//sensor value extrema. this should be the number range the Arduino sends in.
 	//static const double SensorOutput::SIGNAL_IN_MIN = 0;
 	//static const double SensorOutput::SIGNAL_IN_MAX = 1023;
 
-	//hold GSON preset values for ranges
-	////@Expose
-	RangePreset SensorOutput::inRange = new RangePreset();
-	
-	////@Expose
-	RangePreset SensorOutput::outRange = new RangePreset();
-	
-	////@Expose
-	RangePreset SensorOutput::cutoffRange = new RangePreset();
-	
-	
-	//for equations
-	////@Expose
-	float SensorOutput::multiplyVal = 1;
-	
-	////@Expose
-	float SensorOutput::addVal = 0;
-
-	//invert signal
-	////@Expose
-	bool SensorOutput::isInvert = false;
-	
-	//hold GSON preset values for DropdownList
-	////@Expose
-	//string SensorOutput::cutoffType = CUTOFF_TYPE_NONE; //new DropdownPreset();
-	int SensorOutput::cutoffTypeVal = CUTOFF_TYPE_VAL_NONE;
-	
-	//hold GSON preset values for DropdownList
-	//////@Expose
-	//DropdownPreset SensorOutput::filtersPreset;
-
-
-	////@Expose
-	MidiMapping[] SensorOutput::dropdownMidiMappings = new MidiMapping[0];
-	
-	
-	//current, calculated output 
-	double SensorOutput::outputValue = 0;
-	double SensorOutput::inputValue;
-
-	////@Expose
-	OutputFilter[] SensorOutput::outputFilters = new OutputFilter[0];
-	
-	public: SensorOutput::SensorOutput() {
+	SensorOutput::SensorOutput() {
+		multiplyVal = 1;
+		addVal = 0;
+		isInvert = false;
+		cutoffTypeVal = CUTOFF_TYPE_VAL_NONE;
+		outputValue = 0;
+		
 		init();
 	}
-	
-	void SensorOutput::init() {
-		if (dropdownMidiMappings == null) {
-			dropdownMidiMappings = new MidiMapping[0];
-		}
-		
+
+	void SensorOutput::init() {		
 		for (MidiMapping o : dropdownMidiMappings) 
 			o.init();
 		
@@ -137,7 +96,7 @@
 		inputValue = val;
 		
 		//calculate values!!!!!!
-		if (inRange == null) 
+		if (inRange == NULL) 
 			return;
 
 		outputValue = scaleRange(val, inRange.low, inRange.high, outRange.low, outRange.high);
@@ -151,9 +110,9 @@
 		}
 		if (cutoffTypeVal == (CUTOFF_TYPE_VAL_NULLABLE)) {
 			if (outputValue > cutoffRange.high)
-				outputValue = SensorizerServer.SENSOR_VALUE_NULL;
+				outputValue = SensorizerServer::SENSOR_VALUE_NULL;
 			else if (outputValue < cutoffRange.low)
-				outputValue = SensorizerServer.SENSOR_VALUE_NULL;
+				outputValue = SensorizerServer::SENSOR_VALUE_NULL;
 		}		
 		else if (cutoffTypeVal == (CUTOFF_TYPE_VAL_CLIP)) {
 			if (outputValue > cutoffRange.high)
@@ -168,10 +127,10 @@
 		}
 		
 		//synchronized(outputFilters) { 
-			for (OutputFilter outputFilter : outputFilters) {
-				if (outputFilter != null) {		
-					outputFilter.setValue(outputValue);	
-					outputValue = outputFilter.value();	
+			for (int i = 0; i < OUTPUT_FITLERS_LENGTH; i++) {
+				if (outputFilters[i] != NULL) {		
+					outputFilters[i].setValue(outputValue);	
+					outputValue = outputFilters[i].value();	
 				}
 			}
 		//}
@@ -179,7 +138,7 @@
 		//TODO: equaitons should go here but out meters need to accept any num
 
 		//EQUATIONS
-		if (outputValue != SensorizerServer.SENSOR_VALUE_NULL) {
+		if (outputValue != SensorizerServer::SENSOR_VALUE_NULL) {
 			outputValue = outputValue * multiplyVal + addVal;
 		}
 	}
@@ -198,11 +157,14 @@
 
 	//sends all messages through ALL server mappings
 	void SensorOutput::send() {
-		double[] outvals = new double[]{ outputValue()}; //only call once!
-		if (outvals[0] != SensorizerServer.SENSOR_VALUE_NULL || cutoffTypeVal == CUTOFF_TYPE_VAL_NULLABLE) {
+		double outvals[1] = {outputValue()}; //only call once!
+		if (outvals[0] != SensorizerServer::SENSOR_VALUE_NULL || cutoffTypeVal == CUTOFF_TYPE_VAL_NULLABLE) {
 			//synchronized(dropdownMidiMappings) { 
-				for (MidiMapping d : dropdownMidiMappings)
-					d.send(outvals);
+				for (int i = 0; i < MIDI_MAPPINGS_LENGTH; i++) {
+					//if (dropdownMidiMappings[i] != NULL) {
+						dropdownMidiMappings[i].send(outvals);
+					//}
+				}
 			//}
 		}
 	}
