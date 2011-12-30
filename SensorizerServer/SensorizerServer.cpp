@@ -50,9 +50,11 @@ void SensorizerServer::readPin(int pinIdx, int pinValue) {
 
 void SensorizerServer::loadPreset() {
 	int i = 0;
+	SensorOutput* s;
+	MidiMapping* m;
 	
 	//arduino 0
-SensorOutput* s = new SensorOutput();
+s = new SensorOutput();
 s->inRange.low = 0.028571429;
 s->inRange.high = 0.35;
 s->outRange.low = 0;
@@ -64,7 +66,7 @@ s->multiplyVal = 1;
 s->addVal = 0;
 s->isInvert = false;
 
-// MidiMapping* m = new MidiMapping(this->midiDevice);
+// m = new MidiMapping(this->midiDevice);
 // m->channel = 1;
 // m->note = 60 + i;
 // s->addMidiMapping(m);
@@ -73,7 +75,7 @@ sensorInputs[i++] = s;
 
 
 //arduino 1
-SensorOutput* s = new SensorOutput();
+s = new SensorOutput();
 s->inRange.low = 0;
 s->inRange.high = 0.16428576;
 s->outRange.low = 0;
@@ -85,7 +87,7 @@ s->multiplyVal = 1;
 s->addVal = 0;
 s->isInvert = false;
 
-MidiMapping* m = new MidiMapping(this->midiDevice);
+m = new MidiMapping(this->midiDevice);
 m->channel = 1;
 m->note = 60 + i;
 s->addMidiMapping(m);
@@ -94,7 +96,7 @@ sensorInputs[i++] = s;
 
 
 //arduino 2
-SensorOutput* s = new SensorOutput();
+s = new SensorOutput();
 s->inRange.low = 0;
 s->inRange.high = 0.10714287;
 s->outRange.low = 0;
@@ -106,7 +108,7 @@ s->multiplyVal = 1;
 s->addVal = 0;
 s->isInvert = false;
 
-MidiMapping* m = new MidiMapping(this->midiDevice);
+m = new MidiMapping(this->midiDevice);
 m->channel = 1;
 m->note = 60 + i;
 s->addMidiMapping(m);
@@ -115,7 +117,7 @@ sensorInputs[i++] = s;
 
 
 //arduino 3
-SensorOutput* s = new SensorOutput();
+s = new SensorOutput();
 s->inRange.low = 0;
 s->inRange.high = 0.100000024;
 s->outRange.low = 0;
@@ -127,7 +129,7 @@ s->multiplyVal = 1;
 s->addVal = 0;
 s->isInvert = false;
 
-MidiMapping* m = new MidiMapping(this->midiDevice);
+m = new MidiMapping(this->midiDevice);
 m->channel = 1;
 m->note = 60 + i;
 s->addMidiMapping(m);
@@ -136,7 +138,7 @@ sensorInputs[i++] = s;
 
 
 //arduino 4
-SensorOutput* s = new SensorOutput();
+s = new SensorOutput();
 s->inRange.low = 0;
 s->inRange.high = 0.23571432;
 s->outRange.low = 0;
@@ -148,7 +150,7 @@ s->multiplyVal = 1;
 s->addVal = 0;
 s->isInvert = false;
 
-MidiMapping* m = new MidiMapping(this->midiDevice);
+m = new MidiMapping(this->midiDevice);
 m->channel = 1;
 m->note = 60 + i;
 s->addMidiMapping(m);
@@ -157,7 +159,7 @@ sensorInputs[i++] = s;
 
 
 //arduino 5
-SensorOutput* s = new SensorOutput();
+s = new SensorOutput();
 s->inRange.low = 0;
 s->inRange.high = 0.4928572;
 s->outRange.low = 0;
@@ -169,7 +171,7 @@ s->multiplyVal = 1;
 s->addVal = 0;
 s->isInvert = false;
 
-//MidiMapping* m = new MidiMapping(this->midiDevice);
+//m = new MidiMapping(this->midiDevice);
 //m->channel = 1;
 //m->note = 60 + i;
 //s->addMidiMapping(m);

@@ -1,7 +1,9 @@
 $(document).ready(function(){
 
 function convertPreset(preset) {
-	var code = "int i = 0;\n";
+	var code = "int i = 0;\n" +
+			"SensorOutput* s;\n" +
+			"MidiMapping* m;\n";
 	for (i in preset) {
 		for (j in preset['sensorInputs']) {
 			for (k in preset['sensorInputs'][j]['sensorWindows']) {
@@ -9,7 +11,7 @@ function convertPreset(preset) {
 				//sensor output
 				code += 
 	"\n//" + preset['sensorInputs'][j]['name'] + "\n" +
-	"SensorOutput* s = new SensorOutput();\n" +
+	"s = new SensorOutput();\n" +
 	"s->inRange.low = " + out.inRangeP.low + ";\n" +
 	"s->inRange.high = " + out.inRangeP.high + ";\n" +
 	"s->outRange.low = " + out.outRangeP.low + ";\n" +
@@ -21,7 +23,7 @@ function convertPreset(preset) {
 	"s->addVal = " + out.addVal + ";\n" +
 	"s->isInvert = " + out.isInvert + ";\n" +
 	"\n" +
-	"MidiMapping* m = new MidiMapping(this->midiDevice);\n" +
+	"m = new MidiMapping(this->midiDevice);\n" +
 	"m->channel = 1;\n" +
 	"m->note = 60 + i;\n" +
 	"s->addMidiMapping(m);\n" +

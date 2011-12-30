@@ -6,7 +6,7 @@
 //import com.google.gson.annotations.Expose;
 //import com.odbol.sensorizer.devices.MidiDevice;
 
-#include "SensorizerServer.h"
+//# include "SensorizerServer.h"
 
 #include "MidiDevice.h"
 #include "OutputMapping.h"

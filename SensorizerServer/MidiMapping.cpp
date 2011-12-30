@@ -4,6 +4,8 @@
 //import com.google.gson.annotations.Expose;
 //import com.odbol.sensorizer.devices.MidiDevice;
 
+#include "SensorizerServer.h"
+
 #include "OutputMapping.h"
 
 	//types for msgType
@@ -53,7 +55,7 @@
 		this->channel = 1;
 		this->note = 60;
 		this->duration = 127;
-		this->midiDeviceName = "";
+		//this->midiDeviceName = "";
 		this->isNoteOn = false;
 		
 		this->midiDevice = midiDevice;

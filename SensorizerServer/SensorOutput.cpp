@@ -2,6 +2,7 @@
 #include "filters/OutputFilter.h"
 ////import com.odbol.sensorizer.server.filters.OutputFilter;
 
+#include "SensorizerServer.h"
 	
 	//cutoff dropdown items
 	/*
