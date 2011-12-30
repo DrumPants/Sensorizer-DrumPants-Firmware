@@ -27,6 +27,9 @@ public:
 	SensorizerServer();
 	~SensorizerServer();
 	
+	//reads and sends a single pin
+	void readPin(int pinIdx, int pinValue);
+	
 	void loadPreset();
 	
 };

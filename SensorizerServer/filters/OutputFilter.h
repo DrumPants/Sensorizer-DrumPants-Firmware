@@ -1,9 +1,6 @@
 #ifndef OutputFilter_h
 #define OutputFilter_h
 
-#include <string>
-using namespace std;
-
 class OutputFilter {
 	/**
 	 * this is the class name of the specific filter, so that GSON can make sure to instantiate the correct filter
@@ -13,7 +10,7 @@ class OutputFilter {
 	 * 
 	 */
 	////@Expose
-	public: const static string type;
+	public: const static char* type;
 	
 	/**
 	 * set the input value to process

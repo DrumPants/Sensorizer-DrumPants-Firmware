@@ -173,7 +173,7 @@
 		}
 	}
 
-	void SensorOutput::addOutputFilter(string name, OutputFilter* filter) {
+	void SensorOutput::addOutputFilter(/*string name, */ OutputFilter* filter) {
 		if (outputFiltersCurlength < OUTPUT_FILTERS_LENGTH) {
 			outputFilters[outputFiltersCurlength] = filter;
 		

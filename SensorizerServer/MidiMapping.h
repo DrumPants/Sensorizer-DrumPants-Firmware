@@ -1,9 +1,6 @@
 #ifndef MidiMapping_h
 #define MidiMapping_h
 
-#include <string>
-using namespace std;
-
 //package com.odbol.sensorizer.server;
 
 //import com.google.gson.annotations.Expose;

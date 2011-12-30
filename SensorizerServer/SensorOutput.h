@@ -1,8 +1,7 @@
 #ifndef SensorOutput_h
 #define SensorOutput_h
 
-#include <string>
-using namespace std;
+
 
 #include "filters/OutputFilter.h"
 ////import com.odbol.sensorizer.server.filters.OutputFilter;
@@ -121,7 +120,7 @@ class SensorOutput {
 	//sends all messages through ALL server mappings
 	public: void send();
 	
-	public: void addOutputFilter(string name, OutputFilter* filter);
+	public: void addOutputFilter(/*string name, */OutputFilter* filter);
 	
 	//public: void removeOutputFilter(OutputFilter filter);
 

@@ -4,7 +4,7 @@ class OutputMapping {
 	public: virtual void send(double values[]);
 	
 	//associates an output device with given name to the mapping
-	public: virtual void setOutputDevice(string name);
+	//public: virtual void setOutputDevice(string name);
 	
 	//inits and connects to output device
 	public: virtual void init();
