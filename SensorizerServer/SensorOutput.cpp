@@ -26,14 +26,18 @@
 		addVal = 0;
 		isInvert = false;
 		cutoffTypeVal = CUTOFF_TYPE_VAL_NONE;
-		outputValue = 0;
+		_outputValue = 0;
+		
+		//set current array lengths so we can fill them
+		outputFiltersCurlength = 0;
+		midiMappingsCurlength = 0;
 		
 		init();
 	}
 
 	void SensorOutput::init() {		
-		for (MidiMapping o : dropdownMidiMappings) 
-			o.init();
+		for (int i = 0; i < midiMappingsCurlength; i++) 
+			dropdownMidiMappings[i]->init();
 		
 		//init val from string, since we don't have a nice enum
 		//setCutoffType(this->cutoffType);
@@ -50,14 +54,14 @@
 	}
 
 	//scales a number to fit within the new extrema.
-	static double SensorOutput::scaleRange(double num, double oldMin, double oldMax, double newMin, double newMax) {
+	double SensorOutput::scaleRange(double num, double oldMin, double oldMax, double newMin, double newMax) {
 
 		return scaleRange(num, oldMin, oldMax, newMin, newMax, false);
 	}
 	
 	//scales a number to fit within the new extrema.
 	//if hardCutoff is true, it will not exceed the extrema
-	static double SensorOutput::scaleRange(double num, double oldMin, double oldMax, double newMin, double newMax, bool hardCutoff) {
+	double SensorOutput::scaleRange(double num, double oldMin, double oldMax, double newMin, double newMax, bool hardCutoff) {
 
 	  double n =  ((num - oldMin) / ((oldMax - oldMin) / (newMax - newMin))) + newMin;
 	  if (hardCutoff == true) {
@@ -71,7 +75,7 @@
 
 	//scales a number using different scales depending if num is greater or less than the zero point oldZero.
 	//if hardCutoff is true, it will not exceed the extrema
-	static double SensorOutput::scaleWeightedRange(double num, double oldMin, double oldZero, double oldMax, double newMin, double newMax, bool hardCutoff) {
+	double SensorOutput::scaleWeightedRange(double num, double oldMin, double oldZero, double oldMax, double newMin, double newMax, bool hardCutoff) {
 	  double newZero = scaleRange(0.5, 0, 1, newMin, newMax);
 
 	  if (num > oldZero) 
@@ -93,32 +97,32 @@
 			val = 1.0 - val;
 
 		//save cur raw val
-		inputValue = val;
+		_inputValue = val;
 		
 		//calculate values!!!!!!
-		if (inRange == NULL) 
-			return;
+		//if (inRange == NULL) 
+		//	return;
 
-		outputValue = scaleRange(val, inRange.low, inRange.high, outRange.low, outRange.high);
+		_outputValue = scaleRange(val, inRange.low, inRange.high, outRange.low, outRange.high);
 		
 		
 		if (cutoffTypeVal == CUTOFF_TYPE_VAL_HARD) {
-			if (outputValue > cutoffRange.high)
-				outputValue = 1.0;
-			else if (outputValue < cutoffRange.low)
-				outputValue = 0.0;
+			if (_outputValue > cutoffRange.high)
+				_outputValue = 1.0;
+			else if (_outputValue < cutoffRange.low)
+				_outputValue = 0.0;
 		}
 		if (cutoffTypeVal == (CUTOFF_TYPE_VAL_NULLABLE)) {
-			if (outputValue > cutoffRange.high)
-				outputValue = SensorizerServer::SENSOR_VALUE_NULL;
-			else if (outputValue < cutoffRange.low)
-				outputValue = SensorizerServer::SENSOR_VALUE_NULL;
+			if (_outputValue > cutoffRange.high)
+				_outputValue = SensorizerServer::SENSOR_VALUE_NULL;
+			else if (_outputValue < cutoffRange.low)
+				_outputValue = SensorizerServer::SENSOR_VALUE_NULL;
 		}		
 		else if (cutoffTypeVal == (CUTOFF_TYPE_VAL_CLIP)) {
-			if (outputValue > cutoffRange.high)
-				outputValue = cutoffRange.high;
-			else if (outputValue < cutoffRange.low)
-				outputValue = cutoffRange.low;			
+			if (_outputValue > cutoffRange.high)
+				_outputValue = cutoffRange.high;
+			else if (_outputValue < cutoffRange.low)
+				_outputValue = cutoffRange.low;			
 		}
 		
 		else { //NONE
@@ -127,30 +131,30 @@
 		}
 		
 		//synchronized(outputFilters) { 
-			for (int i = 0; i < OUTPUT_FITLERS_LENGTH; i++) {
-				if (outputFilters[i] != NULL) {		
-					outputFilters[i].setValue(outputValue);	
-					outputValue = outputFilters[i].value();	
-				}
+			for (int i = 0; i < outputFiltersCurlength; i++) {
+				//if (outputFilters[i] != NULL) {		
+					outputFilters[i]->setValue(_outputValue);	
+					_outputValue = outputFilters[i]->value();	
+				//}
 			}
 		//}
 		
 		//TODO: equaitons should go here but out meters need to accept any num
 
 		//EQUATIONS
-		if (outputValue != SensorizerServer::SENSOR_VALUE_NULL) {
-			outputValue = outputValue * multiplyVal + addVal;
+		if (_outputValue != SensorizerServer::SENSOR_VALUE_NULL) {
+			_outputValue = _outputValue * multiplyVal + addVal;
 		}
 	}
 	
 	//returns the current raw sensor value
 	double SensorOutput::inputValue() {
-		return inputValue;
+		return _inputValue;
 	}
 	
 	//returns the caluclated output value based on slider and cuttoff settings
 	double SensorOutput::outputValue() {
-		return outputValue;
+		return _outputValue;
 	}
 	
 	
@@ -160,27 +164,35 @@
 		double outvals[1] = {outputValue()}; //only call once!
 		if (outvals[0] != SensorizerServer::SENSOR_VALUE_NULL || cutoffTypeVal == CUTOFF_TYPE_VAL_NULLABLE) {
 			//synchronized(dropdownMidiMappings) { 
-				for (int i = 0; i < MIDI_MAPPINGS_LENGTH; i++) {
+				for (int i = 0; i < midiMappingsCurlength; i++) {
 					//if (dropdownMidiMappings[i] != NULL) {
-						dropdownMidiMappings[i].send(outvals);
+						dropdownMidiMappings[i]->send(outvals);
 					//}
 				}
 			//}
 		}
 	}
-	
-	void SensorOutput::addOutputFilter(string name, OutputFilter filter) {
+
+	void SensorOutput::addOutputFilter(string name, OutputFilter* filter) {
+		if (outputFiltersCurlength < OUTPUT_FILTERS_LENGTH) {
+			outputFilters[outputFiltersCurlength] = filter;
+		
+			outputFiltersCurlength++;
+		}
+		/*
 		synchronized(outputFilters) { 
 			//outputFilters = Arrays.copyOf(outputFilters, outputFilters.length + 1);
-			OutputFilter[] si = new OutputFilter[outputFilters.length + 1];
+			OutputFilter[] si = new OutputFilter[outputFiltersCurlength + 1];
 			if (outputFilters.length > 0)
 				System.arraycopy(outputFilters, 0, si, 0, outputFilters.length);//Arrays.copyOf(sensorInputs, sensorInputs.length + 1);
 			outputFilters = si;
 			
 			outputFilters[outputFilters.length - 1] = filter;
 		}
+		*/
 	}
 	
+	/*
 	void SensorOutput::removeOutputFilter(OutputFilter filter) {
 		if (outputFilters.length > 0) {
 			synchronized(outputFilters) { 
@@ -196,9 +208,18 @@
 			}
 		}
 	}
-
+*/
 	
-	MidiMapping SensorOutput::addMidiMapping(string deviceName) {
+	MidiMapping* SensorOutput::addMidiMapping(MidiMapping* map) {
+		if (midiMappingsCurlength < MIDI_MAPPINGS_LENGTH) {
+			dropdownMidiMappings[midiMappingsCurlength] = map;
+		
+			midiMappingsCurlength++;
+		}
+		
+		return map;
+	
+	/*
 		synchronized(dropdownMidiMappings) { 
 			//dropdownMidiMappings = Arrays.copyOf(dropdownMidiMappings, dropdownMidiMappings.length + 1);
 			MidiMapping[] si = new MidiMapping[dropdownMidiMappings.length + 1];
@@ -213,12 +234,14 @@
 	
 			return d;
 		}
+		*/
 	}
 
 	/***
 	 * assumes m has already been added.
 	 * //@param m
 	 */
+	 /*
 	void SensorOutput::removeMidiMapping(MidiMapping m) {
 		if (dropdownMidiMappings.length > 0) {
 			synchronized(dropdownMidiMappings) { 
@@ -234,4 +257,5 @@
 			}
 		}
 	}
+	*/
 	

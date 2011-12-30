@@ -1,36 +1,3 @@
-/*
- 2-12-2011
- Spark Fun Electronics 2011
- Nathan Seidle
- 
- This code is public domain but you buy me a beer if you use this and we meet someday (Beerware license).
- 
- This code works with the VS1053 Breakout Board and controls the VS1053 in what is called Real Time MIDI mode. 
- To get the VS1053 into RT MIDI mode, power up the VS1053 breakout board with GPIO0 tied low, GPIO1 tied high.
- 
- I use the NewSoftSerial library to send out the MIDI serial at 31250bps. This allows me to print regular messages
- for debugging to the terminal window. This helped me out a ton.
- 
- 5V : VS1053 VCC
- GND : VS1053 GND
- D3 (SoftSerial TX) : VS1053 RX
- D4 : VS1053 RESET
- 
- Attach a headphone breakout board to the VS1053:
- VS1053 LEFT : TSH
- VS1053 RIGHT : RSH
- VS1053 GBUF : GND
- 
- When in the drum bank (0x78), there are not different instruments, only different notes.
- To play the different sounds, select an instrument # like 5, then play notes 27 to 87.
- 
- To play "Sticks" (31):
- talkMIDI(0xB0, 0, 0x78); //Bank select: drums
- talkMIDI(0xC0, 5, 0); //Set instrument number
- //Play note on channel 1 (0x90), some note value (note), middle velocity (60):
- noteOn(0, 31, 60);
- 
- */
  /* NEEDED??
 
  */
@@ -43,9 +10,51 @@ SensorizerServer::SensorizerServer() {
 }
 
 SensorizerServer::~SensorizerServer() {
+	for (int i = 0; i < SENSOR_INPUTS_LENGTH; i++) {
+		if (sensorInputs[i] != NULL)
+			delete sensorInputs[i];
+	}
+
 	delete this->midiDevice;
 }
 
+//reads all input devices values into the sensorInput objects.
+//also sends all values from sensor inputs.
+void readAll() {
+	//if (arduino != null) {
+		//arduino bindings
+		for (int i = 0; i < SENSOR_INPUTS_LENGTH; i++) {
+	//		if (sensorInputs[i].deviceName == "arduino") {
+				//float v = (float)arduino.analogRead(sensorInputs[i].getDeviceInputIdx()) / 1023.0f;
+				float v = arduino.read(sensorInputs[i].getDeviceInputIdx());
+				
+				//if (v > 0)
+				//	Debug.print(Debug.DEBUG, "ardunio input " + i + ": " + v);		
+				
+				sensorInputs[i]->setValue(v);
+				sensorInputs[i]->send();
+	//		}
+		}
+	//}
+}
 
-
+void SensorizerServer::loadPreset() {
+	int i = 0;
+	SensorOutput* s = new SensorOutput();
+	s->inRange.low = 0.028571429;
+	s->inRange.high = 0.35;
+	s->outRange.low = 0;
+	s->outRange.high = 1;
+	s->cutoffRange.low = 0.014285714;
+	s->cutoffRange.high = 0.95;
+	s->setCutoffType(SensorOutput::CUTOFF_TYPE_VAL_NULLABLE);
+	
+	MidiMapping* m = new MidiMapping(this->midiDevice);
+	m->channel = 1;
+	m->note = 60 + i;
+	s->addMidiMapping(m);
+	
+	sensorInputs[i++] = s;
+	
+}
 

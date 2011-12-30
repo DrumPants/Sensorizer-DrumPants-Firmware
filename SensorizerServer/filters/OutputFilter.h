@@ -13,7 +13,7 @@ class OutputFilter {
 	 * 
 	 */
 	////@Expose
-	public: virtual const static string type;
+	public: const static string type;
 	
 	/**
 	 * set the input value to process

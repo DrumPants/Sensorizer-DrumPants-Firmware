@@ -122,9 +122,9 @@ void MidiDevice::talkMIDI(byte cmd, byte data1, byte data2) {
 
 void MidiDevice::note(bool isOn, int channel, int note, int velocity);
 	if (isOn) 
-		noteOn((byte)channel, byte)note, byte)velocity);
+		noteOn((byte)channel, (byte)note, (byte)velocity);
 	else
-		noteOff(byte)channel, byte)note, 0); //TODO: velocity or 0?
+		noteOff((byte)channel, (byte)note, 0); //TODO: velocity or 0?
 }
 
 

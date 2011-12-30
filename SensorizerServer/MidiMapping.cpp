@@ -80,7 +80,7 @@
 			int c = channel; //atoi(channel);
 			int n = note; //atoi(note);
 			
-			int vel = (int)values[0] * 127.0; //truncate is GOOD ENOUGH Math.round(values[0] * 127.0);
+			int vel = (int)(values[0] * 127.0); //truncate is GOOD ENOUGH Math.round(values[0] * 127.0);
 
 			switch (msgType) {
 			case MidiMapping::NOTE:

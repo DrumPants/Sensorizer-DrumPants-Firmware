@@ -10,8 +10,9 @@ using namespace std;
 #include "MidiMapping.h"
 #include "RangePreset.h"
 
-#define MIDI_MAPPINGS_LENGTH 1
-#define OUTPUT_FITLERS_LENGTH 1
+//can hold a max of 3 mappings/filters.
+#define MIDI_MAPPINGS_LENGTH 3
+#define OUTPUT_FILTERS_LENGTH 3
 
 class SensorOutput {
 	
@@ -32,6 +33,13 @@ class SensorOutput {
 	//sensor value extrema. this should be the number range the Arduino sends in.
 	//private: static const double SIGNAL_IN_MIN;
 	//private: static const double SIGNAL_IN_MAX;
+
+
+	private:
+		int outputFiltersCurlength;
+		int midiMappingsCurlength;
+
+
 
 	//hold GSON preset values for ranges
 	////@Expose
@@ -69,11 +77,11 @@ class SensorOutput {
 	public: MidiMapping* dropdownMidiMappings[MIDI_MAPPINGS_LENGTH];
 
 	//current, calculated output 
-	private: double outputValue;
-	private: double inputValue;
+	private: double _outputValue;
+	private: double _inputValue;
 
 	////@Expose
-	public: OutputFilter* outputFilters[OUTPUT_FITLERS_LENGTH];
+	public: OutputFilter* outputFilters[OUTPUT_FILTERS_LENGTH];
 	
 	public: SensorOutput();
 	
@@ -97,9 +105,6 @@ class SensorOutput {
 	public: static double scaleWeightedRange(double num, double oldMin, double oldZero, double oldMax, double newMin, double newMax, bool hardCutoff);
 	
 	
-	
-	
-
 	//sets the input value, and
 	//calculates the output value based on slider and cuttoff settings
 	//value should ALWAYS be between 0 and 1
@@ -116,19 +121,18 @@ class SensorOutput {
 	//sends all messages through ALL server mappings
 	public: void send();
 	
-	public: void addOutputFilter(string name, OutputFilter filter);
+	public: void addOutputFilter(string name, OutputFilter* filter);
 	
-	public: void removeOutputFilter(OutputFilter filter);
+	//public: void removeOutputFilter(OutputFilter filter);
 
 	
-	public: MidiMapping* addMidiMapping(string deviceName);
+	public: MidiMapping* addMidiMapping(MidiMapping* map);
 
 	/***
 	 * assumes m has already been added.
 	 * //@param m
 	 */
-	public: void removeMidiMapping(MidiMapping* m);
-	
+	//public: void removeMidiMapping(MidiMapping* m);	
 };
 
 
