@@ -1,7 +1,7 @@
 //uncomment this to set serial baud at bluetooth rate. otherwise, USB rate.
 //# define IS_BLUETOOTH
 
-#define ENABLE_TEST 1
+#define ENABLE_TEST 0
 #define DISABLE_FIRMATA 1
 
 #include <SoftwareSerial.h>
@@ -335,8 +335,6 @@ void sysexCallback(byte command, byte argc, byte *argv)
  *============================================================================*/
 void setup() 
 {
-  Serial.println("BEGIN SETUP");
-  
   byte i;
 
   Firmata.setFirmwareVersion(2, 2);
@@ -363,7 +361,7 @@ void setup()
       setPinModeCallback(i, ANALOG);
     } else {
       // sets the output to 0, configures portConfigInputs
-      setPinModeCallback(i, OUTPUT);
+      //setPinModeCallback(i, OUTPUT);
     }
   }
   // by defult, do not report any analog inputs
@@ -375,12 +373,16 @@ void setup()
 #else
   Firmata.begin(115200);
 #endif
+  //Firmata.begin(Serial);
 
   /* send digital inputs to set the initial state on the host computer,
    * since once in the loop(), this firmware will only send on change */
   for (i=0; i < TOTAL_PORTS; i++) {
-    outputPort(i, readPort(i, portConfigInputs[i]), true);
+    //outputPort(i, readPort(i, portConfigInputs[i]), true);
   }
+  
+    
+  server.init();
   
   Serial.println("END SETUP");  
 }
@@ -394,12 +396,12 @@ void loop()
 
   /* DIGITALREAD - as fast as possible, check for changes and output them to the
    * FTDI buffer using Serial.print()  */
-  checkDigitalInputs();  
+  //checkDigitalInputs();  
 
   /* SERIALREAD - processing incoming messagse as soon as possible, while still
    * checking digital inputs.  */
-  while(Firmata.available())
-    Firmata.processInput();
+  //while(Firmata.available())
+  //  Firmata.processInput();
 
   /* SEND FTDI WRITE BUFFER - make sure that the FTDI buffer doesn't go over
    * 60 bytes. use a timer to sending an event character every 4 ms to
@@ -419,7 +421,7 @@ void loop()
           server.readPin(pin, val);
 #endif          
           
-          Firmata.sendAnalog(analogPin, val);
+          //Firmata.sendAnalog(analogPin, val);
         }
       }
     }
@@ -439,7 +441,7 @@ SensorizerServer server;
 
 
 #if ENABLE_TEST
-#define TEST_MAX 500
+#define TEST_MAX 90
 #define TEST_INTERVAL 50000
 
 int testCounter = -TEST_INTERVAL;
@@ -488,9 +490,12 @@ void setup() {
   
   server.init();
 }
-
+int thePin = 0;
 void loop() {
-  //testUpdate();
+#if ENABLE_TEST
+  testUpdate();
+  return;
+#endif
 
   while(Serial.available() == 0) ;
 
@@ -508,7 +513,14 @@ void loop() {
   //For this bank 0x78, the instrument does not matter, only the note
   //noteOn(0, note, 60);
 
-  server.readPin(1, 90);
+  thePin = (thePin + 1) % 6;
+
+  if (note < 60)
+    server.readPin(thePin, 0);
+  else if (note < 75)
+    server.readPin(thePin, note);
+  else
+    server.readPin(thePin, 1024);
   //Note will dissapate automatically
   
   
