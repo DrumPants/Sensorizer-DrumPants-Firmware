@@ -73,14 +73,14 @@ class SensorOutput {
 
 
 	////@Expose
-	public: MidiMapping* dropdownMidiMappings[MIDI_MAPPINGS_LENGTH];
+	public: MidiMapping* dropdownMidiMappings[MIDI_MAPPINGS_LENGTH] = {};
 
 	//current, calculated output 
 	private: double _outputValue;
 	private: double _inputValue;
 
 	////@Expose
-	public: OutputFilter* outputFilters[OUTPUT_FILTERS_LENGTH];
+	public: OutputFilter* outputFilters[OUTPUT_FILTERS_LENGTH] = {};
 	
 	public: SensorOutput();
 	

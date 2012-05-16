@@ -38,7 +38,7 @@ class OneHitEnvelope : OneHitDetector {
 	
 	//holds the sequence of values of the envelope
 	////@Expose
-	public: double frames[FRAME_LENGTH];
+	public: double frames[FRAME_LENGTH] = {};
 
 	//@Override
 	public: void trigger();

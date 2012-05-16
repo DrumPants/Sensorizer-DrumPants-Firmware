@@ -6,7 +6,9 @@
 
 
 SensorizerServer::SensorizerServer() {
-	this->midiDevice = new MidiDevice(); //Soft TX on 3, we don't use RX in this code
+	this->midiDevice = new MidiDevice(); 
+
+	this->loadPreset();
 }
 
 SensorizerServer::~SensorizerServer() {
@@ -76,7 +78,7 @@ sensorInputs[i++] = s;
 
 //arduino 1
 s = new SensorOutput();
-s->inRange.low = 0;
+s->inRange.low = 0.03;
 s->inRange.high = 0.16428576;
 s->outRange.low = 0;
 s->outRange.high = 1;

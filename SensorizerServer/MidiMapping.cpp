@@ -127,8 +127,13 @@
 			}
 
 			//record history for threshold
-			*valuesHistory[1] = *valuesHistory[0];
-			*valuesHistory[0] = *values;
+			//i'm skeptical of this. do it manually
+			//*valuesHistory[1] = *valuesHistory[0];
+			//*valuesHistory[0] = *values;
+			//TODO: make work for multiple values arrays
+			valuesHistory[1][0] = valuesHistory[0][0];
+			valuesHistory[0][0] = values[0];			
+			
 		//}
 		
 	}
