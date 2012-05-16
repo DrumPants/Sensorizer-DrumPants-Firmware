@@ -59,6 +59,10 @@
 		this->isNoteOn = false;
 		
 		this->midiDevice = midiDevice;
+		
+		//manually init array
+		valuesHistory[1][0] = SensorizerServer::SENSOR_VALUE_NULL;
+		valuesHistory[0][0] = SensorizerServer::SENSOR_VALUE_NULL;	
 	}
 
 	//@Override
@@ -72,6 +76,8 @@
 	 */
 	//@Override
 	void MidiMapping::send(double values[]) {
+		DEBUG_PRINT("MidiMapping::send")
+		
 		//if (midiDevice != NULL) {
 			//throw new Exception();
 			
@@ -84,6 +90,8 @@
 			
 			int vel = (int)(values[0] * 127.0); //truncate is GOOD ENOUGH Math.round(values[0] * 127.0);
 
+			DEBUG_PRINT_NUM("MidiMapping::send vel", vel)
+			
 			switch (msgType) {
 			case MidiMapping::NOTE:
 				//int dur = duration; //Integer.parseInt(duration);
@@ -126,6 +134,9 @@
 				break;
 			}
 
+
+			DEBUG_PRINT("MidiMapping::send recording history")
+		
 			//record history for threshold
 			//i'm skeptical of this. do it manually
 			//*valuesHistory[1] = *valuesHistory[0];
@@ -136,6 +147,8 @@
 			
 		//}
 		
+		
+		DEBUG_PRINT("DONE MidiMapping::send")
 	}
 
 	

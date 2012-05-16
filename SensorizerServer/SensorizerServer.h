@@ -12,6 +12,16 @@
 
 #define SENSOR_INPUTS_LENGTH 6
 
+#define ENABLE_DEBUG_PRINTING 1
+
+#if ENABLE_DEBUG_PRINTING
+	#define DEBUG_PRINT(text) Serial.println(text);Serial.println("-----");
+	#define DEBUG_PRINT_NUM(text, num) Serial.print(text);Serial.println(num, DEC);Serial.println("-----");
+#else
+	#define DEBUG_PRINT(text)   
+	#define DEBUG_PRINT_NUM(text, num)   
+#endif
+
 class SensorizerServer {
 
 private: 
@@ -26,6 +36,8 @@ public:
 	
 	SensorizerServer();
 	~SensorizerServer();
+	
+	void init();
 	
 	//reads and sends a single pin
 	void readPin(int pinIdx, int pinValue);

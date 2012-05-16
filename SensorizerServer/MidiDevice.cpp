@@ -40,17 +40,19 @@
 //SoftwareSerial mySerial(2, 3);
 
 MidiDevice::MidiDevice() {
-	this->mySerial = &SoftwareSerial(2, 3, false); //Soft TX on 3, we don't use RX in this code
+	this->mySerial = new SoftwareSerial(2, 3, false); //Soft TX on 3, we don't use RX in this code
 }
 
 MidiDevice::~MidiDevice() {
-	delete this->mySerial;
+	//delete this->mySerial;
 }
 
 void MidiDevice::setup() {
+	Serial.println("Initializing MidiDevice");
+	
 	int instrument = 0; //does this need to be a member?
 
-	Serial.begin(57600);
+	//Serial.begin(57600);
 	
 	//Setup soft serial for MIDI control
 	mySerial->begin(31250);
@@ -70,7 +72,7 @@ void MidiDevice::setup() {
 	talkMIDI(0xC0, instrument, 0); //Set instrument number. 0xC0 is a 1 data byte command
 	
 	
-	Serial.println("Press a letter and press enter");
+	Serial.println("MidiDevice now setup");
 }
 
 /*

@@ -25,6 +25,10 @@
 		speed = 10;
 		//frames = new double[1];
 
+		//manually initialize arrays (ARRG FFFFFFFFUUUUUUUU ISO C++)
+		for (int i = 0; i < FRAME_LENGTH; i++) {
+			frames[i] = 0.0;
+		}
 	}
 	
 	//@Override

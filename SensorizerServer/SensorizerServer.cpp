@@ -6,6 +6,11 @@
 
 
 SensorizerServer::SensorizerServer() {
+	//manually init array
+	for (int i = 0; i < SENSOR_INPUTS_LENGTH; i++) {
+		sensorInputs[i] = NULL;
+	}
+
 	this->midiDevice = new MidiDevice(); 
 
 	this->loadPreset();
@@ -18,6 +23,17 @@ SensorizerServer::~SensorizerServer() {
 	}
 
 	delete this->midiDevice;
+}
+
+
+void SensorizerServer::init() {
+	this->midiDevice->setup();
+	
+	for (int i = 0; i < SENSOR_INPUTS_LENGTH; i++) {
+		if (sensorInputs[i] != NULL)
+			sensorInputs[i]->init();
+	}
+
 }
 
 //reads all input devices values into the sensorInput objects.
@@ -46,6 +62,8 @@ void SensorizerServer::readAll() {
 void SensorizerServer::readPin(int pinIdx, int pinValue) {
 	float v = pinValue / 1024.0;
 
+DEBUG_PRINT_NUM("readPin", v)
+  
 	sensorInputs[pinIdx]->setValue(v);
 	sensorInputs[pinIdx]->send();
 }
@@ -91,7 +109,7 @@ s->isInvert = false;
 
 m = new MidiMapping(this->midiDevice);
 m->channel = 1;
-m->note = 60 + i;
+m->note = 57;//60 + i;
 s->addMidiMapping(m);
 
 sensorInputs[i++] = s;
