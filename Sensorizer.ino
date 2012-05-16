@@ -2,7 +2,7 @@
 //# define IS_BLUETOOTH
 
 #define ENABLE_TEST 0
-#define DISABLE_FIRMATA 1
+#define DISABLE_FIRMATA 0
 
 #include <SoftwareSerial.h>
 #include <SensorizerServer.h>    
@@ -361,7 +361,7 @@ void setup()
       setPinModeCallback(i, ANALOG);
     } else {
       // sets the output to 0, configures portConfigInputs
-      //setPinModeCallback(i, OUTPUT);
+      setPinModeCallback(i, OUTPUT);
     }
   }
   // by defult, do not report any analog inputs
@@ -378,7 +378,7 @@ void setup()
   /* send digital inputs to set the initial state on the host computer,
    * since once in the loop(), this firmware will only send on change */
   for (i=0; i < TOTAL_PORTS; i++) {
-    //outputPort(i, readPort(i, portConfigInputs[i]), true);
+    outputPort(i, readPort(i, portConfigInputs[i]), true);
   }
   
     
@@ -396,12 +396,12 @@ void loop()
 
   /* DIGITALREAD - as fast as possible, check for changes and output them to the
    * FTDI buffer using Serial.print()  */
-  //checkDigitalInputs();  
+  checkDigitalInputs();  
 
   /* SERIALREAD - processing incoming messagse as soon as possible, while still
    * checking digital inputs.  */
-  //while(Firmata.available())
-  //  Firmata.processInput();
+  while(Firmata.available())
+    Firmata.processInput();
 
   /* SEND FTDI WRITE BUFFER - make sure that the FTDI buffer doesn't go over
    * 60 bytes. use a timer to sending an event character every 4 ms to
@@ -418,10 +418,10 @@ void loop()
           int val = analogRead(analogPin);
           
 #if !ENABLE_TEST
-          server.readPin(pin, val);
+          server.readPin(analogPin, val);
 #endif          
           
-          //Firmata.sendAnalog(analogPin, val);
+          Firmata.sendAnalog(analogPin, val);
         }
       }
     }

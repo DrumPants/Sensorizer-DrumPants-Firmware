@@ -48,7 +48,7 @@ MidiDevice::~MidiDevice() {
 }
 
 void MidiDevice::setup() {
-	Serial.println("Initializing MidiDevice");
+	//Serial.println("Initializing MidiDevice");
 	
 	int instrument = 0; //does this need to be a member?
 
@@ -72,7 +72,7 @@ void MidiDevice::setup() {
 	talkMIDI(0xC0, instrument, 0); //Set instrument number. 0xC0 is a 1 data byte command
 	
 	
-	Serial.println("MidiDevice now setup");
+	//Serial.println("MidiDevice now setup");
 }
 
 /*

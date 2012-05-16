@@ -12,7 +12,7 @@
 
 #define SENSOR_INPUTS_LENGTH 6
 
-#define ENABLE_DEBUG_PRINTING 1
+#define ENABLE_DEBUG_PRINTING 0
 
 #if ENABLE_DEBUG_PRINTING
 	#define DEBUG_PRINT(text) Serial.println(text);Serial.println("-----");
