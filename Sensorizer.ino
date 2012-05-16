@@ -440,7 +440,7 @@ SensorizerServer server;
 
 #if ENABLE_TEST
 #define TEST_MAX 500
-#define TEST_INTERVAL 100000
+#define TEST_INTERVAL 50000
 
 int testCounter = -TEST_INTERVAL;
 
@@ -491,7 +491,7 @@ void setup() {
 
 void loop() {
   //testUpdate();
-  
+
   while(Serial.available() == 0) ;
 
   int note = Serial.read();
@@ -508,7 +508,7 @@ void loop() {
   //For this bank 0x78, the instrument does not matter, only the note
   //noteOn(0, note, 60);
 
-  server.readPin(1, 500);
+  server.readPin(1, 90);
   //Note will dissapate automatically
   
   

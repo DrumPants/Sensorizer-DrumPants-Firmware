@@ -158,7 +158,7 @@
 			_outputValue = _outputValue * multiplyVal + addVal;
 		}
 		
-		DEBUG_PRINT("DONE SensorOutput::setValue")
+		DEBUG_PRINT_NUM("DONE SensorOutput::setValue ", _outputValue)
 	}
 	
 	//returns the current raw sensor value
@@ -184,7 +184,7 @@
 				
 				for (int i = 0; i < midiMappingsCurlength; i++) {
 					if (dropdownMidiMappings[i] != NULL) {
-						DEBUG_PRINT("SensorOutput::dropdownMidiMappings->send()")
+						DEBUG_PRINT_NUM("SensorOutput::dropdownMidiMappings->send()", outvals[0])
 						dropdownMidiMappings[i]->send(outvals);
 					}
 				}
