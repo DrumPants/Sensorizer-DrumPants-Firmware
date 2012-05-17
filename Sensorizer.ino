@@ -2,10 +2,42 @@
 //# define IS_BLUETOOTH
 
 #define ENABLE_TEST 0
-#define DISABLE_FIRMATA 0
+#define DISABLE_FIRMATA 1
 
 #include <SoftwareSerial.h>
 #include <SensorizerServer.h>    
+
+
+SensorizerServer server;
+
+
+#define ENCODER_DO_NOT_USE_INTERRUPTS
+#include <Encoder.h>
+
+
+Encoder myEnc(5, 6);
+
+long position  = -999;
+void checkKnobs() {
+  long newPos = myEnc.read() / 4;
+  if (newPos != position) {
+    position = newPos;
+    DEBUG_PRINT_NUM("encoder: ", position);
+    int newInst = position % 129;
+    if (newInst < 0)
+      newInst = 128 - newInst;
+    if (newInst > 127) {
+      DEBUG_PRINT_NUM("change bank: ", newInst);
+      server.midiDevice->setBank(0x78); //DRUMS
+    }
+    else {     
+      DEBUG_PRINT_NUM("change bank: ", newInst); 
+      
+      server.midiDevice->setBank(0x79, newInst); //MELODIC
+    }
+  }
+}
+
 
  /*
   Copyright (C) 2006-2008 Hans-Christoph Steiner.  All rights reserved.
@@ -27,9 +59,6 @@
 #if !DISABLE_FIRMATA
 #include <Servo.h>
 #include <Firmata.h>
-
-
-SensorizerServer server;
 
 
 /*==============================================================================
@@ -427,6 +456,7 @@ void loop()
     }
   }
   
+  checkKnobs();
   
 #if ENABLE_TEST
   testUpdate();
@@ -434,9 +464,6 @@ void loop()
 }
 
 //end DISABLE_FIRMATA
-#else 
-SensorizerServer server;
-
 #endif
 
 
@@ -486,20 +513,22 @@ void setup() {
 */
 
   Serial.println("Press a letter and press enter!");
-  
-  
+    
   server.init();
 }
 int thePin = 0;
 void loop() {
+  
 #if ENABLE_TEST
   testUpdate();
   return;
 #endif
 
-  while(Serial.available() == 0) ;
+  checkKnobs();
+  while(Serial.available() == 0) 
+    checkKnobs();
 
-  int note = Serial.read();
+  int note = Serial.read();  
   //Good sounding notes range from 27 to 87
   //So let's take the letter and range it to 27
   note -= 'a';

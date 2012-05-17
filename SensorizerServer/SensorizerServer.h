@@ -10,25 +10,20 @@
 #include "MidiDevice.h"
 #include "SensorOutput.h"
 
+#include "Debug.h"
+
 #define SENSOR_INPUTS_LENGTH 6
 
-#define ENABLE_DEBUG_PRINTING 0
-
-#if ENABLE_DEBUG_PRINTING
-	#define DEBUG_PRINT(text) Serial.println(text);Serial.println("-----");
-	#define DEBUG_PRINT_NUM(text, num) Serial.print(text);Serial.println(num, DEC);Serial.println("-----");
-#else
-	#define DEBUG_PRINT(text)   
-	#define DEBUG_PRINT_NUM(text, num)   
-#endif
 
 class SensorizerServer {
 
 private: 
 
-	MidiDevice* midiDevice;
 
 public:
+	//should maybe be private but I don't believe in writing everything twice.
+	MidiDevice* midiDevice;
+	
 	
 	static const double SENSOR_VALUE_NULL = -1.0;
 

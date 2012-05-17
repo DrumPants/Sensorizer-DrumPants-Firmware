@@ -41,6 +41,7 @@
 */
 #include <SoftwareSerial.h>
 
+#include "Debug.h"
 
 //Tied to VS1053 Reset line
 #define RESET_MIDI_PIN 4
@@ -58,6 +59,8 @@ private:
 	//Plays a MIDI note. Doesn't check to see that cmd is greater than 127, or that data values are less than 127
 	void talkMIDI(byte cmd, byte data1, byte data2);
 	
+	
+	byte instrument, bank;
 	
 public:
 	
@@ -77,6 +80,14 @@ public:
 	void noteOff(byte channel, byte note, byte release_velocity);
 	
 	void note(bool isOn, int channel, int note, int velocity);
+	
+	//not sure how this works, perhaps only 0x78 (drums) and 0x79 (melodic) are accepted???
+	void setBank(byte bank, byte instrument = 0);
+	byte getBank();
+	
+	void setInstrument(byte inst);
+	byte getInstrument();
+	
 };
 
 #endif

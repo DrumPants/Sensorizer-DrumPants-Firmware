@@ -41,6 +41,9 @@
 
 MidiDevice::MidiDevice() {
 	this->mySerial = new SoftwareSerial(2, 3, false); //Soft TX on 3, we don't use RX in this code
+	
+	bank = 0x79;
+	instrument = 30;
 }
 
 MidiDevice::~MidiDevice() {
@@ -49,8 +52,6 @@ MidiDevice::~MidiDevice() {
 
 void MidiDevice::setup() {
 	//Serial.println("Initializing MidiDevice");
-	
-	int instrument = 0; //does this need to be a member?
 
 	//Serial.begin(57600);
 	
@@ -66,13 +67,35 @@ void MidiDevice::setup() {
 	
 	talkMIDI(0xB0, 0x07, 120); //0xB0 is channel message, set channel volume to near max (127)
 	
-	talkMIDI(0xB0, 0, 0x78); //Select the bank of really fun sounds
+	setBank(bank); //Select the bank of really fun sounds
 	
 	//For this bank 0x78, the instrument does not matter, only the note
-	talkMIDI(0xC0, instrument, 0); //Set instrument number. 0xC0 is a 1 data byte command
+	//setInstrument(instrument); //Set instrument number. 0xC0 is a 1 data byte command
 	
 	
 	//Serial.println("MidiDevice now setup");
+}
+
+void MidiDevice::setBank(byte bank, byte instrument) {
+	DEBUG_PRINT_NUM("setBank: ", bank)
+	talkMIDI(0xB0, 0, bank); //Select the bank of really fun sounds
+	
+	this->bank = bank;
+	
+	setInstrument(instrument);
+}
+byte MidiDevice::getBank() {
+	return bank;
+}
+
+void MidiDevice::setInstrument(byte inst) {
+	DEBUG_PRINT_NUM("setInstrument: ", inst)
+	talkMIDI(0xC0, inst, 0); //Set instrument number. 0xC0 is a 1 data byte command
+	
+	this->instrument = inst;
+}
+byte MidiDevice::getInstrument() {
+	return this->instrument;
 }
 
 /*
