@@ -498,12 +498,13 @@ void setup() {
  // mySerial.begin(31250);
 
   //Reset the VS1053
+/*
   pinMode(resetMIDI, OUTPUT);
   digitalWrite(resetMIDI, LOW);
   delay(100);
   digitalWrite(resetMIDI, HIGH);
   delay(100);
-/*
+
   talkMIDI(0xB0, 0x07, 120); //0xB0 is channel message, set channel volume to near max (127)
 
   talkMIDI(0xB0, 0, 0x78); //Select the bank of really fun sounds

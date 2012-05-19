@@ -91,7 +91,7 @@ s->addVal = 0;
 s->isInvert = false;
 
 // m = new MidiMapping(this->midiDevice);
-// m->channel = 1;
+// m->channel = 0;
 // m->note = 60 + i;
 // s->addMidiMapping(m);
 
@@ -112,7 +112,7 @@ s->addVal = 0;
 s->isInvert = false;
 
 m = new MidiMapping(this->midiDevice);
-m->channel = 1;
+m->channel = 0;
 m->note = 57;//60 + i;
 s->addMidiMapping(m);
 
@@ -133,7 +133,7 @@ s->addVal = 0;
 s->isInvert = false;
 
 m = new MidiMapping(this->midiDevice);
-m->channel = 1;
+m->channel = 0;
 m->note = 60 + i;
 s->addMidiMapping(m);
 
@@ -154,7 +154,7 @@ s->addVal = 0;
 s->isInvert = false;
 
 m = new MidiMapping(this->midiDevice);
-m->channel = 1;
+m->channel = 0;
 m->note = 60 + i;
 s->addMidiMapping(m);
 
@@ -175,7 +175,7 @@ s->addVal = 0;
 s->isInvert = false;
 
 m = new MidiMapping(this->midiDevice);
-m->channel = 1;
+m->channel = 0;
 m->note = 60 + i;
 s->addMidiMapping(m);
 
@@ -196,7 +196,7 @@ s->addVal = 0;
 s->isInvert = false;
 
 //m = new MidiMapping(this->midiDevice);
-//m->channel = 1;
+//m->channel = 0;
 //m->note = 60 + i;
 //s->addMidiMapping(m);
 
