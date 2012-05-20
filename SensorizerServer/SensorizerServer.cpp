@@ -203,3 +203,12 @@ s->isInvert = false;
 sensorInputs[i++] = s;
 }
 
+
+void SensorizerServer::loadNotes(byte notes[]) {
+	for (int i = 0; i < SENSOR_INPUTS_LENGTH; i++) {
+		if (sensorInputs[i] != NULL) {
+			if (sensorInputs[i]->dropdownMidiMappings[0] != NULL)
+				sensorInputs[i]->dropdownMidiMappings[0]->note = notes[i];
+		}
+	}
+}

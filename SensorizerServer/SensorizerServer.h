@@ -39,6 +39,9 @@ public:
 	
 	void loadPreset();
 	
+	//takes a 6 element array of notes and loads them into the MIDI preset
+	void loadNotes(byte notes[]);
+	
 };
 
 #endif

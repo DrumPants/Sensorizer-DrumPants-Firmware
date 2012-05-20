@@ -14,30 +14,100 @@ SensorizerServer server;
 #define ENCODER_DO_NOT_USE_INTERRUPTS
 #include <Encoder.h>
 
+#define ENCODER_MODE_SWITCH_PIN 7
+
+
+
+#define NOTE_PRESETS_MELODIC_LENGTH 9
+#define NOTE_PRESETS_DRUMS_LENGTH 2
+
+/*
+var n = [0, 60, 62, 63, 65, 67];
+var ns = [];
+for (var i=0;i < 8; i++) { 
+    for (j in n) {
+        n[j] = n[j] + 1;
+    }
+    console.log(n);
+}
+*/
+byte NOTE_PRESETS_MELODIC[NOTE_PRESETS_MELODIC_LENGTH][6] = {
+	{0, 60, 62, 63, 65, 67},
+	{0, 61, 63, 64, 66, 68},
+	{0, 62, 64, 65, 67, 69},
+	{0, 63, 65, 66, 68, 70},
+	{0, 64, 66, 67, 69, 71},
+	{0, 65, 67, 68, 70, 72},
+	{0, 66, 68, 69, 71, 73},
+	{0, 67, 69, 70, 72, 74},
+	{0, 68, 70, 71, 73, 75}
+};
+
+byte NOTE_PRESETS_DRUMS[NOTE_PRESETS_DRUMS_LENGTH][6] = {
+	{0, 57, 38, 51, 46, 35},
+	{0, 49, 40, 60, 61, 36}
+};
+
+
 
 Encoder myEnc(5, 6);
 
+void setupKnobs() {
+ pinMode(ENCODER_MODE_SWITCH_PIN, INPUT);
+ digitalWrite(ENCODER_MODE_SWITCH_PIN, HIGH); //enable pullup 
+}
+
 long position  = -999;
+long positionKey  = -999;
+
 void checkKnobs() {
   long newPos = myEnc.read() / 4;
-  if (newPos != position) {
-    position = newPos;
-    DEBUG_PRINT_NUM("encoder: ", position);
-    int newInst = position % 129;
-    if (newInst < 0)
-      newInst = 128 - newInst;
-    if (newInst > 127) {
-      DEBUG_PRINT_NUM("change bank: ", newInst);
-      server.midiDevice->setBank(0x78); //DRUMS
-    }
-    else {     
-      DEBUG_PRINT_NUM("change bank: ", newInst); 
+  
+  int buttonMode = digitalRead(ENCODER_MODE_SWITCH_PIN);
+  if (buttonMode == HIGH) {
+    if (newPos != position) {
+      DEBUG_PRINT_NUM("encoder: ", newPos);
+      int newInst = newPos % 129;
+      if (newInst < 0)
+        newInst = 128 - newInst;
+      if (newInst > 127) {
+        DEBUG_PRINT_NUM("change bank: ", newInst);
+        server.midiDevice->setBank(0x78); //DRUMS
+        
+        //previous was melodic, load drum preset
+        server.loadNotes( NOTE_PRESETS_DRUMS[0] );
+      }
+      else {     
+        DEBUG_PRINT_NUM("change bank: ", newInst); 
+        
+        server.midiDevice->setBank(0x79, newInst); //MELODIC
+        
+        if (position > 127) {
+           //we switched from drums, reload the note scales        
+          server.loadNotes( NOTE_PRESETS_MELODIC[0] );
+        }
+      }
       
-      server.midiDevice->setBank(0x79, newInst); //MELODIC
+      position = newPos;
+    }
+  }
+  else { //button is depressed. cheer up, button!
+     if (newPos != positionKey) {
+      positionKey = newPos;
+      DEBUG_PRINT_NUM("encoder key: ", positionKey);
+      
+      if (server.midiDevice->getBank() == 0x78) { //DRUMS
+        int newInst = abs(positionKey % NOTE_PRESETS_DRUMS_LENGTH);
+        server.loadNotes( NOTE_PRESETS_DRUMS[newInst] );
+      }
+      else { //MELODIC
+        int newInst = abs(positionKey % NOTE_PRESETS_MELODIC_LENGTH);
+        server.loadNotes( NOTE_PRESETS_MELODIC[newInst] );
+        
+      }
     }
   }
 }
-
 
  /*
   Copyright (C) 2006-2008 Hans-Christoph Steiner.  All rights reserved.
@@ -410,6 +480,7 @@ void setup()
     outputPort(i, readPort(i, portConfigInputs[i]), true);
   }
   
+  setupKnobs();
     
   server.init();
   
@@ -514,6 +585,8 @@ void setup() {
 */
 
   Serial.println("Press a letter and press enter!");
+    
+  setupKnobs();  
     
   server.init();
 }
