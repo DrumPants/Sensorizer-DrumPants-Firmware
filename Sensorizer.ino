@@ -52,17 +52,17 @@ byte NOTE_PRESETS_DRUMS[NOTE_PRESETS_DRUMS_LENGTH][6] = {
 
 
 
-Encoder* myEnc;
+Encoder myEnc;
 
 void setupKnobs() {
- myEnc = new Encoder(ENCODER_PIN_1, ENCODER_PIN_2);
+ myEnc.init(ENCODER_PIN_1, ENCODER_PIN_2);
   
  pinMode(ENCODER_MODE_SWITCH_PIN, INPUT);
  digitalWrite(ENCODER_MODE_SWITCH_PIN, HIGH); //enable pullup 
 }
 
-long position  = -999;
-long positionKey  = -999;
+int32_t position  = 32;
+int32_t positionKey  = 36;
 
 bool lastButtonMode = HIGH;
 
@@ -71,13 +71,13 @@ void checkKnobs() {
   int buttonMode = digitalRead(ENCODER_MODE_SWITCH_PIN);
   if (lastButtonMode != buttonMode) {
      if (buttonMode == HIGH)
-       myEnc->write(position * 4);
+       myEnc.write(position * 4);
      else
-       myEnc->write(positionKey * 4); 
+       myEnc.write(positionKey * 4); 
   }
   
   
-  long newPos = myEnc->read() / 4;
+  int newPos = myEnc.read() / 4;
   
   if (buttonMode == HIGH) {
     if (newPos != position) {
@@ -107,7 +107,7 @@ void checkKnobs() {
     }
   }
   else { //button is depressed. cheer up, button!
-     if (newPos != position) {
+     if (newPos != positionKey) {
       positionKey = newPos;
       DEBUG_PRINT_NUM("encoder key: ", positionKey);
       
