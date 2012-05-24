@@ -14,6 +14,8 @@ SensorizerServer server;
 #define ENCODER_DO_NOT_USE_INTERRUPTS
 #include <Encoder.h>
 
+#define ENCODER_PIN_1 8
+#define ENCODER_PIN_2 9
 #define ENCODER_MODE_SWITCH_PIN 10
 
 
@@ -50,9 +52,11 @@ byte NOTE_PRESETS_DRUMS[NOTE_PRESETS_DRUMS_LENGTH][6] = {
 
 
 
-Encoder myEnc(8, 9);
+Encoder* myEnc;
 
 void setupKnobs() {
+ myEnc = new Encoder(ENCODER_PIN_1, ENCODER_PIN_2);
+  
  pinMode(ENCODER_MODE_SWITCH_PIN, INPUT);
  digitalWrite(ENCODER_MODE_SWITCH_PIN, HIGH); //enable pullup 
 }
@@ -60,12 +64,23 @@ void setupKnobs() {
 long position  = -999;
 long positionKey  = -999;
 
+bool lastButtonMode = HIGH;
+
 void checkKnobs() {
-  long newPos = myEnc.read() / 4;
-  
+   //don't swap as soon as they release button: remember states for button pushed and not
   int buttonMode = digitalRead(ENCODER_MODE_SWITCH_PIN);
+  if (lastButtonMode != buttonMode) {
+     if (buttonMode == HIGH)
+       myEnc->write(position * 4);
+     else
+       myEnc->write(positionKey * 4); 
+  }
+  
+  
+  long newPos = myEnc->read() / 4;
+  
   if (buttonMode == HIGH) {
-    if (newPos != position && newPos != positionKey) { //don't swap as soon as they release button
+    if (newPos != position) {
       DEBUG_PRINT_NUM("encoder: ", newPos);
       int newInst = newPos % 129;
       if (newInst < 0)
@@ -92,7 +107,7 @@ void checkKnobs() {
     }
   }
   else { //button is depressed. cheer up, button!
-     if (newPos != position && newPos != positionKey) {
+     if (newPos != position) {
       positionKey = newPos;
       DEBUG_PRINT_NUM("encoder key: ", positionKey);
       
@@ -107,6 +122,8 @@ void checkKnobs() {
       }
     }
   }
+  
+  lastButtonMode = buttonMode;
 }
 
  /*
@@ -460,7 +477,15 @@ void setup()
       setPinModeCallback(i, ANALOG);
     } else {
       // sets the output to 0, configures portConfigInputs
-      setPinModeCallback(i, OUTPUT);
+      switch (i) {
+        case ENCODER_PIN_1:
+        case ENCODER_PIN_2:
+        case ENCODER_MODE_SWITCH_PIN:
+          setPinModeCallback(i, INPUT);
+          break;
+        default:
+          setPinModeCallback(i, OUTPUT);
+      }
     }
   }
   // by defult, do not report any analog inputs
@@ -494,6 +519,8 @@ void loop()
 {
   byte pin, analogPin;
 
+  checkKnobs();
+  
   /* DIGITALREAD - as fast as possible, check for changes and output them to the
    * FTDI buffer using Serial.print()  */
   checkDigitalInputs();  
@@ -521,13 +548,12 @@ void loop()
           server.readPin(analogPin, val);
 #endif          
           
-          Firmata.sendAnalog(analogPin, val);
+          //Firmata.sendAnalog(analogPin, val);
         }
       }
     }
   }
   
-  checkKnobs();
   
 #if ENABLE_TEST
   testUpdate();

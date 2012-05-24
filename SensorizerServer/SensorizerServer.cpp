@@ -65,8 +65,8 @@ void SensorizerServer::readPin(int pinIdx, int pinValue) {
 
 	float v = pinValue / 1024.0;
 
-DEBUG_PRINT_NUM("readPin pin: ", pinIdx)
-DEBUG_PRINT_NUM("readPin val: ", v)
+//DEBUG_PRINT_NUM("readPin pin: ", pinIdx)
+//DEBUG_PRINT_NUM("readPin val: ", v)
   
 	sensorInputs[pinIdx]->setValue(v);
 	sensorInputs[pinIdx]->send();

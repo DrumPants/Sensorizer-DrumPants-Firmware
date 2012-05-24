@@ -101,7 +101,7 @@
 	//calculates the output value based on slider and cuttoff settings
 	//value should ALWAYS be between 0 and 1
 	void SensorOutput::setValue(double val) {
-		DEBUG_PRINT_NUM("SensorOutput::setValue ", val)
+		//DEBUG_PRINT_NUM("SensorOutput::setValue ", val)
 	
 		//invert
 		if (isInvert)
@@ -141,7 +141,7 @@
 			
 		}
 		
-		DEBUG_PRINT_NUM("SensorOutput::.outputFiltersCurlength ", outputFiltersCurlength)
+		//DEBUG_PRINT_NUM("SensorOutput::.outputFiltersCurlength ", outputFiltersCurlength)
 		//synchronized(outputFilters) { 
 			for (int i = 0; i < outputFiltersCurlength; i++) {
 				//if (outputFilters[i] != NULL) {		
@@ -158,7 +158,7 @@
 			_outputValue = _outputValue * multiplyVal + addVal;
 		}
 		
-		DEBUG_PRINT_NUM("DONE SensorOutput::setValue ", _outputValue)
+		//DEBUG_PRINT_NUM("DONE SensorOutput::setValue ", _outputValue)
 	}
 	
 	//returns the current raw sensor value
@@ -175,22 +175,22 @@
 
 	//sends all messages through ALL server mappings
 	void SensorOutput::send() {
-		DEBUG_PRINT("SensorOutput::send")
+		//DEBUG_PRINT("SensorOutput::send")
 		double outvals[1] = {outputValue()}; //only call once!
 		if (outvals[0] != SensorizerServer::SENSOR_VALUE_NULL || cutoffTypeVal == CUTOFF_TYPE_VAL_NULLABLE) {
 			//synchronized(dropdownMidiMappings) { 
 			
-				DEBUG_PRINT_NUM("SensorOutput::midiMappingsCurlength ", midiMappingsCurlength)
+				//DEBUG_PRINT_NUM("SensorOutput::midiMappingsCurlength ", midiMappingsCurlength)
 				
 				for (int i = 0; i < midiMappingsCurlength; i++) {
 					if (dropdownMidiMappings[i] != NULL) {
-						DEBUG_PRINT_NUM("SensorOutput::dropdownMidiMappings->send()", outvals[0])
+						//DEBUG_PRINT_NUM("SensorOutput::dropdownMidiMappings->send()", outvals[0])
 						dropdownMidiMappings[i]->send(outvals);
 					}
 				}
 			//}
 		}
-		DEBUG_PRINT("DONE SensorOutput::send")
+		//DEBUG_PRINT("DONE SensorOutput::send")
 	}
 
 	void SensorOutput::addOutputFilter(/*string name, */ OutputFilter* filter) {

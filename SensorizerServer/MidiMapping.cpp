@@ -76,7 +76,7 @@
 	 */
 	//@Override
 	void MidiMapping::send(double values[]) {
-		DEBUG_PRINT("MidiMapping::send")
+		//DEBUG_PRINT("MidiMapping::send")
 		
 		//if (midiDevice != NULL) {
 			//throw new Exception();
@@ -90,8 +90,8 @@
 			
 			int vel = (int)(values[0] * 127.0); //truncate is GOOD ENOUGH Math.round(values[0] * 127.0);
 
-			DEBUG_PRINT_NUM("MidiMapping::send vel ", vel)
-			DEBUG_PRINT_NUM("MidiMapping::send msgType", msgType)
+			//DEBUG_PRINT_NUM("MidiMapping::send vel ", vel)
+			//DEBUG_PRINT_NUM("MidiMapping::send msgType", msgType)
 			
 			switch (msgType) {
 			case MidiMapping::NOTE:
@@ -114,14 +114,14 @@
 						numNULLs -= (VALUES_HISTORY_LENGTH + 2); //make sure any NULLs (history just started) don't trigger note on
 				}
 					
-				DEBUG_PRINT_NUM("MidiMapping::send recording history numNULLS: ", numNULLs)
+				//DEBUG_PRINT_NUM("MidiMapping::send recording history numNULLS: ", numNULLs)
 				
 				if (values[0] != SensorizerServer::SENSOR_VALUE_NULL && numNULLs == VALUES_HISTORY_LENGTH) { //been NULLs the whole time of history threshold. turn off!
 					//note on
 					//if (!isNoteOn) {
 						//dur = Integer.parseInt(duration);
 						
-						DEBUG_PRINT("MidiMapping::send note ON")
+						//DEBUG_PRINT("MidiMapping::send note ON")
 						midiDevice->note(true, c, n, duration); //duration is now velocity
 
 					//	isNoteOn = true;
@@ -130,7 +130,7 @@
 				else if (values[0] == SensorizerServer::SENSOR_VALUE_NULL && numNULLs == 0) { //value now NULL, only note off when it was on long enough for the threshold 
 					//note off
 					//if (isNoteOn) {
-						DEBUG_PRINT("MidiMapping::send note OFF")
+						//DEBUG_PRINT("MidiMapping::send note OFF")
 						
 						midiDevice->note(false, c, n, 0);
 						
@@ -142,9 +142,9 @@
 			}
 
 
-			DEBUG_PRINT("MidiMapping::send recording history")
-			DEBUG_PRINT_NUM("MidiMapping::send recording history: ", valuesHistory[0][0])
-			DEBUG_PRINT_NUM("MidiMapping::send recording history: ", valuesHistory[1][0])
+			//DEBUG_PRINT("MidiMapping::send recording history")
+			//DEBUG_PRINT_NUM("MidiMapping::send recording history: ", valuesHistory[0][0])
+			//DEBUG_PRINT_NUM("MidiMapping::send recording history: ", valuesHistory[1][0])
 			
 			//record history for threshold
 			//i'm skeptical of this. do it manually
@@ -157,7 +157,7 @@
 		//}
 		
 		
-		DEBUG_PRINT("DONE MidiMapping::send")
+		//DEBUG_PRINT("DONE MidiMapping::send")
 	}
 
 	
