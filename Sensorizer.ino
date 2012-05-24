@@ -14,7 +14,7 @@ SensorizerServer server;
 #define ENCODER_DO_NOT_USE_INTERRUPTS
 #include <Encoder.h>
 
-#define ENCODER_MODE_SWITCH_PIN 7
+#define ENCODER_MODE_SWITCH_PIN 10
 
 
 
@@ -50,7 +50,7 @@ byte NOTE_PRESETS_DRUMS[NOTE_PRESETS_DRUMS_LENGTH][6] = {
 
 
 
-Encoder myEnc(5, 6);
+Encoder myEnc(8, 9);
 
 void setupKnobs() {
  pinMode(ENCODER_MODE_SWITCH_PIN, INPUT);
@@ -65,7 +65,7 @@ void checkKnobs() {
   
   int buttonMode = digitalRead(ENCODER_MODE_SWITCH_PIN);
   if (buttonMode == HIGH) {
-    if (newPos != position) {
+    if (newPos != position && newPos != positionKey) { //don't swap as soon as they release button
       DEBUG_PRINT_NUM("encoder: ", newPos);
       int newInst = newPos % 129;
       if (newInst < 0)
@@ -92,7 +92,7 @@ void checkKnobs() {
     }
   }
   else { //button is depressed. cheer up, button!
-     if (newPos != positionKey) {
+     if (newPos != position && newPos != positionKey) {
       positionKey = newPos;
       DEBUG_PRINT_NUM("encoder key: ", positionKey);
       
