@@ -114,6 +114,7 @@ s->isInvert = false;
 m = new MidiMapping(this->midiDevice);
 m->channel = 0;
 m->note = 57;//60 + i;
+m->setMsgType(MidiMapping::NOTE_ONE_ONLY);
 s->addMidiMapping(m);
 
 sensorInputs[i++] = s;
@@ -123,48 +124,6 @@ sensorInputs[i++] = s;
 s = new SensorOutput();
 s->inRange.low = 0;
 s->inRange.high = 0.47142863;
-s->outRange.low = 0;
-s->outRange.high = 1;
-s->cutoffRange.low = 0.15714286;
-s->cutoffRange.high = 1;
-s->setCutoffType(3); //Nullable
-s->multiplyVal = 1;
-s->addVal = 0;
-s->isInvert = false;
-
-m = new MidiMapping(this->midiDevice);
-m->channel = 0;
-m->note = 60 + i;
-s->addMidiMapping(m);
-
-sensorInputs[i++] = s;
-
-
-//arduino 3
-s = new SensorOutput();
-s->inRange.low = 0;
-s->inRange.high = 0.5;
-s->outRange.low = 0;
-s->outRange.high = 1;
-s->cutoffRange.low = 0.20000002;
-s->cutoffRange.high = 1;
-s->setCutoffType(3); //Nullable
-s->multiplyVal = 1;
-s->addVal = 0;
-s->isInvert = false;
-
-m = new MidiMapping(this->midiDevice);
-m->channel = 0;
-m->note = 60 + i;
-s->addMidiMapping(m);
-
-sensorInputs[i++] = s;
-
-
-//arduino 4
-s = new SensorOutput();
-s->inRange.low = 0;
-s->inRange.high = 0.32857147;
 s->outRange.low = 0;
 s->outRange.high = 1;
 s->cutoffRange.low = 0.1;
@@ -177,6 +136,51 @@ s->isInvert = false;
 m = new MidiMapping(this->midiDevice);
 m->channel = 0;
 m->note = 60 + i;
+m->setMsgType(MidiMapping::NOTE_ONE_ONLY);
+s->addMidiMapping(m);
+
+sensorInputs[i++] = s;
+
+
+//arduino 3
+s = new SensorOutput();
+s->inRange.low = 0;
+s->inRange.high = 0.5;
+s->outRange.low = 0;
+s->outRange.high = 1;
+s->cutoffRange.low = 0.1;
+s->cutoffRange.high = 1;
+s->setCutoffType(3); //Nullable
+s->multiplyVal = 1;
+s->addVal = 0;
+s->isInvert = false;
+
+m = new MidiMapping(this->midiDevice);
+m->channel = 0;
+m->note = 60 + i;
+m->setMsgType(MidiMapping::NOTE_ONE_ONLY);
+s->addMidiMapping(m);
+
+sensorInputs[i++] = s;
+
+
+//arduino 4
+s = new SensorOutput();
+s->inRange.low = 0;
+s->inRange.high = 0.5;
+s->outRange.low = 0;
+s->outRange.high = 1;
+s->cutoffRange.low = 0.1;
+s->cutoffRange.high = 1;
+s->setCutoffType(3); //Nullable
+s->multiplyVal = 1;
+s->addVal = 0;
+s->isInvert = false;
+
+m = new MidiMapping(this->midiDevice);
+m->channel = 0;
+m->note = 60 + i;
+m->setMsgType(MidiMapping::NOTE_ONE_ONLY);
 s->addMidiMapping(m);
 
 sensorInputs[i++] = s;
@@ -188,17 +192,18 @@ s->inRange.low = 0;
 s->inRange.high = 1;
 s->outRange.low = 0;
 s->outRange.high = 1;
-s->cutoffRange.low = 0.2;
+s->cutoffRange.low = 0.1;
 s->cutoffRange.high = 1;
 s->setCutoffType(3); //Nullable
 s->multiplyVal = 1;
 s->addVal = 0;
 s->isInvert = false;
 
-//m = new MidiMapping(this->midiDevice);
-//m->channel = 0;
-//m->note = 60 + i;
-//s->addMidiMapping(m);
+m = new MidiMapping(this->midiDevice);
+m->channel = 0;
+m->note = 60 + i;
+m->setMsgType(MidiMapping::NOTE_ONE_ONLY);
+s->addMidiMapping(m);
 
 sensorInputs[i++] = s;
 }
