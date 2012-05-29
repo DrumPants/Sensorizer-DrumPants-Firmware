@@ -175,7 +175,7 @@ int pinState[TOTAL_PINS];           // any value that has been written
 /* timer variables */
 unsigned long currentMillis;        // store the current value from millis()
 unsigned long previousMillis;       // for comparison with currentMillis
-int samplingInterval = 19;          // how often to run the main loop (in ms)
+int samplingInterval = 1;//19;          // how often to run the main loop (in ms)
 
 Servo servos[MAX_SERVOS];
 
@@ -556,7 +556,7 @@ void loop()
           server.readPin(analogPin, val);
 #endif          
           
-          Firmata.sendAnalog(analogPin, val);
+          //Firmata.sendAnalog(analogPin, val);
         }
       }
     }

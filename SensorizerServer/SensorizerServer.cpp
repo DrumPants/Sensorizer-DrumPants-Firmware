@@ -148,7 +148,7 @@ s->inRange.low = 0;
 s->inRange.high = 0.5;
 s->outRange.low = 0;
 s->outRange.high = 1;
-s->cutoffRange.low = 0.1;
+s->cutoffRange.low = 0.07;
 s->cutoffRange.high = 1;
 s->setCutoffType(3); //Nullable
 s->multiplyVal = 1;
