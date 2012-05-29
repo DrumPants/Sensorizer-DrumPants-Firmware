@@ -100,12 +100,12 @@ sensorInputs[i++] = s;
 
 //arduino 1
 s = new SensorOutput();
-s->inRange.low = 0.03;
-s->inRange.high = 0.16428576;
+s->inRange.low = 0.021428572;
+s->inRange.high = 0.44285715;
 s->outRange.low = 0;
 s->outRange.high = 1;
-s->cutoffRange.low = 0.035714287;
-s->cutoffRange.high = 0.98571426;
+s->cutoffRange.low = 0.057142872;
+s->cutoffRange.high = 1;
 s->setCutoffType(3); //Nullable
 s->multiplyVal = 1;
 s->addVal = 0;
@@ -122,11 +122,11 @@ sensorInputs[i++] = s;
 //arduino 2
 s = new SensorOutput();
 s->inRange.low = 0;
-s->inRange.high = 0.10714287;
+s->inRange.high = 0.47142863;
 s->outRange.low = 0;
 s->outRange.high = 1;
-s->cutoffRange.low = 0.057142872;
-s->cutoffRange.high = 0.98571426;
+s->cutoffRange.low = 0.15714286;
+s->cutoffRange.high = 1;
 s->setCutoffType(3); //Nullable
 s->multiplyVal = 1;
 s->addVal = 0;
@@ -143,11 +143,11 @@ sensorInputs[i++] = s;
 //arduino 3
 s = new SensorOutput();
 s->inRange.low = 0;
-s->inRange.high = 0.100000024;
+s->inRange.high = 0.5;
 s->outRange.low = 0;
 s->outRange.high = 1;
-s->cutoffRange.low = 0.05;
-s->cutoffRange.high = 0.98571426;
+s->cutoffRange.low = 0.20000002;
+s->cutoffRange.high = 1;
 s->setCutoffType(3); //Nullable
 s->multiplyVal = 1;
 s->addVal = 0;
@@ -164,11 +164,11 @@ sensorInputs[i++] = s;
 //arduino 4
 s = new SensorOutput();
 s->inRange.low = 0;
-s->inRange.high = 0.23571432;
+s->inRange.high = 0.32857147;
 s->outRange.low = 0;
 s->outRange.high = 1;
-s->cutoffRange.low = 0.035714287;
-s->cutoffRange.high = 0.98571426;
+s->cutoffRange.low = 0.1;
+s->cutoffRange.high = 1;
 s->setCutoffType(3); //Nullable
 s->multiplyVal = 1;
 s->addVal = 0;
@@ -185,10 +185,10 @@ sensorInputs[i++] = s;
 //arduino 5
 s = new SensorOutput();
 s->inRange.low = 0;
-s->inRange.high = 0.4928572;
+s->inRange.high = 1;
 s->outRange.low = 0;
 s->outRange.high = 1;
-s->cutoffRange.low = 0.014285714;
+s->cutoffRange.low = 0.2;
 s->cutoffRange.high = 1;
 s->setCutoffType(3); //Nullable
 s->multiplyVal = 1;

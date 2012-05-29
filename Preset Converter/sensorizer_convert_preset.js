@@ -1,5 +1,3 @@
-$(document).ready(function(){
-
 function convertPreset(preset) {
 	var code = "int i = 0;\n" +
 			"SensorOutput* s;\n" +
@@ -36,6 +34,7 @@ function convertPreset(preset) {
 	return code;
 }
 
+$(document).ready(function(){
 
 $('#presets').change(function (e) {
 	$.ajax({
@@ -48,6 +47,10 @@ $('#presets').change(function (e) {
 		$("#preset_code").text("ERROR: could not parse JSON. You may have to replace all '-Infinity' with 'null'. (" + errorThrown + ")");
 	  }
 	});
+});
+
+$('#pastedPreset').change(function (e) {
+	$("#preset_code").text(convertPreset($.parseJSON(this.value)));
 });
 
 
