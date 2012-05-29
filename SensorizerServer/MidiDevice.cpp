@@ -65,7 +65,7 @@ void MidiDevice::setup() {
 	digitalWrite(RESET_MIDI_PIN, HIGH);
 	delay(100);
 	
-	talkMIDI(0xB0, 0x07, 120); //0xB0 is channel message, set channel volume to near max (127)
+	talkMIDI(0xB0, 0x07, 126); //0xB0 is channel message, set channel volume to near max (127)
 	
 	setBank(bank); //Select the bank of really fun sounds
 	

@@ -2,7 +2,7 @@
 //# define IS_BLUETOOTH
 
 #define ENABLE_TEST 0
-#define DISABLE_FIRMATA 1
+#define DISABLE_FIRMATA 0
 
 #include <SoftwareSerial.h>
 #include <SensorizerServer.h>    
@@ -509,7 +509,7 @@ void setup()
     
   server.init();
   
-  Serial.println("END SETUP");  
+  DEBUG_PRINT("END SETUP")
 }
 
 /*==============================================================================
@@ -548,7 +548,7 @@ void loop()
           server.readPin(analogPin, val);
 #endif          
           
-          //Firmata.sendAnalog(analogPin, val);
+          Firmata.sendAnalog(analogPin, val);
         }
       }
     }
