@@ -151,6 +151,8 @@ void MidiDevice::talkMIDI(byte cmd, byte data1, byte data2) {
     mySerial->write(data2);//print(data2, BYTE);
 
   digitalWrite(LED_PIN, LOW);
+
+  this->listener->onSendOutput(cmd, data1, data2);
 }
 
 
@@ -161,6 +163,12 @@ void MidiDevice::note(bool isOn, int channel, int note, int velocity) {
 		noteOff((byte)channel, (byte)note, 0); //TODO: velocity or 0?
 }
 
+
+
+/*** for looper listeners ***/
+void MidiDevice::setListener(EventLooper* l) {
+	this->listener = l;
+}
 
 
 

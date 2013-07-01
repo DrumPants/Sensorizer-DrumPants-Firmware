@@ -13,6 +13,13 @@ SensorizerServer::SensorizerServer() {
 
 	this->midiDevice = new MidiDevice(); 
 
+	//set up looper
+	this->looper = new EventLooper();
+	this->looper.setOutputDevice(this->midiDevice);
+
+	// record and loop each output
+	this->midiDevice->setListener(this->looper);
+
 	this->loadPreset();
 }
 
@@ -34,6 +41,20 @@ void SensorizerServer::init() {
 			sensorInputs[i]->init();
 	}
 
+}
+
+void SensorizerServer::tick() {
+	int curTime = getCurMillis();
+	int timeEllapsed = curTime - this->lastTimeTicked;
+
+	// TODO: if time per tick has not ellapsed from last time, return.
+	if (timeEllapsed < TIME_PER_TICK)
+		return;
+
+
+	this->lastTimeTicked = curTime;
+
+	this->looper->tick(curTime);
 }
 
 //reads all input devices values into the sensorInput objects.

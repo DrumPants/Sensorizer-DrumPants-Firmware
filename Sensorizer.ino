@@ -688,8 +688,11 @@ void loop() {
 #endif
 
   checkKnobs();
-  while(Serial.available() == 0) 
+  while(Serial.available() == 0) {
     checkKnobs();
+
+    server.tick();
+  }
 
   int note = Serial.read();  
   //Good sounding notes range from 27 to 87
