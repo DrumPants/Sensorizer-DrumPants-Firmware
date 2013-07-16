@@ -10,8 +10,9 @@
 	
 	
 	OneHitDetector::OneHitDetector() {
-		this->lastVal = SensorizerServer.SENSOR_VALUE_NULL;
-		this->isRising = false
+		this->lastVal = SensorizerServer::SENSOR_VALUE_NULL;
+		this->isRising = false;
+		this->triggeredVal = SensorizerServer::SENSOR_VALUE_NULL;
 	}
 	
 	
@@ -20,8 +21,10 @@
 	 */
 	//@Override
 	void OneHitDetector::setValue(double value) {
+		triggeredVal = SensorizerServer::SENSOR_VALUE_NULL;
+
 		//detect peak in signal and trigger one hit if so
-		if (value < lastVal || value == SensorizerServer.SENSOR_VALUE_NULL) {
+		if (value < lastVal || value == SensorizerServer::SENSOR_VALUE_NULL) {
 			if (isRising) {
 				trigger();
 				isRising = false;
@@ -35,10 +38,12 @@
 	}
 
 	
-	void OneHitDetector::trigger() {
+	inline void OneHitDetector::trigger() {
 		// if (triggerListener != null) {
 // 			triggerListener.onTrigger();
 // 		}
+
+		triggeredVal = lastVal;
 	}
 	
 	/* (non-Javadoc)
@@ -46,7 +51,9 @@
 	 */
 	//@Override
 	//public: virtual double value();
-	
+	double OneHitDetector::value() {
+		return triggeredVal; // return peak, not current val after peak
+	}
 	/** 
 	 * Adds a listener for the trigger event. Note that this does not support multiple listeners!
 	 * //@param l

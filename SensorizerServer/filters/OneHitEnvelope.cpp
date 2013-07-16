@@ -5,7 +5,7 @@
 #include <math.h>
 
 	////@Expose
-	string OneHitEnvelope::type = "OneHitEnvelope";
+	//string OneHitEnvelope::type = "OneHitEnvelope";
 	
 	const int OneHitEnvelope::LINEAR = 0;
 	const int OneHitEnvelope::LINEAR_INV = 1;
@@ -148,7 +148,7 @@
 	void OneHitEnvelope::loadFrames(int newVals[], double scale) {
 		//resetFramesLength(newVals.length);
 		for (int i = 0; i < FRAME_LENGTH; i++) {
-			if (newVals[i] == null) {
+			if (newVals[i] == NULL) {
 				frames[i] = SensorizerServer::SENSOR_VALUE_NULL;
 			}
 			else {

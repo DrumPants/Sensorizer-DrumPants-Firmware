@@ -1,8 +1,8 @@
 #ifndef OneHitEnvelope_h
 #define OneHitEnvelope_h
 
-#include <string>
-using namespace std;
+//# include <string>
+//using namespace std;
 
 #include "../SensorizerServer.h"
 ////import com.odbol.sensorizer.server.SensorizerServer;
@@ -12,7 +12,7 @@ using namespace std;
 
 class OneHitEnvelope : OneHitDetector {
 	////@Expose
-	public: static string type;
+	//public: static string type;
 	
 	public: static const int LINEAR;
 	public: static const int LINEAR_INV;

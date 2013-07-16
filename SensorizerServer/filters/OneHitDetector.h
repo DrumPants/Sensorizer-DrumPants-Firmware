@@ -1,8 +1,8 @@
 #ifndef OneHitDetector_h
 #define OneHitDetector_h
 
-#include <string>
-using namespace std;
+//# include <string>
+//using namespace std;
 
 #include "../SensorizerServer.h"
 ////import com.odbol.sensorizer.server.SensorizerServer;
@@ -13,7 +13,7 @@ using namespace std;
 class OneHitDetector : OutputFilter {
 	
 	//for peak detector in setValue()
-	private: double lastVal;
+	private: double lastVal, triggeredVal;
 
 	private: bool isRising;
 
@@ -33,7 +33,7 @@ class OneHitDetector : OutputFilter {
 	 * //@see OutputFilter#value()
 	 */
 	//@Override
-	public: virtual double value();
+	public: /*virtual*/ double value(); // dont use virtual as it's a little overboard for this.
 	
 	/** 
 	 * Adds a listener for the trigger event. Note that this does not support multiple listeners!

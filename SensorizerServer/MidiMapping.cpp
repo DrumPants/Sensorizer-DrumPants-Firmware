@@ -122,7 +122,7 @@
 						//dur = Integer.parseInt(duration);
 						
 						//DEBUG_PRINT("MidiMapping::send note ON")
-						midiDevice->note(true, c, n, duration); //duration is now velocity
+						midiDevice->note(true, c, n, vel);// try real velocity instead of preset one: duration); //duration is now velocity
 
 					//	isNoteOn = true;
 					//}
