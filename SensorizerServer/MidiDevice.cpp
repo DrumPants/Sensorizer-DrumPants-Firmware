@@ -40,7 +40,15 @@
 //SoftwareSerial mySerial(2, 3);
 
 MidiDevice::MidiDevice() {
+
+#if USE_HARDWARE_SERIAL
+	// Ok, the Serial object is not actually the HardwareSerial class, it's something else.
+	//this->mySerial = &Serial;
+	// do some tricky de-re-referencing to get around it.
+	#define mySerial (&Serial)
+#else
 	this->mySerial = new SoftwareSerial(2, 3, false); //Soft TX on 3, we don't use RX in this code
+#endif
 	
 	bank = 0x79;
 	instrument = 30;
@@ -57,7 +65,8 @@ void MidiDevice::setup() {
 	
 	//Setup soft serial for MIDI control
 	mySerial->begin(31250);
-	
+
+
 	//Reset the VS1053
 	pinMode(RESET_MIDI_PIN, OUTPUT);
 	digitalWrite(RESET_MIDI_PIN, LOW);

@@ -34,12 +34,16 @@
 #ifndef MidiDevice_h
 #define MidiDevice_h
 
+#define USE_HARDWARE_SERIAL 1
+
 #include <Arduino.h>
 /*
 # include <HardwareSerial.h>
 # include <WConstants.h> 
 */
+#if !USE_HARDWARE_SERIAL
 #include <SoftwareSerial.h>
+#endif
 
 #include "Debug.h"
 
@@ -53,8 +57,11 @@ class MidiDevice {
 
 private: 
 
+#if USE_HARDWARE_SERIAL
+	HardwareSerial* mySerial;
+#else
 	SoftwareSerial* mySerial;//(2, 3); //Soft TX on 3, we don't use RX in this code
-
+#endif
 
 	//Plays a MIDI note. Doesn't check to see that cmd is greater than 127, or that data values are less than 127
 	void talkMIDI(byte cmd, byte data1, byte data2);

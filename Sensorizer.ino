@@ -1,10 +1,27 @@
 //uncomment this to set serial baud at bluetooth rate. otherwise, USB rate.
 //# define IS_BLUETOOTH
 
-#define ENABLE_TEST 0
-#define DISABLE_FIRMATA 0
+#define IS_DUE 1
 
+#define ENABLE_TEST 0
+
+#if IS_DUE
+  // NOTE: this requires installing Firmata 2.3.5 into the Arduino IDE (see http://firmata.org/wiki/Main_Page#Arduino_Due )
+  #define DISABLE_FIRMATA 0
+  
+  // we can't begin on the same Serial twice - MIDIDevice also uses Serial since it's the hardware one.
+  // so for now we disable Firmata.begin()
+  #define ENABLE_FIRMATA_OUTPUT 0
+  
+  #define USE_HARDWARE_SERIAL 1
+#else
+  #define DISABLE_FIRMATA 0
+#endif
+
+#if !USE_HARDWARE_SERIAL
 #include <SoftwareSerial.h>
+#endif 
+
 #include <SensorizerServer.h>    
 
 
@@ -152,6 +169,7 @@ void checkKnobs() {
  */
 
 #if !DISABLE_FIRMATA
+
 #include <Servo.h>
 #include <Firmata.h>
 
@@ -499,6 +517,8 @@ void setup()
   // by defult, do not report any analog inputs
   //report all by default
   //analogInputsToReport = 0;
+#if ENABLE_FIRMATA_OUTPUT
+  // we can't begin on the same Serial twice - MIDIDevice also uses Serial since it's the hardware one.
 
 #ifndef IS_BLUETOOTH
   Firmata.begin(57600);
@@ -506,6 +526,7 @@ void setup()
   Firmata.begin(115200);
 #endif
   //Firmata.begin(Serial);
+#endif
 
   /* send digital inputs to set the initial state on the host computer,
    * since once in the loop(), this firmware will only send on change */
@@ -535,8 +556,10 @@ void loop()
 
   /* SERIALREAD - processing incoming messagse as soon as possible, while still
    * checking digital inputs.  */
+#if ENABLE_FIRMATA_OUTPUT   
   while(Firmata.available())
     Firmata.processInput();
+#endif 
 
   /* SEND FTDI WRITE BUFFER - make sure that the FTDI buffer doesn't go over
    * 60 bytes. use a timer to sending an event character every 4 ms to
@@ -555,8 +578,10 @@ void loop()
 #if !ENABLE_TEST
           server.readPin(analogPin, val);
 #endif          
-          
+
+#if ENABLE_FIRMATA_OUTPUT          
           //Firmata.sendAnalog(analogPin, val);
+#endif          
         }
       }
     }
