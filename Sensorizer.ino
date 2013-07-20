@@ -6,6 +6,7 @@
 #define ENABLE_TEST 0
 
 #if IS_DUE
+  #define FIRST_USABLE_PIN 2
   // NOTE: this requires installing Firmata 2.3.5 into the Arduino IDE (see http://firmata.org/wiki/Main_Page#Arduino_Due )
   #define DISABLE_FIRMATA 0
   
@@ -15,6 +16,7 @@
   
   #define USE_HARDWARE_SERIAL 1
 #else
+  #define FIRST_USABLE_PIN 0
   #define DISABLE_FIRMATA 0
 #endif
 
@@ -170,9 +172,9 @@ void checkKnobs() {
 
 #if !DISABLE_FIRMATA
 
+ 
 #include <Servo.h>
 #include <Firmata.h>
-
 
 /*==============================================================================
  * GLOBAL VARIABLES
@@ -207,7 +209,9 @@ void outputPort(byte portNumber, byte portValue, byte forceSend)
   portValue = portValue & portConfigInputs[portNumber];
   // only send if the value is different than previously sent
   if(forceSend || previousPINs[portNumber] != portValue) {
+#if ENABLE_FIRMATA_OUTPUT    
     Firmata.sendDigitalPort(portNumber, portValue);
+#endif
     previousPINs[portNumber] = portValue;
   }
 }
@@ -294,17 +298,26 @@ void setPinModeCallback(byte pin, int mode)
       pinConfig[pin] = SERVO;
       if (!servos[PIN_TO_SERVO(pin)].attached()) {
           servos[PIN_TO_SERVO(pin)].attach(PIN_TO_DIGITAL(pin));
-      } else {
+      } 
+#if ENABLE_FIRMATA_OUTPUT                
+      else {
+  
         Firmata.sendString("Servo only on pins from 2 to 13");
+
       }
+#endif        
     }
     break;
   case I2C:
     pinConfig[pin] = mode;
+#if ENABLE_FIRMATA_OUTPUT    
     Firmata.sendString("I2C mode not yet supported");
+#endif
     break;
-  default:
+#if ENABLE_FIRMATA_OUTPUT   
+  default:   
     Firmata.sendString("Unknown pin mode"); // TODO: put error msgs in EEPROM
+#endif    
   }
   // TODO: save status to EEPROM here, if changed
 }
@@ -408,8 +421,10 @@ void sysexCallback(byte command, byte argc, byte *argv)
   case SAMPLING_INTERVAL:
     if (argc > 1)
       samplingInterval = argv[0] + (argv[1] << 7);
+#if ENABLE_FIRMATA_OUTPUT    
     else
       Firmata.sendString("Not enough data");
+#endif      
     break;
   case EXTENDED_ANALOG:
     if (argc > 1) {
@@ -479,6 +494,7 @@ void setup()
 {
   byte i;
 
+#if ENABLE_FIRMATA_OUTPUT
   Firmata.setFirmwareVersion(2, 2);
 
   Firmata.attach(ANALOG_MESSAGE, analogWriteCallback);
@@ -487,7 +503,7 @@ void setup()
   Firmata.attach(REPORT_DIGITAL, reportDigitalCallback);
   Firmata.attach(SET_PIN_MODE, setPinModeCallback);
   Firmata.attach(START_SYSEX, sysexCallback);
-
+#endif
   // TODO: load state from EEPROM here
 
   /* these are initialized to zero by the compiler startup code
@@ -497,7 +513,14 @@ void setup()
     previousPINs[i] = 0;
   }
   */
-  for (i=0; i < TOTAL_PINS; i++) {
+  
+  
+  
+  
+  
+   
+  
+  for (i = FIRST_USABLE_PIN; i < TOTAL_PINS; i++) {
     if (IS_PIN_ANALOG(i)) {
       // turns off pullup, configures everything
       setPinModeCallback(i, ANALOG);
@@ -509,11 +532,16 @@ void setup()
         case ENCODER_MODE_SWITCH_PIN:
           setPinModeCallback(i, INPUT);
           break;
+#if !IS_DUE        
         default:
           setPinModeCallback(i, OUTPUT);
+#endif
       }
-    }
+    } 
   }
+  
+  
+  
   // by defult, do not report any analog inputs
   //report all by default
   //analogInputsToReport = 0;
@@ -526,14 +554,18 @@ void setup()
   Firmata.begin(115200);
 #endif
   //Firmata.begin(Serial);
+  
+#else 
+ 
+  Serial.begin(57600);
 #endif
 
-  /* send digital inputs to set the initial state on the host computer,
-   * since once in the loop(), this firmware will only send on change */
+  // send digital inputs to set the initial state on the host computer,
+  // since once in the loop(), this firmware will only send on change 
   for (i=0; i < TOTAL_PORTS; i++) {
     outputPort(i, readPort(i, portConfigInputs[i]), true);
   }
-  
+
   setupKnobs();
     
   server.init();
@@ -550,13 +582,14 @@ void loop()
 
   checkKnobs();
   
+
+#if ENABLE_FIRMATA_OUTPUT   
   /* DIGITALREAD - as fast as possible, check for changes and output them to the
    * FTDI buffer using Serial.print()  */
   checkDigitalInputs();  
 
   /* SERIALREAD - processing incoming messagse as soon as possible, while still
    * checking digital inputs.  */
-#if ENABLE_FIRMATA_OUTPUT   
   while(Firmata.available())
     Firmata.processInput();
 #endif 
@@ -590,6 +623,7 @@ void loop()
   
 #if ENABLE_TEST
   testUpdate();
+  return;
 #endif
 }
 
@@ -602,18 +636,23 @@ void loop()
 #define TEST_INTERVAL 50000
 
 int testCounter = -TEST_INTERVAL;
+int testPin = 1;
 
 void testUpdate() {
   if (++testCounter > TEST_MAX) {
     testCounter = -TEST_INTERVAL;
-    Serial.println("TEST: reset test");
+    
+    // try next note once we've done a full one here.
+   // testPin = (testPin + 1) % 4;
+    DEBUG_PRINT("TEST: reset test");
   }
+  
   
   int val = 0;
   if (testCounter > 0) {
     val = testCounter;
   }
-  server.readPin(1, val);
+  server.readPin(testPin, val);
 }
 #endif
 
@@ -643,7 +682,7 @@ void setup() {
   talkMIDI(0xC0, instrument, 0); //Set instrument number. 0xC0 is a 1 data byte command
 */
 
-  Serial.println("Press a letter and press enter!");
+  DEBUG_PRINT("Press a letter and press enter!");
     
   setupKnobs();  
     
@@ -667,10 +706,9 @@ void loop() {
   note -= 'a';
   note += 57;
 
-  Serial.print("Note=");
-  Serial.println(note, DEC);
+  DEBUG_PRINT_NUM("Note=", note);
 
-  Serial.println("Done NOTE");
+  DEBUG_PRINT("Done NOTE");
 
   //For this bank 0x78, the instrument does not matter, only the note
   //noteOn(0, note, 60);
@@ -686,7 +724,7 @@ void loop() {
   //Note will dissapate automatically
   
   
-  Serial.println("Done server.readPin");
+  DEBUG_PRINT("Done server.readPin");
 }
 
 #endif
