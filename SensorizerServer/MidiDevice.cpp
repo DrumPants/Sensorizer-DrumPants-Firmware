@@ -64,7 +64,7 @@ void MidiDevice::setup() {
 	//Serial.begin(57600);
 	
 	//Setup soft serial for MIDI control
-	mySerial->begin(31250);
+	mySerial->begin(BAUD_RATE_MIDI);
 
 
 	//Reset the VS1053

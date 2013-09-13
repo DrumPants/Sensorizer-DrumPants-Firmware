@@ -1,24 +1,4 @@
-//uncomment this to set serial baud at bluetooth rate. otherwise, USB rate.
-//# define IS_BLUETOOTH
-
-#define IS_DUE 1
-
-#define ENABLE_TEST 0
-
-#if IS_DUE
-  #define FIRST_USABLE_PIN 2
-  // NOTE: this requires installing Firmata 2.3.5 into the Arduino IDE (see http://firmata.org/wiki/Main_Page#Arduino_Due )
-  #define DISABLE_FIRMATA 0
-  
-  // we can't begin on the same Serial twice - MIDIDevice also uses Serial since it's the hardware one.
-  // so for now we disable Firmata.begin()
-  #define ENABLE_FIRMATA_OUTPUT 0
-  
-  #define USE_HARDWARE_SERIAL 1
-#else
-  #define FIRST_USABLE_PIN 0
-  #define DISABLE_FIRMATA 0
-#endif
+#include <Constants.h>  
 
 #if !USE_HARDWARE_SERIAL
 #include <SoftwareSerial.h>
@@ -547,17 +527,12 @@ void setup()
   //analogInputsToReport = 0;
 #if ENABLE_FIRMATA_OUTPUT
   // we can't begin on the same Serial twice - MIDIDevice also uses Serial since it's the hardware one.
-
-#ifndef IS_BLUETOOTH
-  Firmata.begin(57600);
-#else
-  Firmata.begin(115200);
-#endif
-  //Firmata.begin(Serial);
+  
+  Firmata.begin(BAUD_RATE);
   
 #else 
- 
-  Serial.begin(57600);
+
+  Serial.begin(BAUD_RATE);
 #endif
 
   // send digital inputs to set the initial state on the host computer,
@@ -645,6 +620,7 @@ void testUpdate() {
     // try next note once we've done a full one here.
    // testPin = (testPin + 1) % 4;
     DEBUG_PRINT("TEST: reset test");
+    Serial.println("TEST: reset test"); 
   }
   
   
@@ -661,7 +637,7 @@ void testUpdate() {
 #if DISABLE_FIRMATA
 byte resetMIDI = 4; //Tied to VS1053 Reset line
 void setup() {
-  Serial.begin(57600);
+  Serial.begin(BAUD_RATE);// was 57600);
 
   //Setup soft serial for MIDI control
  // mySerial.begin(31250);

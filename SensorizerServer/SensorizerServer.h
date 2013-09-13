@@ -6,6 +6,7 @@
 # include <HardwareSerial.h>
 # include <WConstants.h> 
 */
+#include "Constants.h" 
 
 #include "MidiDevice.h"
 #include "SensorOutput.h"

@@ -34,9 +34,12 @@
 #ifndef MidiDevice_h
 #define MidiDevice_h
 
-#define USE_HARDWARE_SERIAL 1
+#define USE_HARDWARE_SERIAL 0
 
 #include <Arduino.h>
+
+#include "Constants.h" 
+
 /*
 # include <HardwareSerial.h>
 # include <WConstants.h> 
