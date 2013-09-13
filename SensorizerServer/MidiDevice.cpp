@@ -50,8 +50,8 @@ MidiDevice::MidiDevice() {
 	this->mySerial = new SoftwareSerial(2, 3, false); //Soft TX on 3, we don't use RX in this code
 #endif
 	
-	bank = 0x79;
-	instrument = 30;
+	bank = 0x78; // start with DRUMS!
+	instrument = 0; // was 30 for piano
 }
 
 MidiDevice::~MidiDevice() {

@@ -66,6 +66,10 @@ void setupKnobs() {
   
  pinMode(ENCODER_MODE_SWITCH_PIN, INPUT);
  digitalWrite(ENCODER_MODE_SWITCH_PIN, HIGH); //enable pullup 
+
+ // init other vars with whatever values are appropriate.
+ // this allows us to change things immediately.
+ checkKnobs();
 }
 
 int32_t position  = 32;
@@ -543,8 +547,8 @@ void setup()
 
   setupKnobs();
     
-  server.init();
-  
+  setupServer();
+
   DEBUG_PRINT("END SETUP")
 }
 
@@ -595,7 +599,6 @@ void loop()
     }
   }
   
-  
 #if ENABLE_TEST
   testUpdate();
   return;
@@ -604,6 +607,18 @@ void loop()
 
 //end DISABLE_FIRMATA
 #endif
+
+void setupServer() {
+    server.init();
+
+    // load good drums preset to start
+    server.loadNotes( NOTE_PRESETS_DRUMS[0] );
+
+    // must wait a second for the MIDI device to boot up before it accepts our messages
+    delay(4000);
+
+    server.midiDevice->setBank(0x78); //DRUMS
+}
 
 
 #if ENABLE_TEST
@@ -662,7 +677,7 @@ void setup() {
     
   setupKnobs();  
     
-  server.init();
+  setupServer();
 }
 int thePin = 0;
 void loop() {
