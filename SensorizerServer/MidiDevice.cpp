@@ -37,6 +37,8 @@
  
 #include "MidiDevice.h"
 
+#include "looper/EventLooper.h"
+
 //SoftwareSerial mySerial(2, 3);
 
 MidiDevice::MidiDevice() {
@@ -139,7 +141,8 @@ void MidiDevice::noteOff(byte channel, byte note, byte release_velocity) {
 }
 
 //Plays a MIDI note. Doesn't check to see that cmd is greater than 127, or that data values are less than 127
-void MidiDevice::talkMIDI(byte cmd, byte data1, byte data2) {
+// if isSilent is true, it will not alert the listener.
+void MidiDevice::talkMIDI(byte cmd, byte data1, byte data2, bool isSilent) {
   digitalWrite(LED_PIN, HIGH);
   mySerial->write(cmd);//print(cmd, BYTE);
   mySerial->write(data1);//print(data1, BYTE);
@@ -152,7 +155,9 @@ void MidiDevice::talkMIDI(byte cmd, byte data1, byte data2) {
 
   digitalWrite(LED_PIN, LOW);
 
-  this->listener->onSendOutput(cmd, data1, data2);
+  if (!isSilent) {
+	this->listener->onSendOutput(cmd, data1, data2);
+  }
 }
 
 

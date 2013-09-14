@@ -11,16 +11,19 @@
 #include "MidiDevice.h"
 #include "SensorOutput.h"
 
+#include "looper/EventLooper.h"
+
 #include "Debug.h"
 
 #define SENSOR_INPUTS_LENGTH 6
 
+#define TIME_PER_TICK 10
 
 class SensorizerServer {
 
 private: 
-
-
+	EventLooper* looper;
+	int lastTimeTicked;
 public:
 	//should maybe be private but I don't believe in writing everything twice.
 	MidiDevice* midiDevice;
@@ -42,6 +45,8 @@ public:
 	
 	//takes a 6 element array of notes and loads them into the MIDI preset
 	void loadNotes(byte notes[]);
+
+	void tick();
 	
 };
 

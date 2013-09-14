@@ -15,7 +15,7 @@ SensorizerServer::SensorizerServer() {
 
 	//set up looper
 	this->looper = new EventLooper();
-	this->looper.setOutputDevice(this->midiDevice);
+	this->looper->setOutputDevice(this->midiDevice);
 
 	// record and loop each output
 	this->midiDevice->setListener(this->looper);
@@ -44,7 +44,7 @@ void SensorizerServer::init() {
 }
 
 void SensorizerServer::tick() {
-	int curTime = getCurMillis();
+	int curTime = millis();
 	int timeEllapsed = curTime - this->lastTimeTicked;
 
 	// TODO: if time per tick has not ellapsed from last time, return.

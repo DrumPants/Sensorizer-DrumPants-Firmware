@@ -50,11 +50,16 @@
 
 #include "Debug.h"
 
+
 //Tied to VS1053 Reset line
 #define RESET_MIDI_PIN 4
 
 //MIDI traffic inidicator
 #define LED_PIN 13
+
+ 
+class EventLooper;
+
 
 class MidiDevice {
 
@@ -66,11 +71,9 @@ private:
 	SoftwareSerial* mySerial;//(2, 3); //Soft TX on 3, we don't use RX in this code
 #endif
 
-	//Plays a MIDI note. Doesn't check to see that cmd is greater than 127, or that data values are less than 127
-	void talkMIDI(byte cmd, byte data1, byte data2);
-	
-	
 	byte instrument, bank;
+
+	EventLooper* listener;
 	
 public:
 	
@@ -90,13 +93,24 @@ public:
 	void noteOff(byte channel, byte note, byte release_velocity);
 	
 	void note(bool isOn, int channel, int note, int velocity);
-	
+
+	//Plays a MIDI note. Doesn't check to see that cmd is greater than 127, or that data values are less than 127
+	// if isSilent is true, it will not alert the listener.
+	void talkMIDI(byte cmd, byte data1, byte data2, bool isSilent = false);
+
 	//not sure how this works, perhaps only 0x78 (drums) and 0x79 (melodic) are accepted???
 	void setBank(byte bank, byte instrument = 0);
 	byte getBank();
 	
 	void setInstrument(byte inst);
 	byte getInstrument();
+
+
+	/*** for looper listeners ***/
+	/***
+		Sets a listener object and will call onSendOutput() on it whenever a MIDI command is sent.
+	***/
+	void setListener(EventLooper* l);
 	
 };
 
