@@ -28,6 +28,8 @@ class OneHitDetector : OutputFilter {
 
 	
 	public: void trigger();
+
+	OneHitDetector();
 	
 	/* (non-Javadoc)
 	 * //@see OutputFilter#value()
