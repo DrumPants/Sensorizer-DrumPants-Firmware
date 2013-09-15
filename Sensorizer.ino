@@ -615,7 +615,7 @@ void setupServer() {
     server.loadNotes( NOTE_PRESETS_DRUMS[0] );
 
     // must wait a second for the MIDI device to boot up before it accepts our messages
-    delay(4000);
+    delay(1000);
 
     server.midiDevice->setBank(0x78); //DRUMS
 }
