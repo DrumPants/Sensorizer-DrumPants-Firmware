@@ -29,6 +29,7 @@ SensorizerServer::~SensorizerServer() {
 			delete sensorInputs[i];
 	}
 
+	delete this->looper;
 	delete this->midiDevice;
 }
 
