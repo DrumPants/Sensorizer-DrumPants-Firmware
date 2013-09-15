@@ -13,12 +13,14 @@ SensorizerServer::SensorizerServer() {
 
 	this->midiDevice = new MidiDevice(); 
 
+#if ENABLE_LOOPER
 	//set up looper
 	this->looper = new EventLooper();
 	this->looper->setOutputDevice(this->midiDevice);
 
 	// record and loop each output
 	this->midiDevice->setListener(this->looper);
+#endif
 
 	this->loadPreset();
 }
@@ -29,7 +31,10 @@ SensorizerServer::~SensorizerServer() {
 			delete sensorInputs[i];
 	}
 
+#if ENABLE_LOOPER
 	delete this->looper;
+#endif
+
 	delete this->midiDevice;
 }
 
@@ -55,7 +60,9 @@ void SensorizerServer::tick() {
 
 	this->lastTimeTicked = curTime;
 
+#if ENABLE_LOOPER
 	this->looper->tick(curTime);
+#endif
 }
 
 //reads all input devices values into the sensorInput objects.

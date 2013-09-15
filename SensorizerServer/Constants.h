@@ -16,6 +16,7 @@
 // for the MIDI chip in MidiDevice class
 #define BAUD_RATE_MIDI 31250
 
+#define ENABLE_LOOPER 0
 
 #if IS_DUE
   #define FIRST_USABLE_PIN 2
