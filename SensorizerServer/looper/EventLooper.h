@@ -15,8 +15,9 @@
 
 #include "../MidiDevice.h"
 
-#define LOOP_LENGTH_IN_TICKS 1024
-#define MAX_LOOP_LAYERS 64
+#define LOOP_LENGTH_IN_SECONDS 8
+#define LOOP_LENGTH_IN_TICKS 512
+#define MAX_LOOP_LAYERS 32
 
 class EventLooper {
 

@@ -7,16 +7,16 @@
 
 #include "EventLooper.h"
 
-~EventLooper() {
+EventLooper::~EventLooper() {
 	for(int i = 0; i <= this->curLayerIdx ; i++) {
 		LoopLayer* l = this->layers[i];
 
 		if (l != NULL) {
 
 			MidiEvent* ev;
-			l.moveToStart();
-			while (ev = l->getEvent() != NULL) {
-				delete ev;
+			l->moveToStart();
+			while ((ev = l->getEvent()) != NULL) {
+				MidiEvent::destroyEvent(ev);
 
 				l->moveToNext();
 			}
