@@ -96,7 +96,7 @@
 			switch (msgType) {
 			case MidiMapping::NOTE:
 				//int dur = duration; //Integer.parseInt(duration);
-				midiDevice->note(c, n, vel, duration);
+				midiDevice->note(true, c, n, vel);
 				break;
 			case MidiMapping::CONTROL_CHANGE:
 				//TODO

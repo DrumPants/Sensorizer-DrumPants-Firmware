@@ -4,6 +4,7 @@
  
 #include "SensorizerServer.h"
 
+#include "filters/OneHitDetector.h"
 
 SensorizerServer::SensorizerServer() {
 	//manually init array
@@ -140,10 +141,12 @@ s->multiplyVal = 1;
 s->addVal = 0;
 s->isInvert = false;
 
+s->addOutputFilter(new OneHitDetector());
+
 m = new MidiMapping(this->midiDevice);
 m->channel = 0;
 m->note = 57;//60 + i;
-m->setMsgType(MidiMapping::NOTE_ONE_ONLY);
+m->setMsgType(MidiMapping::NOTE);
 s->addMidiMapping(m);
 
 sensorInputs[i++] = s;
@@ -162,10 +165,12 @@ s->multiplyVal = 1;
 s->addVal = 0;
 s->isInvert = false;
 
+s->addOutputFilter(new OneHitDetector());
+
 m = new MidiMapping(this->midiDevice);
 m->channel = 0;
 m->note = 60 + i;
-m->setMsgType(MidiMapping::NOTE_ONE_ONLY);
+m->setMsgType(MidiMapping::NOTE);
 s->addMidiMapping(m);
 
 sensorInputs[i++] = s;
@@ -184,10 +189,12 @@ s->multiplyVal = 1;
 s->addVal = 0;
 s->isInvert = false;
 
+s->addOutputFilter(new OneHitDetector());
+
 m = new MidiMapping(this->midiDevice);
 m->channel = 0;
 m->note = 60 + i;
-m->setMsgType(MidiMapping::NOTE_ONE_ONLY);
+m->setMsgType(MidiMapping::NOTE);
 s->addMidiMapping(m);
 
 sensorInputs[i++] = s;
@@ -206,10 +213,12 @@ s->multiplyVal = 1;
 s->addVal = 0;
 s->isInvert = false;
 
+s->addOutputFilter(new OneHitDetector());
+
 m = new MidiMapping(this->midiDevice);
 m->channel = 0;
 m->note = 60 + i;
-m->setMsgType(MidiMapping::NOTE_ONE_ONLY);
+m->setMsgType(MidiMapping::NOTE);
 s->addMidiMapping(m);
 
 sensorInputs[i++] = s;
@@ -228,10 +237,12 @@ s->multiplyVal = 1;
 s->addVal = 0;
 s->isInvert = false;
 
+s->addOutputFilter(new OneHitDetector());
+
 m = new MidiMapping(this->midiDevice);
 m->channel = 0;
 m->note = 60 + i;
-m->setMsgType(MidiMapping::NOTE_ONE_ONLY);
+m->setMsgType(MidiMapping::NOTE);
 s->addMidiMapping(m);
 
 sensorInputs[i++] = s;

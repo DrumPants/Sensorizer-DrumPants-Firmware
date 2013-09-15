@@ -10,7 +10,7 @@
 #include "OutputFilter.h"
 
 
-class OneHitDetector : OutputFilter {
+class OneHitDetector : public OutputFilter {
 	
 	//for peak detector in setValue()
 	private: double lastVal, triggeredVal;
@@ -26,11 +26,10 @@ class OneHitDetector : OutputFilter {
 	//@Override
 	public: void setValue(double value);
 
-	
-	public: void trigger();
-
 	OneHitDetector();
-	
+
+	private: void trigger();
+
 	/* (non-Javadoc)
 	 * //@see OutputFilter#value()
 	 */
