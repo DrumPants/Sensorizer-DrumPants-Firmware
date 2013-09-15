@@ -80,7 +80,7 @@ void SensorizerServer::loadPreset() {
 	//arduino 0
 s = new SensorOutput();
 s->inRange.low = 0.028571429;
-s->inRange.high = 0.35;
+s->inRange.high = 0.30;//35;
 s->outRange.low = 0;
 s->outRange.high = 1;
 s->cutoffRange.low = 0.014285714;
@@ -101,7 +101,7 @@ sensorInputs[i++] = s;
 //arduino 1
 s = new SensorOutput();
 s->inRange.low = 0.021428572;
-s->inRange.high = 0.44285715;
+s->inRange.high = 0.40;//44285715;
 s->outRange.low = 0;
 s->outRange.high = 1;
 s->cutoffRange.low = 0.057142872;
@@ -123,7 +123,7 @@ sensorInputs[i++] = s;
 //arduino 2
 s = new SensorOutput();
 s->inRange.low = 0;
-s->inRange.high = 0.47142863;
+s->inRange.high = 0.40;//47142863;
 s->outRange.low = 0;
 s->outRange.high = 1;
 s->cutoffRange.low = 0.1;
@@ -145,7 +145,7 @@ sensorInputs[i++] = s;
 //arduino 3
 s = new SensorOutput();
 s->inRange.low = 0;
-s->inRange.high = 0.5;
+s->inRange.high = 0.40;//5;
 s->outRange.low = 0;
 s->outRange.high = 1;
 s->cutoffRange.low = 0.1;
@@ -167,7 +167,7 @@ sensorInputs[i++] = s;
 //arduino 4
 s = new SensorOutput();
 s->inRange.low = 0;
-s->inRange.high = 0.5;
+s->inRange.high = 0.40;//5;
 s->outRange.low = 0;
 s->outRange.high = 1;
 s->cutoffRange.low = 0.1;
@@ -189,7 +189,7 @@ sensorInputs[i++] = s;
 //arduino 5
 s = new SensorOutput();
 s->inRange.low = 0;
-s->inRange.high = 1;
+s->inRange.high = 0.4;
 s->outRange.low = 0;
 s->outRange.high = 1;
 s->cutoffRange.low = 0.1;
