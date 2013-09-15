@@ -32,7 +32,7 @@ void EventLooper::setOutputDevice(MidiDevice* d) {
 }
 
 void EventLooper::send(MidiEvent* ev) {
-	this->device->talkMIDI(ev->cmd, ev->data1, ev->data2);
+	this->device->talkMIDI(ev->cmd, ev->data1, ev->data2, true); // send as silent so we don't give ourselves an infinite loop
 }
 
 /***
