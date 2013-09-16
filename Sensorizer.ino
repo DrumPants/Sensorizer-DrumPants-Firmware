@@ -599,8 +599,10 @@ void loop()
     }
   }
 
+#if ENABLE_LOOPER  
   // loop that shit! 
-  //server.tick();
+  server.tick();
+#endif
   
 #if ENABLE_TEST
   testUpdate();
