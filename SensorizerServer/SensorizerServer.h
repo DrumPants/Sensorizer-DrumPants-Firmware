@@ -22,7 +22,11 @@
 class SensorizerServer {
 
 private: 
+	
+#if ENABLE_LOOPER
 	EventLooper* looper;
+#endif
+
 	int lastTimeTicked; 
 public:
 	//should maybe be private but I don't believe in writing everything twice.

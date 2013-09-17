@@ -52,8 +52,10 @@ MidiDevice::MidiDevice() {
 	this->mySerial = new SoftwareSerial(2, 3, false); //Soft TX on 3, we don't use RX in this code
 #endif
 	
-	bank = 0x78; // start with DRUMS!
-	instrument = 0; // was 30 for piano
+	this->bank = 0x78; // start with DRUMS!
+	this->instrument = 0; // was 30 for piano
+
+	this->listener = NULL;
 }
 
 MidiDevice::~MidiDevice() {
@@ -155,7 +157,7 @@ void MidiDevice::talkMIDI(byte cmd, byte data1, byte data2, bool isSilent) {
 
   digitalWrite(LED_PIN, LOW);
 
-  if (!isSilent) {
+  if (!isSilent && this->listener != NULL) {
 	this->listener->onSendOutput(cmd, data1, data2);
   }
 }
