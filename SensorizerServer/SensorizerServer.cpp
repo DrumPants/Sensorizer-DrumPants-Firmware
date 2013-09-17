@@ -122,7 +122,7 @@ void SensorizerServer::loadPreset() {
 	s->outRange.high = 1;
 	s->cutoffRange.low = 0.8428571;
 	s->cutoffRange.high = 1;
-	s->setCutoffType(3); //Nullable
+	s->setCutoffType(SensorOutput::CUTOFF_TYPE_VAL_CLIP); //Nullable
 	s->multiplyVal = 1;
 	s->addVal = 0;
 	s->isInvert = false;
@@ -150,7 +150,7 @@ void SensorizerServer::loadPreset() {
 	s->outRange.high = 1;
 	s->cutoffRange.low = 0.014285714;
 	s->cutoffRange.high = 1;
-	s->setCutoffType(3); //Nullable
+	s->setCutoffType(SensorOutput::CUTOFF_TYPE_VAL_CLIP); //Nullable
 	s->multiplyVal = 1;
 	s->addVal = 0;
 	s->isInvert = false;
@@ -178,7 +178,7 @@ void SensorizerServer::loadPreset() {
 	s->outRange.high = 1;
 	s->cutoffRange.low = 0;
 	s->cutoffRange.high = 1;
-	s->setCutoffType(3); //No Cutoff
+	s->setCutoffType(SensorOutput::CUTOFF_TYPE_VAL_CLIP); //No Cutoff
 	s->multiplyVal = 1;
 	s->addVal = 0;
 	s->isInvert = false;
@@ -206,7 +206,7 @@ void SensorizerServer::loadPreset() {
 	s->outRange.high = 1;
 	s->cutoffRange.low = 0;
 	s->cutoffRange.high = 1;
-	s->setCutoffType(3); //No Cutoff
+	s->setCutoffType(SensorOutput::CUTOFF_TYPE_VAL_CLIP); //No Cutoff
 	s->multiplyVal = 1;
 	s->addVal = 0;
 	s->isInvert = false;
@@ -234,7 +234,7 @@ void SensorizerServer::loadPreset() {
 	s->outRange.high = 1;
 	s->cutoffRange.low = 0;
 	s->cutoffRange.high = 1;
-	s->setCutoffType(3); //No Cutoff
+	s->setCutoffType(SensorOutput::CUTOFF_TYPE_VAL_CLIP); //No Cutoff
 	s->multiplyVal = 1;
 	s->addVal = 0;
 	s->isInvert = false;
@@ -262,7 +262,7 @@ void SensorizerServer::loadPreset() {
 	s->outRange.high = 1;
 	s->cutoffRange.low = 0.54285717;
 	s->cutoffRange.high = 1;
-	s->setCutoffType(3); //Nullable
+	s->setCutoffType(SensorOutput::CUTOFF_TYPE_VAL_CLIP); //Nullable
 	s->multiplyVal = 1;
 	s->addVal = 0;
 	s->isInvert = false;

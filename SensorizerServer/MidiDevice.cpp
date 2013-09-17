@@ -164,6 +164,12 @@ void MidiDevice::talkMIDI(byte cmd, byte data1, byte data2, bool isSilent) {
 
 
 void MidiDevice::note(bool isOn, int channel, int note, int velocity) {
+	// i assumed the truncation from int to byte would take care of this.
+	// ProTip: don't trust C++ to do anything reasonable.
+	channel = min(channel, 127);
+	note = min(note, 127);
+	velocity = min(velocity, 127);
+
 	if (isOn) 
 		noteOn((byte)channel, (byte)note, (byte)velocity);
 	else
