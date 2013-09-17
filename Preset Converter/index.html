@@ -24,7 +24,9 @@
 
 <script type='text/html' id="presetTemplate">
 
-	// {{inputName}}
+	////////////////////////////
+	// OUTPUT FOR {{inputName}}
+	////////////////////////////
 	s = new SensorOutput();
 	s->inRange.low = {{inRange.low}};
 	s->inRange.high = {{inRange.high}};
@@ -37,12 +39,17 @@
 	s->addVal = {{addVal}};
 	s->isInvert = {{isInvert}};
 
+	s->addOutputFilter(new OneHitDetector());
+
 	m = new MidiMapping(this->midiDevice);
 	m->channel = 1;
 	m->note = 60 + i;
+	m->setMsgType(MidiMapping::NOTE);
 	s->addMidiMapping(m);
 	
 	sensorInputs[i++] = s;
+	////////////////////////////
+
 </script>
 
 </body>

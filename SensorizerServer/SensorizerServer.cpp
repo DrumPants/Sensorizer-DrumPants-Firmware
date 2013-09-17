@@ -6,6 +6,8 @@
 
 #include "filters/OneHitDetector.h"
 
+#define PRESET_USE_NEW 1
+
 SensorizerServer::SensorizerServer() {
 	//manually init array
 	for (int i = 0; i < SENSOR_INPUTS_LENGTH; i++) {
@@ -107,6 +109,192 @@ void SensorizerServer::loadPreset() {
 	SensorOutput* s;
 	MidiMapping* m;
 	
+
+#if PRESET_USE_NEW
+
+	////////////////////////////
+	// OUTPUT FOR arduino 0
+	////////////////////////////
+	s = new SensorOutput();
+	s->inRange.low = 0;
+	s->inRange.high = 1;
+	s->outRange.low = 0;
+	s->outRange.high = 1;
+	s->cutoffRange.low = 0.8428571;
+	s->cutoffRange.high = 1;
+	s->setCutoffType(3); //Nullable
+	s->multiplyVal = 1;
+	s->addVal = 0;
+	s->isInvert = false;
+
+	// s->addOutputFilter(new OneHitDetector());
+
+	// m = new MidiMapping(this->midiDevice);
+	// m->channel = 1;
+	// m->note = 60 + i;
+	// m->setMsgType(MidiMapping::NOTE);
+	// s->addMidiMapping(m);
+	
+	sensorInputs[i++] = s;
+	////////////////////////////
+
+
+
+	////////////////////////////
+	// OUTPUT FOR arduino 1
+	////////////////////////////
+	s = new SensorOutput();
+	s->inRange.low = 0;
+	s->inRange.high = 0.21212122;
+	s->outRange.low = 0;
+	s->outRange.high = 1;
+	s->cutoffRange.low = 0.014285714;
+	s->cutoffRange.high = 1;
+	s->setCutoffType(3); //Nullable
+	s->multiplyVal = 1;
+	s->addVal = 0;
+	s->isInvert = false;
+
+	s->addOutputFilter(new OneHitDetector());
+
+	m = new MidiMapping(this->midiDevice);
+	m->channel = 1;
+	m->note = 60 + i;
+	m->setMsgType(MidiMapping::NOTE);
+	s->addMidiMapping(m);
+	
+	sensorInputs[i++] = s;
+	////////////////////////////
+
+
+
+	////////////////////////////
+	// OUTPUT FOR arduino 2
+	////////////////////////////
+	s = new SensorOutput();
+	s->inRange.low = 0;
+	s->inRange.high = 0.06353861;
+	s->outRange.low = 0;
+	s->outRange.high = 1;
+	s->cutoffRange.low = 0;
+	s->cutoffRange.high = 1;
+	s->setCutoffType(3); //No Cutoff
+	s->multiplyVal = 1;
+	s->addVal = 0;
+	s->isInvert = false;
+
+	s->addOutputFilter(new OneHitDetector());
+
+	m = new MidiMapping(this->midiDevice);
+	m->channel = 1;
+	m->note = 60 + i;
+	m->setMsgType(MidiMapping::NOTE);
+	s->addMidiMapping(m);
+	
+	sensorInputs[i++] = s;
+	////////////////////////////
+
+
+
+	////////////////////////////
+	// OUTPUT FOR arduino 3
+	////////////////////////////
+	s = new SensorOutput();
+	s->inRange.low = 0;
+	s->inRange.high = 0.28739002;
+	s->outRange.low = 0;
+	s->outRange.high = 1;
+	s->cutoffRange.low = 0;
+	s->cutoffRange.high = 1;
+	s->setCutoffType(3); //No Cutoff
+	s->multiplyVal = 1;
+	s->addVal = 0;
+	s->isInvert = false;
+
+	s->addOutputFilter(new OneHitDetector());
+
+	m = new MidiMapping(this->midiDevice);
+	m->channel = 1;
+	m->note = 60 + i;
+	m->setMsgType(MidiMapping::NOTE);
+	s->addMidiMapping(m);
+	
+	sensorInputs[i++] = s;
+	////////////////////////////
+
+
+
+	////////////////////////////
+	// OUTPUT FOR arduino 4
+	////////////////////////////
+	s = new SensorOutput();
+	s->inRange.low = 0;
+	s->inRange.high = 0.20821114;
+	s->outRange.low = 0;
+	s->outRange.high = 1;
+	s->cutoffRange.low = 0;
+	s->cutoffRange.high = 1;
+	s->setCutoffType(3); //No Cutoff
+	s->multiplyVal = 1;
+	s->addVal = 0;
+	s->isInvert = false;
+
+	s->addOutputFilter(new OneHitDetector());
+
+	m = new MidiMapping(this->midiDevice);
+	m->channel = 1;
+	m->note = 60 + i;
+	m->setMsgType(MidiMapping::NOTE);
+	s->addMidiMapping(m);
+	
+	sensorInputs[i++] = s;
+	////////////////////////////
+
+
+
+	////////////////////////////
+	// OUTPUT FOR arduino 5
+	////////////////////////////
+	s = new SensorOutput();
+	s->inRange.low = 0;
+	s->inRange.high = 0.23851417;
+	s->outRange.low = 0;
+	s->outRange.high = 1;
+	s->cutoffRange.low = 0.54285717;
+	s->cutoffRange.high = 1;
+	s->setCutoffType(3); //Nullable
+	s->multiplyVal = 1;
+	s->addVal = 0;
+	s->isInvert = false;
+
+	s->addOutputFilter(new OneHitDetector());
+
+	m = new MidiMapping(this->midiDevice);
+	m->channel = 1;
+	m->note = 60 + i;
+	m->setMsgType(MidiMapping::NOTE);
+	s->addMidiMapping(m);
+	
+	sensorInputs[i++] = s;
+	////////////////////////////
+
+
+
+
+
+
+
+
+
+
+#else
+
+
+
+
+
+
+
 	//arduino 0
 s = new SensorOutput();
 s->inRange.low = 0.028571429;
@@ -246,6 +434,9 @@ m->setMsgType(MidiMapping::NOTE);
 s->addMidiMapping(m);
 
 sensorInputs[i++] = s;
+
+#endif
+
 }
 
 
