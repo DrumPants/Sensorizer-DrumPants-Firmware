@@ -1,40 +1,27 @@
-function convertPreset(preset) {
-	var code = "int i = 0;\n" +
-			"SensorOutput* s;\n" +
-			"MidiMapping* m;\n";
-	for (i in preset) {
-		for (j in preset['sensorInputs']) {
-			for (k in preset['sensorInputs'][j]['sensorWindows']) {
-				var out = preset['sensorInputs'][j]['sensorWindows'][k];
-				//sensor output
-				code += 
-	"\n//" + preset['sensorInputs'][j]['name'] + "\n" +
-	"s = new SensorOutput();\n" +
-	"s->inRange.low = " + out.inRangeP.low + ";\n" +
-	"s->inRange.high = " + out.inRangeP.high + ";\n" +
-	"s->outRange.low = " + out.outRangeP.low + ";\n" +
-	"s->outRange.high = " + out.outRangeP.high + ";\n" +
-	"s->cutoffRange.low = " + out.cutoffRangeP.low + ";\n" +
-	"s->cutoffRange.high = " + out.cutoffRangeP.high + ";\n" +
-	"s->setCutoffType(" + out.cutoffType.value.toFixed(0) + "); //" + out.cutoffType.label + "\n" +
-	"s->multiplyVal = " + out.multiplyVal + ";\n" +
-	"s->addVal = " + out.addVal + ";\n" +
-	"s->isInvert = " + out.isInvert + ";\n" +
-	"\n" +
-	"m = new MidiMapping(this->midiDevice);\n" +
-	"m->channel = 1;\n" +
-	"m->note = 60 + i;\n" +
-	"s->addMidiMapping(m);\n" +
-	"\n" +
-	"sensorInputs[i++] = s;\n\n";
-				
-			}
-		}
-	}
-	return code;
-}
-
 $(document).ready(function(){
+
+	var template = Mustache.compile($('#presetTemplate').text()),
+		convertPreset = function convertPreset(preset) {
+				var code = "int i = 0;\n" +
+						"SensorOutput* s;\n" +
+						"MidiMapping* m;\n";
+				for (var i in preset) {
+					for (var j in preset['sensorInputs']) {
+						for (var k in preset['sensorInputs'][j]['sensorOutputs']) {
+							var name = preset['sensorInputs'][j]['name'],
+								out = preset['sensorInputs'][j]['sensorOutputs'][k];
+
+							//sensor output
+							code += template($.extend({}, {
+									inputName : name,// we always use cutoffType "Nullable"
+									cutoffTypeVal : 3 //out.cutoffType.value.toFixed(0)
+								}, out));
+							
+						}
+					}
+				}
+				return code;
+			};
 
 $('#presets').change(function (e) {
 	$.ajax({

@@ -1,6 +1,7 @@
 <html>
 <head><title>Preset Converter</title>
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+		<script src="mustache.js"></script>
 		<script src="sensorizer_convert_preset.js"></script>
 </head>
 <body>
@@ -20,5 +21,29 @@
 <pre id="preset_code" style='width:600px;min-height:200px;background-color:#eee;padding:5px;'>
 
 </pre>
+
+<script type='text/html' id="presetTemplate">
+
+	// {{inputName}}
+	s = new SensorOutput();
+	s->inRange.low = {{inRange.low}};
+	s->inRange.high = {{inRange.high}};
+	s->outRange.low = {{outRange.low}};
+	s->outRange.high = {{outRange.high}};
+	s->cutoffRange.low = {{cutoffRange.low}};
+	s->cutoffRange.high = {{cutoffRange.high}};
+	s->setCutoffType({{cutoffTypeVal}}); //{{cutoffType}}
+	s->multiplyVal = {{multiplyVal}};
+	s->addVal = {{addVal}};
+	s->isInvert = {{isInvert}};
+
+	m = new MidiMapping(this->midiDevice);
+	m->channel = 1;
+	m->note = 60 + i;
+	s->addMidiMapping(m);
+	
+	sensorInputs[i++] = s;
+</script>
+
 </body>
 </html>
