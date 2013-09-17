@@ -80,7 +80,7 @@ void MidiDevice::setup() {
 	
 	talkMIDI(0xB0, 0x07, 126); //0xB0 is channel message, set channel volume to near max (127)
 	
-	setBank(bank); //Select the bank of really fun sounds
+	setBank(this->bank); //Select the bank of really fun sounds
 	
 	//For this bank 0x78, the instrument does not matter, only the note
 	//setInstrument(instrument); //Set instrument number. 0xC0 is a 1 data byte command
