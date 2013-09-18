@@ -27,6 +27,8 @@
 		if (value < lastVal || value == SensorizerServer::SENSOR_VALUE_NULL) {
 			if (isRising) {
 				trigger();
+
+		DEBUG_PRINT_NUM("triggered NOTE: ", lastVal);
 				isRising = false;
 			}
 		}
@@ -42,8 +44,6 @@
 		// if (triggerListener != null) {
 // 			triggerListener.onTrigger();
 // 		}
-
-		DEBUG_PRINT_NUM("triggered NOTE: ", lastVal);
 
 		triggeredVal = lastVal;
 	}
