@@ -43,6 +43,8 @@
 // 			triggerListener.onTrigger();
 // 		}
 
+		DEBUG_PRINT_NUM("triggered NOTE: ", lastVal);
+
 		triggeredVal = lastVal;
 	}
 	

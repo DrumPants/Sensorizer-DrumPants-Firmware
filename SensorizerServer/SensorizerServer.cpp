@@ -122,7 +122,7 @@ void SensorizerServer::loadPreset() {
 	s->outRange.high = 1;
 	s->cutoffRange.low = 0.8428571;
 	s->cutoffRange.high = 1;
-	s->setCutoffType(SensorOutput::CUTOFF_TYPE_VAL_CLIP); //Nullable
+	s->setCutoffType(SensorOutput::CUTOFF_TYPE_VAL_NULLABLE); //Nullable
 	s->multiplyVal = 1;
 	s->addVal = 0;
 	s->isInvert = false;
@@ -130,7 +130,7 @@ void SensorizerServer::loadPreset() {
 	// s->addOutputFilter(new OneHitDetector());
 
 	// m = new MidiMapping(this->midiDevice);
-	// m->channel = 1;
+	// m->channel = 0;
 	// m->note = 60 + i;
 	// m->setMsgType(MidiMapping::NOTE);
 	// s->addMidiMapping(m);
@@ -150,7 +150,7 @@ void SensorizerServer::loadPreset() {
 	s->outRange.high = 1;
 	s->cutoffRange.low = 0.014285714;
 	s->cutoffRange.high = 1;
-	s->setCutoffType(SensorOutput::CUTOFF_TYPE_VAL_CLIP); //Nullable
+	s->setCutoffType(SensorOutput::CUTOFF_TYPE_VAL_NULLABLE); //Nullable
 	s->multiplyVal = 1;
 	s->addVal = 0;
 	s->isInvert = false;
@@ -158,9 +158,9 @@ void SensorizerServer::loadPreset() {
 	s->addOutputFilter(new OneHitDetector());
 
 	m = new MidiMapping(this->midiDevice);
-	m->channel = 1;
+	m->channel = 0;
 	m->note = 60 + i;
-	m->setMsgType(MidiMapping::NOTE);
+	m->setMsgType(MidiMapping::NOTE_ONE_ONLY);
 	s->addMidiMapping(m);
 	
 	sensorInputs[i++] = s;
@@ -178,7 +178,7 @@ void SensorizerServer::loadPreset() {
 	s->outRange.high = 1;
 	s->cutoffRange.low = 0;
 	s->cutoffRange.high = 1;
-	s->setCutoffType(SensorOutput::CUTOFF_TYPE_VAL_CLIP); //No Cutoff
+	s->setCutoffType(SensorOutput::CUTOFF_TYPE_VAL_NULLABLE); //No Cutoff
 	s->multiplyVal = 1;
 	s->addVal = 0;
 	s->isInvert = false;
@@ -186,9 +186,9 @@ void SensorizerServer::loadPreset() {
 	s->addOutputFilter(new OneHitDetector());
 
 	m = new MidiMapping(this->midiDevice);
-	m->channel = 1;
+	m->channel = 0;
 	m->note = 60 + i;
-	m->setMsgType(MidiMapping::NOTE);
+	m->setMsgType(MidiMapping::NOTE_ONE_ONLY);
 	s->addMidiMapping(m);
 	
 	sensorInputs[i++] = s;
@@ -206,7 +206,7 @@ void SensorizerServer::loadPreset() {
 	s->outRange.high = 1;
 	s->cutoffRange.low = 0;
 	s->cutoffRange.high = 1;
-	s->setCutoffType(SensorOutput::CUTOFF_TYPE_VAL_CLIP); //No Cutoff
+	s->setCutoffType(SensorOutput::CUTOFF_TYPE_VAL_NULLABLE); //No Cutoff
 	s->multiplyVal = 1;
 	s->addVal = 0;
 	s->isInvert = false;
@@ -214,9 +214,9 @@ void SensorizerServer::loadPreset() {
 	s->addOutputFilter(new OneHitDetector());
 
 	m = new MidiMapping(this->midiDevice);
-	m->channel = 1;
+	m->channel = 0;
 	m->note = 60 + i;
-	m->setMsgType(MidiMapping::NOTE);
+	m->setMsgType(MidiMapping::NOTE_ONE_ONLY);
 	s->addMidiMapping(m);
 	
 	sensorInputs[i++] = s;
@@ -234,7 +234,7 @@ void SensorizerServer::loadPreset() {
 	s->outRange.high = 1;
 	s->cutoffRange.low = 0;
 	s->cutoffRange.high = 1;
-	s->setCutoffType(SensorOutput::CUTOFF_TYPE_VAL_CLIP); //No Cutoff
+	s->setCutoffType(SensorOutput::CUTOFF_TYPE_VAL_NULLABLE); //No Cutoff
 	s->multiplyVal = 1;
 	s->addVal = 0;
 	s->isInvert = false;
@@ -242,9 +242,9 @@ void SensorizerServer::loadPreset() {
 	s->addOutputFilter(new OneHitDetector());
 
 	m = new MidiMapping(this->midiDevice);
-	m->channel = 1;
+	m->channel = 0;
 	m->note = 60 + i;
-	m->setMsgType(MidiMapping::NOTE);
+	m->setMsgType(MidiMapping::NOTE_ONE_ONLY);
 	s->addMidiMapping(m);
 	
 	sensorInputs[i++] = s;
@@ -262,7 +262,7 @@ void SensorizerServer::loadPreset() {
 	s->outRange.high = 1;
 	s->cutoffRange.low = 0.54285717;
 	s->cutoffRange.high = 1;
-	s->setCutoffType(SensorOutput::CUTOFF_TYPE_VAL_CLIP); //Nullable
+	s->setCutoffType(SensorOutput::CUTOFF_TYPE_VAL_NULLABLE); //Nullable
 	s->multiplyVal = 1;
 	s->addVal = 0;
 	s->isInvert = false;
@@ -270,9 +270,9 @@ void SensorizerServer::loadPreset() {
 	s->addOutputFilter(new OneHitDetector());
 
 	m = new MidiMapping(this->midiDevice);
-	m->channel = 1;
+	m->channel = 0;
 	m->note = 60 + i;
-	m->setMsgType(MidiMapping::NOTE);
+	m->setMsgType(MidiMapping::NOTE_ONE_ONLY);
 	s->addMidiMapping(m);
 	
 	sensorInputs[i++] = s;

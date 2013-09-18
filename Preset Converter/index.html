@@ -42,7 +42,7 @@
 	s->addOutputFilter(new OneHitDetector());
 
 	m = new MidiMapping(this->midiDevice);
-	m->channel = 1;
+	m->channel = 0; //0 for durms!
 	m->note = 60 + i;
 	m->setMsgType(MidiMapping::NOTE);
 	s->addMidiMapping(m);
