@@ -149,7 +149,7 @@ void SensorizerServer::loadPreset() {
 	s->inRange.high = 0.21212122;
 	s->outRange.low = 0;
 	s->outRange.high = 1;
-	s->cutoffRange.low = 0.014285714;
+	s->cutoffRange.low = 0.094285714;
 	s->cutoffRange.high = 1;
 	s->setCutoffType(SensorOutput::CUTOFF_TYPE_VAL_NULLABLE); //Nullable
 	s->multiplyVal = 1;
@@ -209,7 +209,7 @@ void SensorizerServer::loadPreset() {
 	s->inRange.high = 0.28739002;
 	s->outRange.low = 0;
 	s->outRange.high = 1;
-	s->cutoffRange.low = 0.01;
+	s->cutoffRange.low = 0.09;
 	s->cutoffRange.high = 1;
 	s->setCutoffType(SensorOutput::CUTOFF_TYPE_VAL_NULLABLE); //No Cutoff
 	s->multiplyVal = 1;
@@ -277,7 +277,7 @@ void SensorizerServer::loadPreset() {
 	s->isInvert = false;
 
 	filter = new OneHitDetector();
-	filter->retriggerThreshold = 50;
+	filter->retriggerThreshold = 170;
 	s->addOutputFilter(filter);
 
 	m = new MidiMapping(this->midiDevice);

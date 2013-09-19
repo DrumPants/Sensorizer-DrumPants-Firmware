@@ -134,12 +134,16 @@ void loop() {
 //Send a MIDI note-on message.  Like pressing a piano key
 //channel ranges from 0-15
 void MidiDevice::noteOn(byte channel, byte note, byte attack_velocity) {
-  talkMIDI( (0x90 | channel), note, attack_velocity);
+	//DEBUG_PRINT_NUMS("MIDI noteOn: ", note, attack_velocity);
+  
+	talkMIDI( (0x90 | channel), note, attack_velocity);
 }
 
 //Send a MIDI note-off message.  Like releasing a piano key
 void MidiDevice::noteOff(byte channel, byte note, byte release_velocity) {
-  talkMIDI( (0x80 | channel), note, release_velocity);
+	//DEBUG_PRINT_NUMS("MIDI noteOff: ", note, release_velocity);
+ 	
+ 	talkMIDI( (0x80 | channel), note, release_velocity);
 }
 
 //Plays a MIDI note. Doesn't check to see that cmd is greater than 127, or that data values are less than 127
@@ -170,7 +174,8 @@ void MidiDevice::note(bool isOn, int channel, int note, int velocity) {
 	note = min(note, 127);
 	velocity = min(velocity, 127);
 
-	if (isOn) 
+
+	if (isOn)
 		noteOn((byte)channel, (byte)note, (byte)velocity);
 	else
 		noteOff((byte)channel, (byte)note, 0); //TODO: velocity or 0?
