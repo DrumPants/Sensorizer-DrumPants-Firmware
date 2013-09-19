@@ -5,14 +5,15 @@
 #include "OutputFilter.h"
 
 
-
 	//OneHitListener OneHitDetector::triggerListener;
-	
-	
+		
 	OneHitDetector::OneHitDetector() {
 		this->lastVal = SensorizerServer::SENSOR_VALUE_NULL;
 		this->isRising = false;
 		this->triggeredVal = SensorizerServer::SENSOR_VALUE_NULL;
+
+		this->retriggerThreshold = 5;
+		this->ticksSinceLastTrigger = 0;
 	}
 	
 	
@@ -21,6 +22,7 @@
 	 */
 	//@Override
 	void OneHitDetector::setValue(double value) {
+		ticksSinceLastTrigger++;
 		triggeredVal = SensorizerServer::SENSOR_VALUE_NULL;
 
 		//detect peak in signal and trigger one hit if so
@@ -28,7 +30,6 @@
 			if (isRising) {
 				trigger();
 
-		DEBUG_PRINT_NUM("triggered NOTE: ", lastVal);
 				isRising = false;
 			}
 		}
@@ -40,12 +41,19 @@
 	}
 
 	
-	inline void OneHitDetector::trigger() {
-		// if (triggerListener != null) {
-// 			triggerListener.onTrigger();
-// 		}
+	void OneHitDetector::trigger() {
 
-		triggeredVal = lastVal;
+		if (ticksSinceLastTrigger > retriggerThreshold) {
+			ticksSinceLastTrigger = 0;
+
+			DEBUG_PRINT_NUM("triggered NOTE: ", lastVal);
+
+			// if (triggerListener != null) {
+	// 			triggerListener.onTrigger();
+	// 		}
+
+			triggeredVal = lastVal;
+		}
 	}
 	
 	/* (non-Javadoc)
