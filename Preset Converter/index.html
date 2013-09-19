@@ -39,7 +39,9 @@
 	s->addVal = {{addVal}};
 	s->isInvert = {{isInvert}};
 
-	s->addOutputFilter(new OneHitDetector());
+	filter = new OneHitDetector();
+	filter->retriggerThreshold = 5;
+	s->addOutputFilter(filter);
 
 	m = new MidiMapping(this->midiDevice);
 	m->channel = 0; //0 for durms!

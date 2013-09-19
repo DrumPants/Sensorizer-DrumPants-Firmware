@@ -108,6 +108,7 @@ void SensorizerServer::loadPreset() {
 	int i = 0;
 	SensorOutput* s;
 	MidiMapping* m;
+	OneHitDetector* filter;
 	
 
 #if PRESET_USE_NEW
@@ -155,7 +156,9 @@ void SensorizerServer::loadPreset() {
 	s->addVal = 0;
 	s->isInvert = false;
 
-	s->addOutputFilter(new OneHitDetector());
+	filter = new OneHitDetector();
+	filter->retriggerThreshold = 5;
+	s->addOutputFilter(filter);
 
 	m = new MidiMapping(this->midiDevice);
 	m->channel = 0;
@@ -183,7 +186,9 @@ void SensorizerServer::loadPreset() {
 	s->addVal = 0;
 	s->isInvert = false;
 
-	s->addOutputFilter(new OneHitDetector());
+	filter = new OneHitDetector();
+	filter->retriggerThreshold = 5;
+	s->addOutputFilter(filter);
 
 	m = new MidiMapping(this->midiDevice);
 	m->channel = 0;
@@ -211,7 +216,9 @@ void SensorizerServer::loadPreset() {
 	s->addVal = 0;
 	s->isInvert = false;
 
-	s->addOutputFilter(new OneHitDetector());
+	filter = new OneHitDetector();
+	filter->retriggerThreshold = 5;
+	s->addOutputFilter(filter);
 
 	m = new MidiMapping(this->midiDevice);
 	m->channel = 0;
@@ -239,7 +246,9 @@ void SensorizerServer::loadPreset() {
 	s->addVal = 0;
 	s->isInvert = false;
 
-	s->addOutputFilter(new OneHitDetector());
+	filter = new OneHitDetector();
+	filter->retriggerThreshold = 5;
+	s->addOutputFilter(filter);
 
 	m = new MidiMapping(this->midiDevice);
 	m->channel = 0;
@@ -267,7 +276,9 @@ void SensorizerServer::loadPreset() {
 	s->addVal = 0;
 	s->isInvert = false;
 
-	s->addOutputFilter(new OneHitDetector());
+	filter = new OneHitDetector();
+	filter->retriggerThreshold = 5;
+	s->addOutputFilter(filter);
 
 	m = new MidiMapping(this->midiDevice);
 	m->channel = 0;
@@ -329,7 +340,9 @@ s->multiplyVal = 1;
 s->addVal = 0;
 s->isInvert = false;
 
-s->addOutputFilter(new OneHitDetector());
+filter = new OneHitDetector();
+	filter->retriggerThreshold = 5;
+	s->addOutputFilter(filter);
 
 m = new MidiMapping(this->midiDevice);
 m->channel = 0;
@@ -353,7 +366,9 @@ s->multiplyVal = 1;
 s->addVal = 0;
 s->isInvert = false;
 
-s->addOutputFilter(new OneHitDetector());
+filter = new OneHitDetector();
+	filter->retriggerThreshold = 5;
+	s->addOutputFilter(filter);
 
 m = new MidiMapping(this->midiDevice);
 m->channel = 0;
@@ -377,7 +392,9 @@ s->multiplyVal = 1;
 s->addVal = 0;
 s->isInvert = false;
 
-s->addOutputFilter(new OneHitDetector());
+filter = new OneHitDetector();
+	filter->retriggerThreshold = 5;
+	s->addOutputFilter(filter);
 
 m = new MidiMapping(this->midiDevice);
 m->channel = 0;
@@ -401,7 +418,9 @@ s->multiplyVal = 1;
 s->addVal = 0;
 s->isInvert = false;
 
-s->addOutputFilter(new OneHitDetector());
+filter = new OneHitDetector();
+	filter->retriggerThreshold = 5;
+	s->addOutputFilter(filter);
 
 m = new MidiMapping(this->midiDevice);
 m->channel = 0;
@@ -425,7 +444,9 @@ s->multiplyVal = 1;
 s->addVal = 0;
 s->isInvert = false;
 
-s->addOutputFilter(new OneHitDetector());
+filter = new OneHitDetector();
+	filter->retriggerThreshold = 5;
+	s->addOutputFilter(filter);
 
 m = new MidiMapping(this->midiDevice);
 m->channel = 0;
