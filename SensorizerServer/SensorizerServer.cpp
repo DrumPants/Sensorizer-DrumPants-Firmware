@@ -110,6 +110,7 @@ void SensorizerServer::loadPreset() {
 	MidiMapping* m;
 	OneHitDetector* filter;
 	
+	this->midiDevice->setVolume(MIDI_CHANNEL, 126);
 
 #if PRESET_USE_NEW
 
@@ -161,7 +162,7 @@ void SensorizerServer::loadPreset() {
 	s->addOutputFilter(filter);
 
 	m = new MidiMapping(this->midiDevice);
-	m->channel = 0;
+	m->channel = MIDI_CHANNEL;
 	m->note = 60 + i;
 	m->setMsgType(MidiMapping::NOTE);
 	s->addMidiMapping(m);
@@ -191,7 +192,7 @@ void SensorizerServer::loadPreset() {
 	s->addOutputFilter(filter);
 
 	m = new MidiMapping(this->midiDevice);
-	m->channel = 0;
+	m->channel = MIDI_CHANNEL;
 	m->note = 60 + i;
 	m->setMsgType(MidiMapping::NOTE);
 	s->addMidiMapping(m);
@@ -221,7 +222,7 @@ void SensorizerServer::loadPreset() {
 	s->addOutputFilter(filter);
 
 	m = new MidiMapping(this->midiDevice);
-	m->channel = 0;
+	m->channel = MIDI_CHANNEL;
 	m->note = 60 + i;
 	m->setMsgType(MidiMapping::NOTE);
 	s->addMidiMapping(m);
@@ -251,7 +252,7 @@ void SensorizerServer::loadPreset() {
 	s->addOutputFilter(filter);
 
 	m = new MidiMapping(this->midiDevice);
-	m->channel = 0;
+	m->channel = MIDI_CHANNEL;
 	m->note = 60 + i;
 	m->setMsgType(MidiMapping::NOTE);
 	s->addMidiMapping(m);
@@ -281,7 +282,7 @@ void SensorizerServer::loadPreset() {
 	s->addOutputFilter(filter);
 
 	m = new MidiMapping(this->midiDevice);
-	m->channel = 0;
+	m->channel = MIDI_CHANNEL;
 	m->note = 60 + i;
 	m->setMsgType(MidiMapping::NOTE);
 	s->addMidiMapping(m);
@@ -320,7 +321,7 @@ s->addVal = 0;
 s->isInvert = false;
 
 // m = new MidiMapping(this->midiDevice);
-// m->channel = 0;
+// m->channel = MIDI_CHANNEL;
 // m->note = 60 + i;
 // s->addMidiMapping(m);
 
@@ -345,7 +346,7 @@ filter = new OneHitDetector();
 	s->addOutputFilter(filter);
 
 m = new MidiMapping(this->midiDevice);
-m->channel = 0;
+m->channel = MIDI_CHANNEL;
 m->note = 57;//60 + i;
 m->setMsgType(MidiMapping::NOTE);
 s->addMidiMapping(m);
@@ -371,7 +372,7 @@ filter = new OneHitDetector();
 	s->addOutputFilter(filter);
 
 m = new MidiMapping(this->midiDevice);
-m->channel = 0;
+m->channel = MIDI_CHANNEL;
 m->note = 60 + i;
 m->setMsgType(MidiMapping::NOTE);
 s->addMidiMapping(m);
@@ -397,7 +398,7 @@ filter = new OneHitDetector();
 	s->addOutputFilter(filter);
 
 m = new MidiMapping(this->midiDevice);
-m->channel = 0;
+m->channel = MIDI_CHANNEL;
 m->note = 60 + i;
 m->setMsgType(MidiMapping::NOTE);
 s->addMidiMapping(m);
@@ -423,7 +424,7 @@ filter = new OneHitDetector();
 	s->addOutputFilter(filter);
 
 m = new MidiMapping(this->midiDevice);
-m->channel = 0;
+m->channel = MIDI_CHANNEL;
 m->note = 60 + i;
 m->setMsgType(MidiMapping::NOTE);
 s->addMidiMapping(m);
@@ -449,7 +450,7 @@ filter = new OneHitDetector();
 	s->addOutputFilter(filter);
 
 m = new MidiMapping(this->midiDevice);
-m->channel = 0;
+m->channel = MIDI_CHANNEL;
 m->note = 60 + i;
 m->setMsgType(MidiMapping::NOTE);
 s->addMidiMapping(m);

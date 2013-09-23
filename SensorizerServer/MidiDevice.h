@@ -99,11 +99,14 @@ public:
 	void talkMIDI(byte cmd, byte data1, byte data2, bool isSilent = false);
 
 	//not sure how this works, perhaps only 0x78 (drums) and 0x79 (melodic) are accepted???
-	void setBank(byte bank, byte instrument = 0);
+	void setBank(byte channel, byte bank, byte instrument = 0);
 	byte getBank();
 	
-	void setInstrument(byte inst);
+	void setInstrument(byte channel, byte inst);
 	byte getInstrument();
+
+
+	void setVolume(byte channel, byte vol);
 
 
 	/*** for looper listeners ***/

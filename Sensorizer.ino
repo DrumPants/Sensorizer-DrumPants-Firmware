@@ -98,7 +98,7 @@ void checkKnobs() {
         newInst = 128 - newInst;
       if (newInst > 127) {
         DEBUG_PRINT_NUM("change bank: ", newInst);
-        server.midiDevice->setBank(0x78); //DRUMS
+        server.midiDevice->setBank(MIDI_CHANNEL, 0x78); //DRUMS
         
         //previous was melodic, load drum preset
         server.loadNotes( NOTE_PRESETS_DRUMS[0] );
@@ -106,7 +106,7 @@ void checkKnobs() {
       else {     
         DEBUG_PRINT_NUM("change bank: ", newInst); 
         
-        server.midiDevice->setBank(0x79, newInst); //MELODIC
+        server.midiDevice->setBank(MIDI_CHANNEL, 0x79, newInst); //MELODIC
         
         if (position > 127) {
            //we switched from drums, reload the note scales        
@@ -622,7 +622,7 @@ void setupServer() {
     // must wait a second for the MIDI device to boot up before it accepts our messages
     //delay(1000);
 
-    server.midiDevice->setBank(0x78); //DRUMS
+    server.midiDevice->setBank(MIDI_CHANNEL, 0x78); //DRUMS
 }
 
 

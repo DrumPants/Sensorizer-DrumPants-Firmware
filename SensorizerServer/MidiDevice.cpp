@@ -78,9 +78,13 @@ void MidiDevice::setup() {
 	digitalWrite(RESET_MIDI_PIN, HIGH);
 	delay(100);
 	
-	talkMIDI(0xB0, 0x07, 126); //0xB0 is channel message, set channel volume to near max (127)
+	this->setVolume(0, 126); //0xB0 is channel message, set channel volume to near max (127)
+
+	// give us some reverb!
+	this->talkMIDI(0xB0, 0x0c, 0xFF); // REVERB decay
+	this->talkMIDI(0xB0, 0x5b, 0xFF); // REVERB level
 	
-	setBank(this->bank); //Select the bank of really fun sounds
+	this->setBank(0, this->bank); //Select the bank of really fun sounds
 	
 	//For this bank 0x78, the instrument does not matter, only the note
 	//setInstrument(instrument); //Set instrument number. 0xC0 is a 1 data byte command
@@ -89,27 +93,32 @@ void MidiDevice::setup() {
 	//Serial.println("MidiDevice now setup");
 }
 
-void MidiDevice::setBank(byte bank, byte instrument) {
+void MidiDevice::setBank(byte channel, byte bank, byte instrument) {
 	DEBUG_PRINT_NUM("setBank: ", bank)
-	talkMIDI(0xB0, 0, bank); //Select the bank of really fun sounds
+	talkMIDI((0xB0 | channel), 0, bank); //Select the bank of really fun sounds
 	
 	this->bank = bank;
 	
-	setInstrument(instrument);
+	setInstrument(channel, instrument);
 }
 byte MidiDevice::getBank() {
 	return bank;
 }
 
-void MidiDevice::setInstrument(byte inst) {
+void MidiDevice::setInstrument(byte channel, byte inst) {
 	DEBUG_PRINT_NUM("setInstrument: ", inst)
-	talkMIDI(0xC0, inst, 0); //Set instrument number. 0xC0 is a 1 data byte command
+	talkMIDI((0xC0 | channel), inst, 0); //Set instrument number. 0xC0 is a 1 data byte command
 	
 	this->instrument = inst;
 }
 byte MidiDevice::getInstrument() {
 	return this->instrument;
 }
+
+void MidiDevice::setVolume(byte channel, byte vol) {
+	talkMIDI((0xB0 | channel), 0x07, vol); 
+}
+
 
 /*
 void loop() {

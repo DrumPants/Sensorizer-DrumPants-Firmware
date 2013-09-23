@@ -16,6 +16,9 @@
 // for the MIDI chip in MidiDevice class
 #define BAUD_RATE_MIDI 31250
 
+// the channel to send midi notes
+#define MIDI_CHANNEL 0
+
 #define ENABLE_LOOPER 0
 
 #if IS_DUE
