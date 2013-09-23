@@ -137,6 +137,21 @@ void checkKnobs() {
   lastButtonMode = buttonMode;
 }
 
+
+void setupServer() {
+    server.init();
+
+    // load good drums preset to start
+    server.loadNotes( NOTE_PRESETS_DRUMS[0] );
+
+    // must wait a second for the MIDI device to boot up before it accepts our messages
+    //delay(1000);
+
+    server.midiDevice->setBank(0x78); //DRUMS
+}
+
+
+
  /*
   Copyright (C) 2006-2008 Hans-Christoph Steiner.  All rights reserved.
   
@@ -612,18 +627,6 @@ void loop()
 
 //end DISABLE_FIRMATA
 #endif
-
-void setupServer() {
-    server.init();
-
-    // load good drums preset to start
-    server.loadNotes( NOTE_PRESETS_DRUMS[0] );
-
-    // must wait a second for the MIDI device to boot up before it accepts our messages
-    //delay(1000);
-
-    server.midiDevice->setBank(MIDI_CHANNEL, 0x78); //DRUMS
-}
 
 
 #if ENABLE_TEST
