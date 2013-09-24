@@ -91,6 +91,7 @@ void checkKnobs() {
   int newPos = myEnc.read() / 4;
   
   if (buttonMode == HIGH) {
+    // no button, change bank
     if (newPos != position) {
       DEBUG_PRINT_NUM("encoder: ", newPos);
       int newInst = newPos % 129;
@@ -118,7 +119,8 @@ void checkKnobs() {
     }
   }
   else { //button is depressed. cheer up, button!
-     if (newPos != positionKey) {
+    // change scale
+    if (newPos != positionKey) {
       positionKey = newPos;
       DEBUG_PRINT_NUM("encoder key: ", positionKey);
       
