@@ -149,7 +149,7 @@ void setupServer() {
     // must wait a second for the MIDI device to boot up before it accepts our messages
     //delay(1000);
 
-    server.midiDevice->setBank(0x78); //DRUMS
+    server.midiDevice->setBank(MIDI_CHANNEL, 0x78); //DRUMS
 }
 
 
