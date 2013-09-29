@@ -81,8 +81,8 @@ void MidiDevice::setup() {
 	this->setVolume(0, 126); //0xB0 is channel message, set channel volume to near max (127)
 
 	// give us some reverb!
-	this->talkMIDI(0xB0, 0x0c, 0xFF); // REVERB decay
-	this->talkMIDI(0xB0, 0x5b, 0xFF); // REVERB level
+	this->talkMIDI(0xB0, 0x0c, 0xEF); // REVERB decay
+	this->talkMIDI(0xB0, 0x5b, 0xA3); // REVERB level
 	
 	this->setBank(0, this->bank); //Select the bank of really fun sounds
 	
