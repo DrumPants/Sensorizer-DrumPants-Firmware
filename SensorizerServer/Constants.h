@@ -1,6 +1,19 @@
 #ifndef SensorizerConstants_h
 #define SensorizerConstants_h
 
+
+
+// hardware version type presets
+#define PRESET_VJACKET_LEATHER 2
+#define PRESET_JEANS 1
+#define PRESET PRESET_JEANS
+
+
+
+
+
+
+
 //uncomment this to set serial baud at bluetooth rate. otherwise, USB rate.
 //# define IS_BLUETOOTH
 
@@ -14,7 +27,11 @@
 #define BAUD_RATE_BLUETOOTH_LE 19200
 
 // for the MIDI chip in MidiDevice class
-#define BAUD_RATE_MIDI 31250
+#if PRESET == PRESET_VJACKET_LEATHER
+  #define BAUD_RATE_MIDI 19200
+#else
+  #define BAUD_RATE_MIDI 31250
+#endif
 
 // the channel to send midi notes
 #define MIDI_CHANNEL 0

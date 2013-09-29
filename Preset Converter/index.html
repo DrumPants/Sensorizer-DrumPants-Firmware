@@ -40,11 +40,11 @@
 	s->isInvert = {{isInvert}};
 
 	filter = new OneHitDetector();
-	filter->retriggerThreshold = 5;
+	filter->retriggerThreshold = 50;
 	s->addOutputFilter(filter);
 
 	m = new MidiMapping(this->midiDevice);
-	m->channel = 0; //0 for durms!
+	m->channel = MIDI_CHANNEL; //0 for durms!
 	m->note = 60 + i;
 	m->setMsgType(MidiMapping::NOTE);
 	s->addMidiMapping(m);
