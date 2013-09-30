@@ -123,10 +123,11 @@ void SensorizerServer::loadPreset() {
 	s->outRange.high = 1;
 	s->cutoffRange.low = 0.8428571;
 	s->cutoffRange.high = 1;
-	s->setCutoffType(SensorOutput::CUTOFF_TYPE_VAL_NULLABLE); //Nullable
+	s->setCutoffType(SensorOutput::CUTOFF_TYPE_VAL_NULLABLE_LOW); //Nullable
 	s->multiplyVal = 1;
 	s->addVal = 0;
 	s->isInvert = false;
+	s->isLogarithmic = false; // since this is a ribbon sensor.
 
 	// s->addOutputFilter(new OneHitDetector());
 
@@ -151,7 +152,7 @@ void SensorizerServer::loadPreset() {
 	s->outRange.high = 1;
 	s->cutoffRange.low = 0.094285714;
 	s->cutoffRange.high = 1;
-	s->setCutoffType(SensorOutput::CUTOFF_TYPE_VAL_NULLABLE); //Nullable
+	s->setCutoffType(SensorOutput::CUTOFF_TYPE_VAL_NULLABLE_LOW); //Nullable
 	s->multiplyVal = 1;
 	s->addVal = 0;
 	s->isInvert = false;
@@ -181,7 +182,7 @@ void SensorizerServer::loadPreset() {
 	s->outRange.high = 1;
 	s->cutoffRange.low = 0.01;
 	s->cutoffRange.high = 1;
-	s->setCutoffType(SensorOutput::CUTOFF_TYPE_VAL_NULLABLE); //No Cutoff
+	s->setCutoffType(SensorOutput::CUTOFF_TYPE_VAL_NULLABLE_LOW); //No Cutoff
 	s->multiplyVal = 1;
 	s->addVal = 0;
 	s->isInvert = false;
@@ -211,7 +212,7 @@ void SensorizerServer::loadPreset() {
 	s->outRange.high = 1;
 	s->cutoffRange.low = 0.09;
 	s->cutoffRange.high = 1;
-	s->setCutoffType(SensorOutput::CUTOFF_TYPE_VAL_NULLABLE); //No Cutoff
+	s->setCutoffType(SensorOutput::CUTOFF_TYPE_VAL_NULLABLE_LOW); //No Cutoff
 	s->multiplyVal = 1;
 	s->addVal = 0;
 	s->isInvert = false;
@@ -241,7 +242,7 @@ void SensorizerServer::loadPreset() {
 	s->outRange.high = 1;
 	s->cutoffRange.low = 0.01;
 	s->cutoffRange.high = 1;
-	s->setCutoffType(SensorOutput::CUTOFF_TYPE_VAL_NULLABLE); //No Cutoff
+	s->setCutoffType(SensorOutput::CUTOFF_TYPE_VAL_NULLABLE_LOW); //No Cutoff
 	s->multiplyVal = 1;
 	s->addVal = 0;
 	s->isInvert = false;
@@ -271,7 +272,7 @@ void SensorizerServer::loadPreset() {
 	s->outRange.high = 1;
 	s->cutoffRange.low = 0.54285717;
 	s->cutoffRange.high = 1;
-	s->setCutoffType(SensorOutput::CUTOFF_TYPE_VAL_NULLABLE); //Nullable
+	s->setCutoffType(SensorOutput::CUTOFF_TYPE_VAL_NULLABLE_LOW); //Nullable
 	s->multiplyVal = 1;
 	s->addVal = 0;
 	s->isInvert = false;
@@ -310,6 +311,7 @@ void SensorizerServer::loadPreset() {
 	s->multiplyVal = 1;
 	s->addVal = 0;
 	s->isInvert = false;
+	s->isLogarithmic = false; // since this is a ribbon sensor.
 
 	// s->addOutputFilter(new OneHitDetector());
 
@@ -334,7 +336,7 @@ void SensorizerServer::loadPreset() {
 	s->outRange.high = 1;
 	s->cutoffRange.low = 0.22857143;
 	s->cutoffRange.high = 1;
-	s->setCutoffType(3); //Nullable
+	s->setCutoffType(SensorOutput::CUTOFF_TYPE_VAL_NULLABLE_LOW); //Nullable
 	s->multiplyVal = 1;
 	s->addVal = 0;
 	s->isInvert = false;
@@ -364,7 +366,7 @@ void SensorizerServer::loadPreset() {
 	s->outRange.high = 1;
 	s->cutoffRange.low = 0.021428572;
 	s->cutoffRange.high = 1;
-	s->setCutoffType(3); //Nullable
+	s->setCutoffType(SensorOutput::CUTOFF_TYPE_VAL_NULLABLE_LOW); //Nullable
 	s->multiplyVal = 1;
 	s->addVal = 0;
 	s->isInvert = false;
@@ -394,7 +396,7 @@ void SensorizerServer::loadPreset() {
 	s->outRange.high = 1;
 	s->cutoffRange.low = 0.021428572;
 	s->cutoffRange.high = 1;
-	s->setCutoffType(3); //Nullable
+	s->setCutoffType(SensorOutput::CUTOFF_TYPE_VAL_NULLABLE_LOW); //Nullable
 	s->multiplyVal = 1;
 	s->addVal = 0;
 	s->isInvert = false;
@@ -424,7 +426,7 @@ void SensorizerServer::loadPreset() {
 	s->outRange.high = 1;
 	s->cutoffRange.low = 0.028571429;
 	s->cutoffRange.high = 1;
-	s->setCutoffType(3); //Nullable
+	s->setCutoffType(SensorOutput::CUTOFF_TYPE_VAL_NULLABLE_LOW); //Nullable
 	s->multiplyVal = 1;
 	s->addVal = 0;
 	s->isInvert = false;
@@ -458,6 +460,7 @@ void SensorizerServer::loadPreset() {
 	s->multiplyVal = 1;
 	s->addVal = 0;
 	s->isInvert = false;
+	s->isLogarithmic = false; // since this is a light sensor.
 
 	// filter = new OneHitDetector();
 	// filter->retriggerThreshold = 170;
@@ -498,7 +501,7 @@ s->outRange.low = 0;
 s->outRange.high = 1;
 s->cutoffRange.low = 0.014285714;
 s->cutoffRange.high = 0.95;
-s->setCutoffType(3); //Nullable
+s->setCutoffType(SensorOutput::CUTOFF_TYPE_VAL_NULLABLE_LOW); //Nullable
 s->multiplyVal = 1;
 s->addVal = 0;
 s->isInvert = false;
@@ -519,7 +522,7 @@ s->outRange.low = 0;
 s->outRange.high = 1;
 s->cutoffRange.low = 0.057142872;
 s->cutoffRange.high = 1;
-s->setCutoffType(3); //Nullable
+s->setCutoffType(SensorOutput::CUTOFF_TYPE_VAL_NULLABLE_LOW); //Nullable
 s->multiplyVal = 1;
 s->addVal = 0;
 s->isInvert = false;
@@ -545,7 +548,7 @@ s->outRange.low = 0;
 s->outRange.high = 1;
 s->cutoffRange.low = 0.1;
 s->cutoffRange.high = 1;
-s->setCutoffType(3); //Nullable
+s->setCutoffType(SensorOutput::CUTOFF_TYPE_VAL_NULLABLE_LOW); //Nullable
 s->multiplyVal = 1;
 s->addVal = 0;
 s->isInvert = false;
@@ -571,7 +574,7 @@ s->outRange.low = 0;
 s->outRange.high = 1;
 s->cutoffRange.low = 0.1;
 s->cutoffRange.high = 1;
-s->setCutoffType(3); //Nullable
+s->setCutoffType(SensorOutput::CUTOFF_TYPE_VAL_NULLABLE_LOW); //Nullable
 s->multiplyVal = 1;
 s->addVal = 0;
 s->isInvert = false;
@@ -597,7 +600,7 @@ s->outRange.low = 0;
 s->outRange.high = 1;
 s->cutoffRange.low = 0.1;
 s->cutoffRange.high = 1;
-s->setCutoffType(3); //Nullable
+s->setCutoffType(SensorOutput::CUTOFF_TYPE_VAL_NULLABLE_LOW); //Nullable
 s->multiplyVal = 1;
 s->addVal = 0;
 s->isInvert = false;
@@ -623,7 +626,7 @@ s->outRange.low = 0;
 s->outRange.high = 1;
 s->cutoffRange.low = 0.1;
 s->cutoffRange.high = 1;
-s->setCutoffType(3); //Nullable
+s->setCutoffType(SensorOutput::CUTOFF_TYPE_VAL_NULLABLE_LOW); //Nullable
 s->multiplyVal = 1;
 s->addVal = 0;
 s->isInvert = false;
