@@ -23,10 +23,12 @@ class SensorOutput {
 	public: static const string CUTOFF_TYPE_NULLABLE;
 	//public: static const string CUTOFF_TYPE_ONEHIT;
 	*/
-	public: static const int CUTOFF_TYPE_VAL_NONE;
-	public: static const int CUTOFF_TYPE_VAL_HARD;
-	public: static const int CUTOFF_TYPE_VAL_CLIP;
-	public: static const int CUTOFF_TYPE_VAL_NULLABLE;
+public: 
+	static const int CUTOFF_TYPE_VAL_NONE;
+	static const int CUTOFF_TYPE_VAL_HARD;
+	static const int CUTOFF_TYPE_VAL_CLIP;
+	static const int CUTOFF_TYPE_VAL_NULLABLE;
+	static const int CUTOFF_TYPE_VAL_NULLABLE_LOW;
 	//public: static const int CUTOFF_TYPE_VAL_ONEHIT;
 	
 	//sensor value extrema. this should be the number range the Arduino sends in.
@@ -62,6 +64,15 @@ class SensorOutput {
 	//invert signal
 	////@Expose
 	public: bool isInvert;
+
+	/**
+	 * This gives the log of the signal + 1, to boost the low amplitude hits.
+	 * Use for drum triggers.
+	 *
+	 * Happens AFTER inversion.
+	 */
+	////@Expose
+	bool isLogarithmic;
 	
 	//hold GSON preset values for DropdownList
 	////@Expose

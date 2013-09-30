@@ -16,6 +16,10 @@
 	const int SensorOutput::CUTOFF_TYPE_VAL_HARD = 1;
 	const int SensorOutput::CUTOFF_TYPE_VAL_CLIP = 2;
 	const int SensorOutput::CUTOFF_TYPE_VAL_NULLABLE = 3;
+	/**
+	 * Lower than the cutoff gets NULLed, higher than the cutoff acts as CLIP.
+	 */
+	const int SensorOutput::CUTOFF_TYPE_VAL_NULLABLE_LOW = 4;
 	//static const int SensorOutput::CUTOFF_TYPE_VAL_ONEHIT = 3;
 	
 	//sensor value extrema. this should be the number range the Arduino sends in.
@@ -28,6 +32,7 @@
 		isInvert = false;
 		cutoffTypeVal = CUTOFF_TYPE_VAL_NONE;
 		_outputValue = 0;
+		isLogarithmic = true;
 		
 		//set current array lengths so we can fill them
 		outputFiltersCurlength = 0;
@@ -116,16 +121,31 @@
 
 		_outputValue = scaleRange(val, inRange.low, inRange.high, outRange.low, outRange.high);
 		
-		
+		// boost that fucker
+		if (isLogarithmic) {
+			_outputValue = log10(_outputValue) + 1.0;
+		}
+
+		// now cut it down
 		if (cutoffTypeVal == CUTOFF_TYPE_VAL_HARD) {
 			if (_outputValue > cutoffRange.high)
 				_outputValue = 1.0;
 			else if (_outputValue < cutoffRange.low)
 				_outputValue = 0.0;
 		}
-		if (cutoffTypeVal == (CUTOFF_TYPE_VAL_NULLABLE)) {
-			if (_outputValue > cutoffRange.high)
-				_outputValue = SensorizerServer::SENSOR_VALUE_NULL;
+		else if (	cutoffTypeVal == (CUTOFF_TYPE_VAL_NULLABLE) ||
+					cutoffTypeVal == (CUTOFF_TYPE_VAL_NULLABLE_LOW)) {
+			if (_outputValue > cutoffRange.high ) {
+
+				// special case if we want to capture the hard hits
+				if (cutoffTypeVal == (CUTOFF_TYPE_VAL_NULLABLE_LOW)) {
+					_outputValue = cutoffRange.high;
+				}
+				else {
+					_outputValue = SensorizerServer::SENSOR_VALUE_NULL;
+				}
+
+			}
 			else if (_outputValue < cutoffRange.low)
 				_outputValue = SensorizerServer::SENSOR_VALUE_NULL;
 		}		
