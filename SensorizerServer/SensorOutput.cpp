@@ -191,6 +191,16 @@
 			//}
 		}
 		//DEBUG_PRINT("DONE SensorOutput::send")
+		
+		/// only tick every other time to slow it down.
+		if (shouldTick) {
+			for (int i = 0; i < midiMappingsCurlength; i++) {
+				if (dropdownMidiMappings[i] != NULL) {
+					dropdownMidiMappings[i]->tick();
+				}
+			}
+		}
+		shouldTick = !shouldTick;
 	}
 
 	void SensorOutput::addOutputFilter(/*string name, */ OutputFilter* filter) {

@@ -63,11 +63,22 @@
 		//manually init array
 		valuesHistory[1][0] = SensorizerServer::SENSOR_VALUE_NULL;
 		valuesHistory[0][0] = SensorizerServer::SENSOR_VALUE_NULL;	
+
+
+		pendingNoteOffs = new PendingNoteQueue(midiDevice);
+	}
+
+	MidiMapping::~MidiMapping() {
+		delete pendingNoteOffs;
 	}
 
 	//@Override
 	void MidiMapping::init() {
 		
+	}
+
+	void MidiMapping::tick() {
+		pendingNoteOffs->tick();
 	}
 	
 
@@ -97,6 +108,10 @@
 			case MidiMapping::NOTE:
 				//int dur = duration; //Integer.parseInt(duration);
 				midiDevice->note(true, c, n, vel);
+
+				// schedule note off to be sent later
+				pendingNoteOffs->add(c, n);
+
 				break;
 			case MidiMapping::CONTROL_CHANGE:
 				//TODO

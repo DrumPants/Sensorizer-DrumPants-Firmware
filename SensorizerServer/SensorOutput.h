@@ -38,6 +38,7 @@ class SensorOutput {
 		int outputFiltersCurlength;
 		int midiMappingsCurlength;
 
+		bool shouldTick;
 
 
 	//hold GSON preset values for ranges

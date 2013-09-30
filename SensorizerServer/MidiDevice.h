@@ -60,7 +60,6 @@
  
 class EventLooper;
 
-
 class MidiDevice {
 
 private: 
@@ -74,7 +73,7 @@ private:
 	byte instrument, bank;
 
 	EventLooper* listener;
-	
+
 public:
 	
 	static const double SENSOR_VALUE_NULL = -1.0;

@@ -10,6 +10,7 @@
 
 #include "MidiDevice.h"
 #include "OutputMapping.h"
+#include "PendingNoteQueue.h" 
 
 #define VALUES_HISTORY_LENGTH 2
 
@@ -20,6 +21,9 @@ class MidiMapping : public OutputMapping {
 	public: static const int NOTE_ONE_ONLY;
 
 	
+	
+	// holds every note we sent so we can send a note off later.
+	private: PendingNoteQueue* pendingNoteOffs;
 	
 	////@Expose
 	private: int msgType;
@@ -52,9 +56,12 @@ class MidiMapping : public OutputMapping {
 	
 	public: MidiMapping(MidiDevice* midiDevice);
 
+	~MidiMapping();
+
 	//@Override
 	public: void init();
 	
+	void tick();
 
 	/***
 	 * adds the given values to the OSC path and sends an OSC message
