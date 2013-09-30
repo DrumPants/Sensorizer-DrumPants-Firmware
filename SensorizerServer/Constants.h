@@ -6,7 +6,7 @@
 // hardware version type presets
 #define PRESET_VJACKET_LEATHER 2
 #define PRESET_JEANS 1
-#define PRESET PRESET_JEANS
+#define PRESET PRESET_VJACKET_LEATHER
 
 
 
