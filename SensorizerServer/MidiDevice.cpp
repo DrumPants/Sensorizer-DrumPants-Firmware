@@ -39,17 +39,37 @@
 
 #include "looper/EventLooper.h"
 
+#ifdef IS_ARDUINO_SHIM
+    #include "ofxMidi.h"
+
+
+ofxMidiOut midiOut;
+
+#endif
+
 //SoftwareSerial mySerial(2, 3);
 
 MidiDevice::MidiDevice() {
 
-#if USE_HARDWARE_SERIAL
-	// Ok, the Serial object is not actually the HardwareSerial class, it's something else.
-	//this->mySerial = &Serial;
-	// do some tricky de-re-referencing to get around it.
-	#define mySerial (&Serial)
+    
+#ifdef IS_ARDUINO_SHIM
+	// print the available output ports to the console
+	midiOut.listPorts(); // via instance
+	//ofxMidiOut::listPorts(); // via static too
+	
+	// connect
+	midiOut.openPort(0);	// by number
+	//midiOut.openPort("IAC Driver Pure Data In");	// by name
+
 #else
-	this->mySerial = new SoftwareSerial(2, 3, false); //Soft TX on 3, we don't use RX in this code
+    #if USE_HARDWARE_SERIAL
+        // Ok, the Serial object is not actually the HardwareSerial class, it's something else.
+        //this->mySerial = &Serial;
+        // do some tricky de-re-referencing to get around it.
+        #define mySerial (&Serial)
+    #else
+        this->mySerial = new SoftwareSerial(2, 3, false); //Soft TX on 3, we don't use RX in this code
+    #endif
 #endif
 	
 	this->bank = 0x78; // start with DRUMS!
@@ -70,13 +90,15 @@ void MidiDevice::setup() {
 	//Setup soft serial for MIDI control
 	mySerial->begin(BAUD_RATE_MIDI);
 
-
+#ifndef IS_ARDUINO_SHIM
 	//Reset the VS1053
 	pinMode(RESET_MIDI_PIN, OUTPUT);
 	digitalWrite(RESET_MIDI_PIN, LOW);
 	delay(100);
 	digitalWrite(RESET_MIDI_PIN, HIGH);
 	delay(100);
+#endif
+    
 	
 	this->setVolume(0, 126); //0xB0 is channel message, set channel volume to near max (127)
 
@@ -158,17 +180,28 @@ void MidiDevice::noteOff(byte channel, byte note, byte release_velocity) {
 //Plays a MIDI note. Doesn't check to see that cmd is greater than 127, or that data values are less than 127
 // if isSilent is true, it will not alert the listener.
 void MidiDevice::talkMIDI(byte cmd, byte data1, byte data2, bool isSilent) {
+
+    //Some commands only have one data byte. All cmds less than 0xBn have 2 data bytes
+    //(sort of: http://253.ccarh.org/handout/midiprotocol/)
+    //if( (cmd & 0xF0) <= 0xB0)
+    bool hasSecondArg = ((cmd & 0xF0) <= 0xB0 || (cmd & 0xF0) == 0xE0);
+
+#ifdef IS_ARDUINO_SHIM
+    midiOut << cmd << data1;
+    
+    if (hasSecondArg)
+        midiOut << data2;
+    
+#else
   digitalWrite(LED_PIN, HIGH);
   mySerial->write(cmd);//print(cmd, BYTE);
   mySerial->write(data1);//print(data1, BYTE);
 
-  //Some commands only have one data byte. All cmds less than 0xBn have 2 data bytes 
-  //(sort of: http://253.ccarh.org/handout/midiprotocol/)
-  //if( (cmd & 0xF0) <= 0xB0)
-  if( (cmd & 0xF0) <= 0xB0 || (cmd & 0xF0) == 0xE0)
+  if (hasSecondArg)
     mySerial->write(data2);//print(data2, BYTE);
 
   digitalWrite(LED_PIN, LOW);
+#endif
 
   if (!isSilent && this->listener != NULL) {
 	this->listener->onSendOutput(cmd, data1, data2);
