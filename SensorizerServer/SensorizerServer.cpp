@@ -292,7 +292,186 @@ void SensorizerServer::loadPreset() {
 
 
 
+#elif PRESET == PRESET_NEON_GREEN_STRING
 
+
+	////////////////////////////
+	// OUTPUT FOR arduino 0
+	////////////////////////////
+	s = new SensorOutput();
+	s->inRange.low = 0;
+	s->inRange.high = 0.3998045;
+	s->outRange.low = 0;
+	s->outRange.high = 1;
+	s->cutoffRange.low = 0;
+	s->cutoffRange.high = 1;
+	s->setCutoffType(3); //No Cutoff
+	s->multiplyVal = 1;
+	s->addVal = 0;
+	s->isInvert = false;
+
+	filter = new OneHitDetector();
+	filter->retriggerThreshold = 50;
+	s->addOutputFilter(filter);
+
+	m = new MidiMapping(this->midiDevice);
+	m->channel = MIDI_CHANNEL; //0 for durms!
+	m->note = 60 + i;
+	m->setMsgType(MidiMapping::NOTE);
+	s->addMidiMapping(m);
+	
+	sensorInputs[i++] = s;
+	////////////////////////////
+
+
+
+	////////////////////////////
+	// OUTPUT FOR arduino 1
+	////////////////////////////
+	s = new SensorOutput();
+	s->inRange.low = 0;
+	s->inRange.high = 0.1544477;
+	s->outRange.low = 0;
+	s->outRange.high = 1;
+	s->cutoffRange.low = 0;
+	s->cutoffRange.high = 1;
+	s->setCutoffType(3); //No Cutoff
+	s->multiplyVal = 1;
+	s->addVal = 0;
+	s->isInvert = false;
+
+	filter = new OneHitDetector();
+	filter->retriggerThreshold = 50;
+	s->addOutputFilter(filter);
+
+	m = new MidiMapping(this->midiDevice);
+	m->channel = MIDI_CHANNEL; //0 for durms!
+	m->note = 60 + i;
+	m->setMsgType(MidiMapping::NOTE);
+	s->addMidiMapping(m);
+	
+	sensorInputs[i++] = s;
+	////////////////////////////
+
+
+
+	////////////////////////////
+	// OUTPUT FOR arduino 2
+	////////////////////////////
+	s = new SensorOutput();
+	s->inRange.low = 0;
+	s->inRange.high = 0.0684262;
+	s->outRange.low = 0;
+	s->outRange.high = 1;
+	s->cutoffRange.low = 0;
+	s->cutoffRange.high = 1;
+	s->setCutoffType(3); //No Cutoff
+	s->multiplyVal = 1;
+	s->addVal = 0;
+	s->isInvert = false;
+
+	filter = new OneHitDetector();
+	filter->retriggerThreshold = 50;
+	s->addOutputFilter(filter);
+
+	m = new MidiMapping(this->midiDevice);
+	m->channel = MIDI_CHANNEL; //0 for durms!
+	m->note = 60 + i;
+	m->setMsgType(MidiMapping::NOTE);
+	s->addMidiMapping(m);
+	
+	sensorInputs[i++] = s;
+	////////////////////////////
+
+
+
+	////////////////////////////
+	// OUTPUT FOR arduino 3
+	////////////////////////////
+	s = new SensorOutput();
+	s->inRange.low = 0;
+	s->inRange.high = 1;
+	s->outRange.low = 0;
+	s->outRange.high = 1;
+	s->cutoffRange.low = 0;
+	s->cutoffRange.high = 1;
+	s->setCutoffType(3); //No Cutoff
+	s->multiplyVal = 1;
+	s->addVal = 0;
+	s->isInvert = false;
+
+	filter = new OneHitDetector();
+	filter->retriggerThreshold = 50;
+	s->addOutputFilter(filter);
+
+	m = new MidiMapping(this->midiDevice);
+	m->channel = MIDI_CHANNEL; //0 for durms!
+	m->note = 60 + i;
+	m->setMsgType(MidiMapping::NOTE);
+	s->addMidiMapping(m);
+	
+	sensorInputs[i++] = s;
+	////////////////////////////
+
+
+
+	////////////////////////////
+	// OUTPUT FOR arduino 4
+	////////////////////////////
+	s = new SensorOutput();
+	s->inRange.low = 0.24340177;
+	s->inRange.high = 1;
+	s->outRange.low = 0;
+	s->outRange.high = 1;
+	s->cutoffRange.low = 0;
+	s->cutoffRange.high = 1;
+	s->setCutoffType(3); //No Cutoff
+	s->multiplyVal = 1;
+	s->addVal = 0;
+	s->isInvert = true;
+
+	filter = new OneHitDetector();
+	filter->retriggerThreshold = 50;
+	s->addOutputFilter(filter);
+
+	m = new MidiMapping(this->midiDevice);
+	m->channel = MIDI_CHANNEL; //0 for durms!
+	m->note = 60 + i;
+	m->setMsgType(MidiMapping::NOTE);
+	s->addMidiMapping(m);
+	
+	sensorInputs[i++] = s;
+	////////////////////////////
+
+
+
+	////////////////////////////
+	// OUTPUT FOR arduino 5
+	////////////////////////////
+	s = new SensorOutput();
+	s->inRange.low = 0;
+	s->inRange.high = 1;
+	s->outRange.low = 0;
+	s->outRange.high = 1;
+	s->cutoffRange.low = 0;
+	s->cutoffRange.high = 1;
+	s->setCutoffType(3); //No Cutoff
+	s->multiplyVal = 1;
+	s->addVal = 0;
+	s->isInvert = false;
+
+	// filter = new OneHitDetector();
+	// filter->retriggerThreshold = 50;
+	// s->addOutputFilter(filter);
+
+	// m = new MidiMapping(this->midiDevice);
+	// m->channel = MIDI_CHANNEL; //0 for durms!
+	// m->note = 60 + i;
+	// m->setMsgType(MidiMapping::NOTE);
+	// s->addMidiMapping(m);
+	
+	sensorInputs[i++] = s;
+	////////////////////////////
 
 
 #elif PRESET == PRESET_VJACKET_LEATHER

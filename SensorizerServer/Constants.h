@@ -4,20 +4,36 @@
 
 
 // hardware version type presets
+#define PRESET_NEON_GREEN_STRING 3
 #define PRESET_VJACKET_LEATHER 2
 #define PRESET_JEANS 1
-#define PRESET PRESET_VJACKET_LEATHER
+#define PRESET PRESET_NEON_GREEN_STRING
 
 
+#define BLE_TYPE_NONE 0
+#define BLE_TYPE_BLUEGIGA 1
+#define BLE_TYPE_REDBEARLABS 2
 
+#if PRESET == PRESET_VJACKET_LEATHER
 
+  #define BLE_TYPE BLE_TYPE_BLUEGIGA
+  #define USE_HARDWARE_SERIAL 1
 
+#elif PRESET == PRESET_NEON_GREEN_STRING
 
+  #define BLE_TYPE BLE_TYPE_REDBEARLABS
+  #define USE_HARDWARE_SERIAL 1
+
+#else
+  #define BLE_TYPE BLE_TYPE_NONE
+#endif
 
 //uncomment this to set serial baud at bluetooth rate. otherwise, USB rate.
 //# define IS_BLUETOOTH
 
 #define IS_DUE 0
+
+// this is deprciated: always assume its off!
 #define IS_BLE 0
 
 #define ENABLE_TEST 0
@@ -27,8 +43,10 @@
 #define BAUD_RATE_BLUETOOTH_LE 19200
 
 // for the MIDI chip in MidiDevice class
-#if PRESET == PRESET_VJACKET_LEATHER
+#if BLE_TYPE == BLE_TYPE_BLUEGIGA
   #define BAUD_RATE_MIDI 19200
+#elif BLE_TYPE == BLE_TYPE_REDBEARLABS
+  #define BAUD_RATE_MIDI BAUD_RATE_USB
 #else
   #define BAUD_RATE_MIDI 31250
 #endif

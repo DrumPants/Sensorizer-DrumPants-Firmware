@@ -34,7 +34,9 @@
 #ifndef MidiDevice_h
 #define MidiDevice_h
 
-#define USE_HARDWARE_SERIAL 0
+#ifndef USE_HARDWARE_SERIAL
+	#define USE_HARDWARE_SERIAL 0
+#endif
 
 #include <Arduino.h>
 
