@@ -2,17 +2,26 @@
 #define SensorizerConstants_h
 
 
+/******* hardware version type presets ********/
 
-// hardware version type presets
+// for the beta DrumPants PCB:
+#define PRESET_BETA 10
+// for the earlier prototypes
 #define PRESET_NEON_GREEN_STRING 3
 #define PRESET_VJACKET_LEATHER 2
 #define PRESET_JEANS 1
 #define PRESET PRESET_VJACKET_LEATHER
 
+/******* END hardware version type presets ********/
+
+
 
 #define BLE_TYPE_NONE 0
 #define BLE_TYPE_BLUEGIGA 1
 #define BLE_TYPE_REDBEARLABS 2
+
+
+
 
 #if PRESET == PRESET_VJACKET_LEATHER
 
@@ -36,9 +45,14 @@
 //uncomment this to set serial baud at bluetooth rate. otherwise, USB rate.
 //# define IS_BLUETOOTH
 
-#define IS_DUE 0
+#if PRESET == PRESET_BETA
+  #define IS_DUE 1
+  #define IS_DRUMPANTS 1
+#else
+  #define IS_DUE 0
+  #define IS_DRUMPANTS 0
+#endif
 
-// this is deprciated: always assume its off!
 #define IS_BLE 0
 
 #define ENABLE_TEST 0

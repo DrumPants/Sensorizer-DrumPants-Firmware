@@ -54,7 +54,14 @@
 
 
 //Tied to VS1053 Reset line
-#define RESET_MIDI_PIN 4
+#if IS_DRUMPANTS 
+ 	// Arduino doc states pin "4" on Due is two pins A29 and C26, but it's not. It's really only C26.
+ 	// We want A29, which is pin 87
+ 	// see http://forum.arduino.cc/index.php?topic=198502.0
+	#define RESET_MIDI_PIN 87
+#else
+	#define RESET_MIDI_PIN 4
+ #endif
 
 //MIDI traffic inidicator
 #define LED_PIN 13
