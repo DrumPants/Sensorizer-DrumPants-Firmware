@@ -66,7 +66,11 @@ MidiDevice::MidiDevice() {
         // Ok, the Serial object is not actually the HardwareSerial class, it's something else.
         //this->mySerial = &Serial;
         // do some tricky de-re-referencing to get around it.
-        #define mySerial (&Serial)
+        #if IS_DRUMPANTS
+	        #define mySerial (&Serial2)
+		#else
+			#define mySerial (&Serial)
+		#endif
     #else
         this->mySerial = new SoftwareSerial(2, 3, false); //Soft TX on 3, we don't use RX in this code
     #endif

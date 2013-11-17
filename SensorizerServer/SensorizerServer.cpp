@@ -111,7 +111,198 @@ void SensorizerServer::loadPreset() {
 	
 	this->midiDevice->setVolume(MIDI_CHANNEL, 126);
 
-#if PRESET == PRESET_JEANS
+
+/**************** BETA PANTS ******************/
+#if PRESET == PRESET_BETA
+
+	////////////////////////////
+	// OUTPUT FOR arduino 0
+	////////////////////////////
+	s = new SensorOutput();
+	s->inRange.low = 0;
+	s->inRange.high = 1;
+	s->outRange.low = 0;
+	s->outRange.high = 1;
+	s->cutoffRange.low = 0.8428571;
+	s->cutoffRange.high = 1;
+	s->setCutoffType(SensorOutput::CUTOFF_TYPE_VAL_NULLABLE_LOW); //Nullable
+	s->multiplyVal = 1;
+	s->addVal = 0;
+	s->isInvert = false;
+	s->isLogarithmic = false; // since this is a ribbon sensor.
+
+	// s->addOutputFilter(new OneHitDetector());
+
+	// m = new MidiMapping(this->midiDevice);
+	// m->channel = 0;
+	// m->note = 60 + i;
+	// m->setMsgType(MidiMapping::NOTE);
+	// s->addMidiMapping(m);
+	
+	sensorInputs[i++] = s;
+	////////////////////////////
+
+
+
+	////////////////////////////
+	// OUTPUT FOR arduino 1
+	////////////////////////////
+	s = new SensorOutput();
+	s->inRange.low = 0;
+	s->inRange.high = 0.21212122;
+	s->outRange.low = 0;
+	s->outRange.high = 1;
+	s->cutoffRange.low = 0.094285714;
+	s->cutoffRange.high = 1;
+	s->setCutoffType(SensorOutput::CUTOFF_TYPE_VAL_NULLABLE_LOW); //Nullable
+	s->multiplyVal = 1;
+	s->addVal = 0;
+	s->isInvert = false;
+
+	// filter = new OneHitDetector();
+	// filter->retriggerThreshold = 50;
+	// s->addOutputFilter(filter);
+
+	// m = new MidiMapping(this->midiDevice);
+	// m->channel = MIDI_CHANNEL;
+	// m->note = 60 + i;
+	// m->setMsgType(MidiMapping::NOTE);
+	// s->addMidiMapping(m);
+	
+	sensorInputs[i++] = s;
+	////////////////////////////
+
+
+
+	////////////////////////////
+	// OUTPUT FOR arduino 2
+	////////////////////////////
+	s = new SensorOutput();
+	s->inRange.low = 0;
+	s->inRange.high = 0.16353861;
+	s->outRange.low = 0;
+	s->outRange.high = 1;
+	s->cutoffRange.low = 0.01;
+	s->cutoffRange.high = 1;
+	s->setCutoffType(SensorOutput::CUTOFF_TYPE_VAL_NULLABLE_LOW); //No Cutoff
+	s->multiplyVal = 1;
+	s->addVal = 0;
+	s->isInvert = false;
+
+	// filter = new OneHitDetector();
+	// filter->retriggerThreshold = 50;
+	// s->addOutputFilter(filter);
+
+	// m = new MidiMapping(this->midiDevice);
+	// m->channel = MIDI_CHANNEL;
+	// m->note = 60 + i;
+	// m->setMsgType(MidiMapping::NOTE);
+	// s->addMidiMapping(m);
+	
+	sensorInputs[i++] = s;
+	////////////////////////////
+
+
+
+	////////////////////////////
+	// OUTPUT FOR arduino 3
+	////////////////////////////
+	s = new SensorOutput();
+	s->inRange.low = 0;
+	s->inRange.high = 0.28739002;
+	s->outRange.low = 0;
+	s->outRange.high = 1;
+	s->cutoffRange.low = 0.09;
+	s->cutoffRange.high = 1;
+	s->setCutoffType(SensorOutput::CUTOFF_TYPE_VAL_NULLABLE_LOW); //No Cutoff
+	s->multiplyVal = 1;
+	s->addVal = 0;
+	s->isInvert = false;
+
+	filter = new OneHitDetector();
+	filter->retriggerThreshold = 50;
+	s->addOutputFilter(filter);
+
+	m = new MidiMapping(this->midiDevice);
+	m->channel = MIDI_CHANNEL;
+	m->note = 60 + i;
+	m->setMsgType(MidiMapping::NOTE);
+	s->addMidiMapping(m);
+	
+	sensorInputs[i++] = s;
+	////////////////////////////
+
+
+
+	////////////////////////////
+	// OUTPUT FOR arduino 4
+	////////////////////////////
+	s = new SensorOutput();
+	s->inRange.low = 0;
+	s->inRange.high = 0.20821114;
+	s->outRange.low = 0;
+	s->outRange.high = 1;
+	s->cutoffRange.low = 0.01;
+	s->cutoffRange.high = 1;
+	s->setCutoffType(SensorOutput::CUTOFF_TYPE_VAL_NULLABLE_LOW); //No Cutoff
+	s->multiplyVal = 1;
+	s->addVal = 0;
+	s->isInvert = false;
+
+	filter = new OneHitDetector();
+	filter->retriggerThreshold = 50;
+	s->addOutputFilter(filter);
+
+	m = new MidiMapping(this->midiDevice);
+	m->channel = MIDI_CHANNEL;
+	m->note = 60 + i;
+	m->setMsgType(MidiMapping::NOTE);
+	s->addMidiMapping(m);
+	
+	sensorInputs[i++] = s;
+	////////////////////////////
+
+
+
+	////////////////////////////
+	// OUTPUT FOR arduino 5
+	////////////////////////////
+	s = new SensorOutput();
+	s->inRange.low = 0;
+	s->inRange.high = 0.23851417;
+	s->outRange.low = 0;
+	s->outRange.high = 1;
+	s->cutoffRange.low = 0.54285717;
+	s->cutoffRange.high = 1;
+	s->setCutoffType(SensorOutput::CUTOFF_TYPE_VAL_NULLABLE_LOW); //Nullable
+	s->multiplyVal = 1;
+	s->addVal = 0;
+	s->isInvert = false;
+
+	filter = new OneHitDetector();
+	filter->retriggerThreshold = 170;
+	s->addOutputFilter(filter);
+
+	m = new MidiMapping(this->midiDevice);
+	m->channel = MIDI_CHANNEL;
+	m->note = 60 + i;
+	m->setMsgType(MidiMapping::NOTE);
+	s->addMidiMapping(m);
+	
+	sensorInputs[i++] = s;
+	////////////////////////////
+
+
+
+
+
+
+
+
+/**************** ARDUINO PANTS ******************/
+
+
+#elif PRESET == PRESET_JEANS
 
 	////////////////////////////
 	// OUTPUT FOR arduino 0

@@ -10,7 +10,8 @@
 #define PRESET_NEON_GREEN_STRING 3
 #define PRESET_VJACKET_LEATHER 2
 #define PRESET_JEANS 1
-#define PRESET PRESET_VJACKET_LEATHER
+
+#define PRESET PRESET_BETA
 
 /******* END hardware version type presets ********/
 
