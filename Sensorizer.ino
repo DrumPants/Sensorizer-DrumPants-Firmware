@@ -1,4 +1,5 @@
 #include <Constants.h>  
+#include <Debug.h>
 
 #if !USE_HARDWARE_SERIAL
 #include <SoftwareSerial.h>
@@ -214,8 +215,8 @@ void setPinModeCallback(byte pin, int mode)
  *============================================================================*/
 void setup() 
 {
-  byte i;
-
+  // set up the debug printer
+  DEBUG_PRINT_SETUP
 
   setPinModeCallback(ENCODER_PIN_1, INPUT);
   setPinModeCallback(ENCODER_PIN_2, INPUT);
