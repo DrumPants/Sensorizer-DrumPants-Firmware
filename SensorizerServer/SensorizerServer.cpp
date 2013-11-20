@@ -23,8 +23,6 @@ SensorizerServer::SensorizerServer() {
 	// record and loop each output
 	this->midiDevice->setListener(this->looper);
 #endif
-
-	this->loadPreset();
 }
 
 SensorizerServer::~SensorizerServer() {
@@ -44,6 +42,9 @@ SensorizerServer::~SensorizerServer() {
 void SensorizerServer::init() {
 	this->midiDevice->setup();
 	
+	// must do this after midiDevice is set up other wise it crashes on Due
+	this->loadPreset();
+
 	for (int i = 0; i < SENSOR_INPUTS_LENGTH; i++) {
 		if (sensorInputs[i] != NULL)
 			sensorInputs[i]->init();
