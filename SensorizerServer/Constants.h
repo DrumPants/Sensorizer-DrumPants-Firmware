@@ -16,8 +16,13 @@
 
 #if PRESET == PRESET_VJACKET_LEATHER
 
-  #define BLE_TYPE BLE_TYPE_BLUEGIGA
-  #define USE_HARDWARE_SERIAL 1
+  // to use BLE:
+  //#define BLE_TYPE BLE_TYPE_BLUEGIGA
+  //#define USE_HARDWARE_SERIAL 1
+
+  // to use MIDI shield:
+  #define BLE_TYPE BLE_TYPE_NONE
+  #define USE_HARDWARE_SERIAL 0
 
 #elif PRESET == PRESET_NEON_GREEN_STRING
 
