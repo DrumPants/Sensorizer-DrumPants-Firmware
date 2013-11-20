@@ -63,28 +63,17 @@
 
 #if IS_DUE
   #define FIRST_USABLE_PIN 2
-  // NOTE: this requires installing Firmata 2.3.5 into the Arduino IDE (see http://firmata.org/wiki/Main_Page#Arduino_Due )
-  #define DISABLE_FIRMATA 0
-  
-  // we can't begin on the same Serial twice - MIDIDevice also uses Serial since it's the hardware one.
-  // so for now we disable Firmata.begin()
-  #define ENABLE_FIRMATA_OUTPUT 0
   
   #define USE_HARDWARE_SERIAL 1
 #else
   #define FIRST_USABLE_PIN 0
-  #define DISABLE_FIRMATA 0
 #endif
 
 #if IS_BLE
   //#define BAUD_RATE BAUD_RATE_BLUETOOTH_LE
   #define BAUD_RATE BAUD_RATE_USB
   
-  #define ENABLE_FIRMATA_OUTPUT 0
-  
   #define USE_HARDWARE_SERIAL 0
-  
-  #define DISABLE_FIRMATA 1
   
   // for testing:
   #define BAUD_RATE_MIDI BAUD_RATE_BLUETOOTH_LE
