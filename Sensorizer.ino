@@ -8,7 +8,7 @@
 #include <SensorizerServer.h>    
 
 
-SensorizerServer server;
+SensorizerServer* server;
 
 
 #define TOTAL_ANALOG_PINS 6
@@ -102,19 +102,19 @@ void checkKnobs() {
         newInst = 128 - newInst;
       if (newInst > 127) {
         DEBUG_PRINT_NUM("change bank: ", newInst);
-        server.midiDevice->setBank(MIDI_CHANNEL, 0x78); //DRUMS
+        server->midiDevice->setBank(MIDI_CHANNEL, 0x78); //DRUMS
         
         //previous was melodic, load drum preset
-        server.loadNotes( NOTE_PRESETS_DRUMS[0] );
+        server->loadNotes( NOTE_PRESETS_DRUMS[0] );
       }
       else {     
         DEBUG_PRINT_NUM("change bank: ", newInst); 
         
-        server.midiDevice->setBank(MIDI_CHANNEL, 0x79, newInst); //MELODIC
+        server->midiDevice->setBank(MIDI_CHANNEL, 0x79, newInst); //MELODIC
         
         if (position > 127) {
            //we switched from drums, reload the note scales        
-          server.loadNotes( NOTE_PRESETS_MELODIC[0] );
+          server->loadNotes( NOTE_PRESETS_MELODIC[0] );
         }
       }
       
@@ -127,13 +127,13 @@ void checkKnobs() {
       positionKey = newPos;
       DEBUG_PRINT_NUM("encoder key: ", positionKey);
       
-      if (server.midiDevice->getBank() == 0x78) { //DRUMS
+      if (server->midiDevice->getBank() == 0x78) { //DRUMS
         int newInst = abs(positionKey % NOTE_PRESETS_DRUMS_LENGTH);
-        server.loadNotes( NOTE_PRESETS_DRUMS[newInst] );
+        server->loadNotes( NOTE_PRESETS_DRUMS[newInst] );
       }
       else { //MELODIC
         int newInst = abs(positionKey % NOTE_PRESETS_MELODIC_LENGTH);
-        server.loadNotes( NOTE_PRESETS_MELODIC[newInst] );
+        server->loadNotes( NOTE_PRESETS_MELODIC[newInst] );
         
       }
     }
@@ -144,15 +144,16 @@ void checkKnobs() {
 
 
 void setupServer() {
-    server.init();
+    server = new SensorizerServer();
+    server->init();
 
     // load good drums preset to start
-    server.loadNotes( NOTE_PRESETS_DRUMS[0] );
+    server->loadNotes( NOTE_PRESETS_DRUMS[0] );
 
     // must wait a second for the MIDI device to boot up before it accepts our messages
     //delay(1000);
 
-    server.midiDevice->setBank(MIDI_CHANNEL, 0x78); //DRUMS
+    server->midiDevice->setBank(MIDI_CHANNEL, 0x78); //DRUMS
 }
 
 
@@ -259,7 +260,7 @@ void loop()
           int val = analogRead(analogPin);
           
 #if !ENABLE_TEST
-          server.readPin(analogPin, val);
+          server->readPin(analogPin, val);
 #endif          
  
     }
@@ -267,7 +268,7 @@ void loop()
 
 #if ENABLE_LOOPER  
   // loop that shit! 
-  server.tick();
+  server->tick();
 #endif
   
 #if ENABLE_TEST
@@ -300,6 +301,6 @@ void testUpdate() {
   if (testCounter > 0) {
     val = testCounter;
   }
-  server.readPin(testPin, val);
+  server->readPin(testPin, val);
 }
 #endif
