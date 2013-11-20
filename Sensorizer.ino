@@ -145,6 +145,7 @@ void checkKnobs() {
 
 void setupServer() {
     server = new SensorizerServer();
+
     server->init();
 
     // load good drums preset to start
@@ -224,14 +225,17 @@ void setup()
   setPinModeCallback(ENCODER_MODE_SWITCH_PIN, INPUT);
 
    
-  Serial.begin(BAUD_RATE);
+  DEBUG_PRINT("BEGIN SERIAL")
+  //Serial.begin(BAUD_RATE);
 
 
-  SerialUSB.begin(BAUD_RATE);
+  //SerialUSB.begin(BAUD_RATE);
 
-  setupKnobs();
-    
+  DEBUG_PRINT("SETUPSERVER")
   setupServer();
+
+  DEBUG_PRINT("SETUPKNOBS")
+  setupKnobs();
 
   DEBUG_PRINT("END SETUP")
 }
