@@ -4,11 +4,13 @@
 #define ENABLE_DEBUG_PRINTING 1
 
 #if IS_DUE
+	// SerialUSB is BROKEN
 	#define SerialToComputer SerialUSB
 #else
 	#define SerialToComputer Serial
 #endif
 
+// don't use this function! it fucks things up for some reason!
 #define DEBUG_PRINT_SETUP SerialToComputer.begin(57600);SerialToComputer.println("Debug printing STARTED");
 
 #define PRINT(text) SerialToComputer.println(text);SerialToComputer.println("-----");

@@ -218,18 +218,21 @@ void setPinModeCallback(byte pin, int mode)
 void setup() 
 {
   // set up the debug printer
-  DEBUG_PRINT_SETUP
+  //DEBUG_PRINT_SETUP
+
+#if IS_DUE
+  Serial.begin(57600);
+
+  // this is needed for debug printing on native USB port
+  SerialUSB.begin(57600);
+#else
+  Serial.begin(BAUD_RATE);
+#endif
 
   setPinModeCallback(ENCODER_PIN_1, INPUT);
   setPinModeCallback(ENCODER_PIN_2, INPUT);
   setPinModeCallback(ENCODER_MODE_SWITCH_PIN, INPUT);
 
-   
-  DEBUG_PRINT("BEGIN SERIAL")
-  //Serial.begin(BAUD_RATE);
-
-
-  //SerialUSB.begin(BAUD_RATE);
 
   DEBUG_PRINT("SETUPSERVER")
   setupServer();
@@ -247,8 +250,8 @@ void loop()
 {
   byte pin, analogPin;
 
-  Serial.println("loop ser");
-  SerialUSB.println("loop usb");
+ // Serial.println("loop ser");
+ // SerialUSB.println("loop usb");
 
   checkKnobs();
   
