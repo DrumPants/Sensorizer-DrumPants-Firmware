@@ -3,7 +3,7 @@
 
 #define ENABLE_DEBUG_PRINTING 1
 
-#if IS_DRUMPANTS
+#if IS_DUE
 	#define SerialToComputer SerialUSB
 #else
 	#define SerialToComputer Serial

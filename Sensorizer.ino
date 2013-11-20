@@ -226,6 +226,8 @@ void setup()
   Serial.begin(BAUD_RATE);
 
 
+  SerialUSB.begin(BAUD_RATE);
+
   setupKnobs();
     
   setupServer();
@@ -239,6 +241,9 @@ void setup()
 void loop() 
 {
   byte pin, analogPin;
+
+  Serial.println("loop ser");
+  SerialUSB.println("loop usb");
 
   checkKnobs();
   
