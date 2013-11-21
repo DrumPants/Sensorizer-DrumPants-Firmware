@@ -94,6 +94,11 @@ void MidiDevice::setup() {
 	//Setup soft serial for MIDI control
 	mySerial->begin(BAUD_RATE_MIDI);
 
+#if IS_DRUMPANTS
+	// also send to BLE
+	Serial1.begin(BAUD_RATE_BLUETOOTH_LE);
+#endif		
+
 #ifndef IS_ARDUINO_SHIM
 	//Reset the VS1053
 	pinMode(RESET_MIDI_PIN, OUTPUT);
@@ -197,12 +202,25 @@ void MidiDevice::talkMIDI(byte cmd, byte data1, byte data2, bool isSilent) {
         midiOut << data2;
     
 #else
-  digitalWrite(LED_PIN, HIGH);
-  mySerial->write(cmd);//print(cmd, BYTE);
-  mySerial->write(data1);//print(data1, BYTE);
+	digitalWrite(LED_PIN, HIGH);
+	mySerial->write(cmd);//print(cmd, BYTE);
+	mySerial->write(data1);//print(data1, BYTE);
 
-  if (hasSecondArg)
-    mySerial->write(data2);//print(data2, BYTE);
+	if (hasSecondArg)
+		mySerial->write(data2);//print(data2, BYTE);
+
+
+	#if IS_DRUMPANTS
+
+	// also send to BLE
+	Serial1.write(cmd);
+	Serial1.write(data1);
+
+	if (hasSecondArg)
+		Serial1.write(data2);
+
+	#endif
+
 
   digitalWrite(LED_PIN, LOW);
 #endif
