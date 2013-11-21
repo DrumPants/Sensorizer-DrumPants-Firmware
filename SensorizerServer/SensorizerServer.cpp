@@ -133,15 +133,15 @@ void SensorizerServer::loadPreset() {
 	s->addVal = 0;
 	s->isInvert = false;
 
-	filter = new OneHitDetector();
-	filter->retriggerThreshold = 50;
-	s->addOutputFilter(filter);
+	// filter = new OneHitDetector();
+	// filter->retriggerThreshold = 50;
+	// s->addOutputFilter(filter);
 
-	m = new MidiMapping(this->midiDevice);
-	m->channel = MIDI_CHANNEL;
-	m->note = 60 + i;
-	m->setMsgType(MidiMapping::NOTE);
-	s->addMidiMapping(m);
+	// m = new MidiMapping(this->midiDevice);
+	// m->channel = MIDI_CHANNEL;
+	// m->note = 60 + i;
+	// m->setMsgType(MidiMapping::NOTE);
+	// s->addMidiMapping(m);
 	
 	sensorInputs[i++] = s;
 	////////////////////////////
@@ -326,7 +326,33 @@ void SensorizerServer::loadPreset() {
 	////////////////////////////
 
 
+	////////////////////////////
+	// OUTPUT FOR arduino 7
+	////////////////////////////
+	s = new SensorOutput();
+	s->inRange.low = 0;
+	s->inRange.high = 0.16353861;
+	s->outRange.low = 0;
+	s->outRange.high = 1;
+	s->cutoffRange.low = 0.01;
+	s->cutoffRange.high = 1;
+	s->setCutoffType(SensorOutput::CUTOFF_TYPE_VAL_NULLABLE_LOW); //No Cutoff
+	s->multiplyVal = 1;
+	s->addVal = 0;
+	s->isInvert = false;
 
+	filter = new OneHitDetector();
+	filter->retriggerThreshold = 50;
+	s->addOutputFilter(filter);
+
+	m = new MidiMapping(this->midiDevice);
+	m->channel = MIDI_CHANNEL;
+	m->note = 60 + i;
+	m->setMsgType(MidiMapping::NOTE);
+	s->addMidiMapping(m);
+	
+	sensorInputs[i++] = s;
+	////////////////////////////
 
 
 

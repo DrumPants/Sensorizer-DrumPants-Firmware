@@ -82,7 +82,7 @@
   #define USE_HARDWARE_SERIAL 1
 
   // start off on the middle since our sensors only have 6 still.
-  #define ANALOG_PIN_START 2
+  #define ANALOG_PIN_START 1
   #define ANALOG_PIN_END 7
 #else
   #define FIRST_USABLE_PIN 0
