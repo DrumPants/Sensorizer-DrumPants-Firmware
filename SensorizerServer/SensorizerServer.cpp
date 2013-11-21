@@ -160,15 +160,15 @@ void SensorizerServer::loadPreset() {
 	s->addVal = 0;
 	s->isInvert = false;
 
-	// filter = new OneHitDetector();
-	// filter->retriggerThreshold = 50;
-	// s->addOutputFilter(filter);
+	filter = new OneHitDetector();
+	filter->retriggerThreshold = 50;
+	s->addOutputFilter(filter);
 
-	// m = new MidiMapping(this->midiDevice);
-	// m->channel = MIDI_CHANNEL;
-	// m->note = 60 + i;
-	// m->setMsgType(MidiMapping::NOTE);
-	// s->addMidiMapping(m);
+	m = new MidiMapping(this->midiDevice);
+	m->channel = MIDI_CHANNEL;
+	m->note = 60 + i;
+	m->setMsgType(MidiMapping::NOTE);
+	s->addMidiMapping(m);
 	
 	sensorInputs[i++] = s;
 	////////////////////////////

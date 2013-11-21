@@ -81,8 +81,16 @@
   #define FIRST_USABLE_PIN 2
   
   #define USE_HARDWARE_SERIAL 1
+
+  // start off on the middle since our sensors only have 6 still.
+  #define ANALOG_PIN_START 2
+  #define ANALOG_PIN_END 7
 #else
   #define FIRST_USABLE_PIN 0
+
+  // normal arduinos have 6 analog ins
+  #define ANALOG_PIN_START 0
+  #define ANALOG_PIN_END 5
 #endif
 
 #if IS_BLE

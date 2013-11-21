@@ -11,7 +11,6 @@
 SensorizerServer* server;
 
 
-#define TOTAL_ANALOG_PINS 6
 
 #define ENCODER_DO_NOT_USE_INTERRUPTS
 #include <Encoder.h>
@@ -263,7 +262,7 @@ void loop()
   if (currentMillis - previousMillis > samplingInterval) {
     previousMillis += samplingInterval;
     /* ANALOGREAD - do all analogReads() at the configured sampling interval */
-    for(analogPin = 0; analogPin < TOTAL_ANALOG_PINS; analogPin++) {
+    for(analogPin = ANALOG_PIN_START; analogPin <= ANALOG_PIN_END; analogPin++) {
           int val = analogRead(analogPin);
           
 #if !ENABLE_TEST
