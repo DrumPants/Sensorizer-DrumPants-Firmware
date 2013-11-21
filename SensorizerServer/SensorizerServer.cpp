@@ -121,24 +121,25 @@ void SensorizerServer::loadPreset() {
 	////////////////////////////
 	s = new SensorOutput();
 	s->inRange.low = 0;
-	s->inRange.high = 1;
+	s->inRange.high = 0.28739002;
 	s->outRange.low = 0;
 	s->outRange.high = 1;
-	s->cutoffRange.low = 0.8428571;
+	s->cutoffRange.low = 0.09;
 	s->cutoffRange.high = 1;
-	s->setCutoffType(SensorOutput::CUTOFF_TYPE_VAL_NULLABLE_LOW); //Nullable
+	s->setCutoffType(SensorOutput::CUTOFF_TYPE_VAL_NULLABLE_LOW); //No Cutoff
 	s->multiplyVal = 1;
 	s->addVal = 0;
 	s->isInvert = false;
-	s->isLogarithmic = false; // since this is a ribbon sensor.
 
-	// s->addOutputFilter(new OneHitDetector());
+	filter = new OneHitDetector();
+	filter->retriggerThreshold = 50;
+	s->addOutputFilter(filter);
 
-	// m = new MidiMapping(this->midiDevice);
-	// m->channel = 0;
-	// m->note = 60 + i;
-	// m->setMsgType(MidiMapping::NOTE);
-	// s->addMidiMapping(m);
+	m = new MidiMapping(this->midiDevice);
+	m->channel = MIDI_CHANNEL;
+	m->note = 60 + i;
+	m->setMsgType(MidiMapping::NOTE);
+	s->addMidiMapping(m);
 	
 	sensorInputs[i++] = s;
 	////////////////////////////
@@ -190,15 +191,15 @@ void SensorizerServer::loadPreset() {
 	s->addVal = 0;
 	s->isInvert = false;
 
-	// filter = new OneHitDetector();
-	// filter->retriggerThreshold = 50;
-	// s->addOutputFilter(filter);
+	filter = new OneHitDetector();
+	filter->retriggerThreshold = 50;
+	s->addOutputFilter(filter);
 
-	// m = new MidiMapping(this->midiDevice);
-	// m->channel = MIDI_CHANNEL;
-	// m->note = 60 + i;
-	// m->setMsgType(MidiMapping::NOTE);
-	// s->addMidiMapping(m);
+	m = new MidiMapping(this->midiDevice);
+	m->channel = MIDI_CHANNEL;
+	m->note = 60 + i;
+	m->setMsgType(MidiMapping::NOTE);
+	s->addMidiMapping(m);
 	
 	sensorInputs[i++] = s;
 	////////////////////////////

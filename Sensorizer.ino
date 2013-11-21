@@ -247,7 +247,7 @@ void setup()
  *============================================================================*/
 void loop() 
 {
-  byte pin, analogPin;
+  byte analogPin;
 
  // Serial.println("loop ser");
  // SerialUSB.println("loop usb");
@@ -263,10 +263,11 @@ void loop()
     previousMillis += samplingInterval;
     /* ANALOGREAD - do all analogReads() at the configured sampling interval */
     for(analogPin = ANALOG_PIN_START; analogPin <= ANALOG_PIN_END; analogPin++) {
-          int val = analogRead(analogPin);
+        byte pinIdx = analogPin - ANALOG_PIN_START;
+        int val = analogRead(analogPin);
           
 #if !ENABLE_TEST
-          server->readPin(analogPin, val);
+        server->readPin(pinIdx, val);
 #endif          
  
     }
