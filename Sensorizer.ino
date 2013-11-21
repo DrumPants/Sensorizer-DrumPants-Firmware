@@ -24,6 +24,7 @@ SensorizerServer* server;
 #define NOTE_PRESETS_MELODIC_LENGTH 10
 #define NOTE_PRESETS_DRUMS_LENGTH 4
 
+
 /*
 //var n = [0, 60, 62, 63, 65, 67];
 //major pent
@@ -38,7 +39,8 @@ for (var i=0;i < 8; i++) {
     console.log(n);
 }
 */
-byte NOTE_PRESETS_MELODIC[NOTE_PRESETS_MELODIC_LENGTH][6] = {
+
+byte NOTE_PRESETS_MELODIC[NOTE_PRESETS_MELODIC_LENGTH][NOTE_PRESETS_ELEMENT_LENGTH] = {
         {0, 60, 63, 65, 67, 68},
         {0, 60, 64, 65, 67, 69},
         {0, 60, 65, 67, 68, 71},
@@ -52,7 +54,7 @@ byte NOTE_PRESETS_MELODIC[NOTE_PRESETS_MELODIC_LENGTH][6] = {
 	{8, 68, 71, 73, 75, 77}*/
 };
 
-byte NOTE_PRESETS_DRUMS[NOTE_PRESETS_DRUMS_LENGTH][6] = {
+byte NOTE_PRESETS_DRUMS[NOTE_PRESETS_DRUMS_LENGTH][NOTE_PRESETS_ELEMENT_LENGTH] = {
 	{0, 57, 40, 48, 44, 41},
 	{0, 49, 39, 60, 61, 43},
 	{0, 52, 39, 67, 68, 43},
@@ -266,6 +268,7 @@ void loop()
         byte pinIdx = analogPin - ANALOG_PIN_START;
         int val = analogRead(analogPin);
           
+        //DEBUG_PRINT_NUM("check pin ", pinIdx);  
 #if !ENABLE_TEST
         server->readPin(pinIdx, val);
 #endif          

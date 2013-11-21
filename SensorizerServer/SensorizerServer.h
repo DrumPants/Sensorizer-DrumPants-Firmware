@@ -15,6 +15,13 @@
 
 #include "Debug.h"
 
+// TODO: these need to be updated for DUE (MORE NOTES!). hacking for now
+#define NOTE_PRESETS_ELEMENT_LENGTH 6
+#if SENSOR_INPUTS_LENGTH > NOTE_PRESETS_ELEMENT_LENGTH
+  #warning "TODO: update note preset arrays for more than 6 sensors"
+#endif
+
+
 #define SENSOR_INPUTS_LENGTH ((ANALOG_PIN_END + 1) - ANALOG_PIN_START)
 
 #define TIME_PER_TICK (LOOP_LENGTH_IN_SECONDS * 1000 / LOOP_LENGTH_IN_TICKS)

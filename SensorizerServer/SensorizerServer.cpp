@@ -92,8 +92,10 @@ void SensorizerServer::readAll() {
 */
 
 void SensorizerServer::readPin(int pinIdx, int pinValue) {
-	if (pinIdx >= SENSOR_INPUTS_LENGTH)
+	if (pinIdx >= SENSOR_INPUTS_LENGTH) {
+		DEBUG_PRINT_NUM("readPin INVALID PIN", pinIdx);	
 		return;
+	}
 
 	float v = pinValue / 1024.0;
 
@@ -121,10 +123,10 @@ void SensorizerServer::loadPreset() {
 	////////////////////////////
 	s = new SensorOutput();
 	s->inRange.low = 0;
-	s->inRange.high = 0.28739002;
+	s->inRange.high = 0.16353861;
 	s->outRange.low = 0;
 	s->outRange.high = 1;
-	s->cutoffRange.low = 0.09;
+	s->cutoffRange.low = 0.01;
 	s->cutoffRange.high = 1;
 	s->setCutoffType(SensorOutput::CUTOFF_TYPE_VAL_NULLABLE_LOW); //No Cutoff
 	s->multiplyVal = 1;
@@ -151,12 +153,12 @@ void SensorizerServer::loadPreset() {
 	////////////////////////////
 	s = new SensorOutput();
 	s->inRange.low = 0;
-	s->inRange.high = 0.21212122;
+	s->inRange.high = 0.16353861;
 	s->outRange.low = 0;
 	s->outRange.high = 1;
-	s->cutoffRange.low = 0.094285714;
+	s->cutoffRange.low = 0.01;
 	s->cutoffRange.high = 1;
-	s->setCutoffType(SensorOutput::CUTOFF_TYPE_VAL_NULLABLE_LOW); //Nullable
+	s->setCutoffType(SensorOutput::CUTOFF_TYPE_VAL_NULLABLE_LOW); //No Cutoff
 	s->multiplyVal = 1;
 	s->addVal = 0;
 	s->isInvert = false;
@@ -211,10 +213,10 @@ void SensorizerServer::loadPreset() {
 	////////////////////////////
 	s = new SensorOutput();
 	s->inRange.low = 0;
-	s->inRange.high = 0.28739002;
+	s->inRange.high = 0.16353861;
 	s->outRange.low = 0;
 	s->outRange.high = 1;
-	s->cutoffRange.low = 0.09;
+	s->cutoffRange.low = 0.01;
 	s->cutoffRange.high = 1;
 	s->setCutoffType(SensorOutput::CUTOFF_TYPE_VAL_NULLABLE_LOW); //No Cutoff
 	s->multiplyVal = 1;
@@ -241,7 +243,7 @@ void SensorizerServer::loadPreset() {
 	////////////////////////////
 	s = new SensorOutput();
 	s->inRange.low = 0;
-	s->inRange.high = 0.20821114;
+	s->inRange.high = 0.16353861;
 	s->outRange.low = 0;
 	s->outRange.high = 1;
 	s->cutoffRange.low = 0.01;
@@ -271,18 +273,18 @@ void SensorizerServer::loadPreset() {
 	////////////////////////////
 	s = new SensorOutput();
 	s->inRange.low = 0;
-	s->inRange.high = 0.23851417;
+	s->inRange.high = 0.16353861;
 	s->outRange.low = 0;
 	s->outRange.high = 1;
-	s->cutoffRange.low = 0.54285717;
+	s->cutoffRange.low = 0.01;
 	s->cutoffRange.high = 1;
-	s->setCutoffType(SensorOutput::CUTOFF_TYPE_VAL_NULLABLE_LOW); //Nullable
+	s->setCutoffType(SensorOutput::CUTOFF_TYPE_VAL_NULLABLE_LOW); //No Cutoff
 	s->multiplyVal = 1;
 	s->addVal = 0;
 	s->isInvert = false;
 
 	filter = new OneHitDetector();
-	filter->retriggerThreshold = 170;
+	filter->retriggerThreshold = 50;
 	s->addOutputFilter(filter);
 
 	m = new MidiMapping(this->midiDevice);
@@ -295,7 +297,33 @@ void SensorizerServer::loadPreset() {
 	////////////////////////////
 
 
+	////////////////////////////
+	// OUTPUT FOR arduino 6
+	////////////////////////////
+	s = new SensorOutput();
+	s->inRange.low = 0;
+	s->inRange.high = 0.16353861;
+	s->outRange.low = 0;
+	s->outRange.high = 1;
+	s->cutoffRange.low = 0.01;
+	s->cutoffRange.high = 1;
+	s->setCutoffType(SensorOutput::CUTOFF_TYPE_VAL_NULLABLE_LOW); //No Cutoff
+	s->multiplyVal = 1;
+	s->addVal = 0;
+	s->isInvert = false;
 
+	filter = new OneHitDetector();
+	filter->retriggerThreshold = 50;
+	s->addOutputFilter(filter);
+
+	m = new MidiMapping(this->midiDevice);
+	m->channel = MIDI_CHANNEL;
+	m->note = 60 + i;
+	m->setMsgType(MidiMapping::NOTE);
+	s->addMidiMapping(m);
+	
+	sensorInputs[i++] = s;
+	////////////////////////////
 
 
 
@@ -1024,7 +1052,7 @@ void SensorizerServer::loadNotes(byte notes[]) {
 	for (int i = 0; i < SENSOR_INPUTS_LENGTH; i++) {
 		if (sensorInputs[i] != NULL) {
 			if (sensorInputs[i]->dropdownMidiMappings[0] != NULL)
-				sensorInputs[i]->dropdownMidiMappings[0]->note = notes[i];
+				sensorInputs[i]->dropdownMidiMappings[0]->note = notes[min(i, (NOTE_PRESETS_ELEMENT_LENGTH - 1))];
 		}
 	}
 }
