@@ -72,7 +72,7 @@ public:
 	/***
 		Prints the given number as its decimal equivalent.
 	***/
-	void print(byte num);
+	void print(int num);
 };
 
 

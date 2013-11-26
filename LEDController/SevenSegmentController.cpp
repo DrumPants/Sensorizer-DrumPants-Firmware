@@ -113,7 +113,7 @@ void SevenSegmentController::setDigit(byte digitIndex, byte character) {
 }
 
 
-void SevenSegmentController::print(byte num) {
+void SevenSegmentController::print(int num) {
   // byte tens = num / 10;
 
   // charactersForDigits[0] = tens + '0';
@@ -124,6 +124,14 @@ void SevenSegmentController::print(byte num) {
 
   // only show the two least significant digits
   int startChar = str.length() - 2;
-  charactersForDigits[0] = str.charAt(startChar + 0);
+
+  // handle single digits
+  if (startChar < 0) {
+      charactersForDigits[0] = '0';
+  }
+  else {
+    charactersForDigits[0] = str.charAt(startChar + 0);
+  }
+
   charactersForDigits[1] = str.charAt(startChar + 1);
 }
