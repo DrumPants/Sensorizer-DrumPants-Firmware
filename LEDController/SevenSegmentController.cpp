@@ -121,6 +121,9 @@ void SevenSegmentController::print(byte num) {
   // 
   
   String str = String(num);
-  charactersForDigits[0] = str.charAt(0);
-  charactersForDigits[1] = str.charAt(1);
+
+  // only show the two least significant digits
+  int startChar = str.length() - 2;
+  charactersForDigits[0] = str.charAt(startChar + 0);
+  charactersForDigits[1] = str.charAt(startChar + 1);
 }
