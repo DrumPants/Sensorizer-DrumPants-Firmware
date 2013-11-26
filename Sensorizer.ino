@@ -27,20 +27,17 @@ Knobs* knobs;
 
 
 void setupServer() {
-    server = new SensorizerServer();
-
-    server->init();
+    // must wait a bit for the MIDI device to boot up before it accepts our messages
+    delay(500);
     
+    
+    server = new SensorizerServer();
+    server->init();
+
+    
+    // the setup will load good drums preset to start
     knobs = new Knobs();
     knobs->setup(server);
-    
-    // load good drums preset to start
-    //server->loadNotes( NOTE_PRESETS_DRUMS[0] );
-
-    // must wait a second for the MIDI device to boot up before it accepts our messages
-    //delay(1000);
-
-    server->midiDevice->setBank(MIDI_CHANNEL, 0x78); //DRUMS
 }
 
 

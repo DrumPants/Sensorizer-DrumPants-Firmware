@@ -23,8 +23,8 @@ byte NOTE_PRESETS_DRUMS[NOTE_PRESETS_DRUMS_LENGTH][NOTE_PRESETS_ELEMENT_LENGTH] 
 
 Knobs::Knobs() { 
   lastPos = 0; 
-  position  = 32;
-  positionKey  = 36;
+  position  = 128; // start with DRUMS!
+  positionKey  = 1;
   lastButtonMode = HIGH;
 }
 
@@ -49,7 +49,10 @@ void Knobs::setup(SensorizerServer* server) {
 
  // init other vars with whatever values are appropriate.
  // this allows us to change things immediately.
- check();
+ //check();
+ 
+ changeBank(position);
+ //changeScale(false, positionKey);
 }
 
 void Knobs::changeBank(int newPos) {
