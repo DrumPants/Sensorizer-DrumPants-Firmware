@@ -41,6 +41,11 @@ void Knobs::setup(SensorizerServer* server) {
  digitalWrite(ENCODER_PIN_COMMON, LOW); 
 #endif
 
+
+#if ENABLE_LCD
+  lcd.setup();
+#endif
+
  // init other vars with whatever values are appropriate.
  // this allows us to change things immediately.
  check();

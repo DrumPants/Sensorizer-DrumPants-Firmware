@@ -34,10 +34,10 @@
 typedef int ScaleId;
 typedef int BankId;
 
-#define ENABLE_LCD 0
+#define ENABLE_LCD 1
 
 #if ENABLE_LCD
-  #include "LcdInterface.h"
+  #include "LedInterface.h"
 #endif
 
 
@@ -70,7 +70,7 @@ struct Knobs {
   Encoder myEnc;
 
 #if ENABLE_LCD
-  LCDInterface lcd;
+  LEDInterface lcd;
 #endif
 
   int32_t position ;

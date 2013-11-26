@@ -2,6 +2,8 @@
 #include "LedInterface.h"
 
 void LEDInterface::setup() {
+  led->setup(); 
+  
   led->setDigit(0, '0');
   led->setDigit(1, '0');
 }
