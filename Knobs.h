@@ -12,9 +12,12 @@
 #include <Constants.h>
 #include <SensorizerServer.h> 
 
-#define ENCODER_OPTIMIZE_INTERRUPTS
-//#define ENCODER_DO_NOT_USE_INTERRUPTS
-#include <Encoder.h> 
+#if IS_DUE 
+  #define ENCODER_OPTIMIZE_INTERRUPTS
+#else
+  #define ENCODER_DO_NOT_USE_INTERRUPTS
+#endif
+#include <Encoder.h>
 
 #if IS_DRUMPANTS
   #define ENCODER_PIN_1 30
