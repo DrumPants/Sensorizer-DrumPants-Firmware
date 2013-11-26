@@ -30,7 +30,7 @@ Knobs::Knobs() {
 void Knobs::setup(SensorizerServer* server) {
  this->server = server;
 
- myEnc.init(ENCODER_PIN_1, ENCODER_PIN_2);
+ myEnc = new Encoder(ENCODER_PIN_1, ENCODER_PIN_2);
   
  pinMode(ENCODER_MODE_SWITCH_PIN, INPUT);
  digitalWrite(ENCODER_MODE_SWITCH_PIN, HIGH); //enable pullup 
@@ -73,13 +73,13 @@ void Knobs::check() {
   int buttonMode = digitalRead(ENCODER_MODE_SWITCH_PIN);
   if (lastButtonMode != buttonMode) {
      if (buttonMode == HIGH)
-       myEnc.write(position * 4);
+       myEnc->write(position * 4);
      else
-       myEnc.write(positionKey * 4); 
+       myEnc->write(positionKey * 4); 
   }
   
   
-  int newPos = myEnc.read() / 4;
+  int newPos = myEnc->read() / 4;
   
   if (buttonMode == HIGH) {
     // no button, change bank

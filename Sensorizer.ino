@@ -15,7 +15,8 @@ SensorizerServer* server;
 
 Knobs* knobs;
 
-#define ENCODER_DO_NOT_USE_INTERRUPTS
+#define ENCODER_OPTIMIZE_INTERRUPTS
+//#define ENCODER_DO_NOT_USE_INTERRUPTS
 #include <Encoder.h>
 
 

@@ -12,8 +12,8 @@
 #include <Constants.h>
 #include <SensorizerServer.h> 
 
-
-#define ENCODER_DO_NOT_USE_INTERRUPTS
+#define ENCODER_OPTIMIZE_INTERRUPTS
+//#define ENCODER_DO_NOT_USE_INTERRUPTS
 #include <Encoder.h> 
 
 #if IS_DRUMPANTS
@@ -67,7 +67,7 @@ struct Knobs {
 
   SensorizerServer* server;
 
-  Encoder myEnc;
+  Encoder* myEnc;
 
 #if ENABLE_LCD
   LEDInterface lcd;
