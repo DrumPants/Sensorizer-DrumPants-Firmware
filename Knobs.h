@@ -22,6 +22,9 @@
 // set to 1 if using Encoder 1.1. lib, 0 if using 1.0
 #define ENCODER_POSITION_MULTIPLIER 1
 
+// set to a higher number than 1 to count more detents before switching a number
+#define ENCODER_RESOLUTION 4
+
 
 #if IS_DRUMPANTS
   #define ENCODER_PIN_1 30

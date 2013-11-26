@@ -118,7 +118,7 @@ void Knobs::check() {
   // }
   
   
-  int curPos = myEnc->read() / ENCODER_POSITION_MULTIPLIER;
+  int curPos = (myEnc->read() / ENCODER_POSITION_MULTIPLIER) / ENCODER_RESOLUTION;
 
   if (buttonMode == HIGH) {
     // no button, change bank
