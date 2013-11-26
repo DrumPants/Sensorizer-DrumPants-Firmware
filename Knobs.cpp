@@ -21,7 +21,8 @@ byte NOTE_PRESETS_DRUMS[NOTE_PRESETS_DRUMS_LENGTH][NOTE_PRESETS_ELEMENT_LENGTH] 
 	{0, 53, 58, 76, 77, 54}
 };
 
-Knobs::Knobs() {  
+Knobs::Knobs() { 
+  lastPos = 0; 
   position  = 32;
   positionKey  = 36;
   lastButtonMode = HIGH;
@@ -51,73 +52,86 @@ void Knobs::setup(SensorizerServer* server) {
  check();
 }
 
+void Knobs::changeBank(int newPos) {
+  // give drums 12 spots so we don't miss them with the bad encoder.
+  int newInst = abs(newPos) % 139; 
+  
+  //if (newInst < 0)
+  //  newInst = 128 - newInst;
+  if (newInst > 127) {
+    DEBUG_PRINT_NUM("change drum bank: ", newInst);
+    server->midiDevice->setBank(MIDI_CHANNEL, 0x78); //DRUMS
+    
+    //previous was melodic, load drum preset
+    changeScale(false, 0);
+
+#if ENABLE_LCD
+    lcd.changeBank("Drums", newInst);
+#endif        
+  }
+  else {     
+    DEBUG_PRINT_NUM("change sound bank: ", newInst); 
+    
+    server->midiDevice->setBank(MIDI_CHANNEL, 0x79, newInst); //MELODIC
+
+    if (position > 127) {
+       //we switched from drums, reload the note scales        
+      changeScale(true, 0);
+    }
+    
+    // print to LCD after so we trample changeScale()'s printing.    
+#if ENABLE_LCD        
+    lcd.changeBank("Smurds!", newInst);
+#endif
+  }
+}
+
 
 void Knobs::changeScale(bool isMelodic, int positionKey) {
+  int scaleId;
 
   if (isMelodic) {
-    ScaleId scaleId = abs(positionKey % NOTE_PRESETS_MELODIC_LENGTH);
+    scaleId = abs(positionKey) % NOTE_PRESETS_MELODIC_LENGTH;
     server->loadNotes( NOTE_PRESETS_MELODIC[scaleId] );
   }
   else {
-    ScaleId scaleId = abs(positionKey % NOTE_PRESETS_DRUMS_LENGTH);
+    scaleId = abs(positionKey) % NOTE_PRESETS_DRUMS_LENGTH;
     server->loadNotes( NOTE_PRESETS_DRUMS[scaleId] );
   }
 
 #if ENABLE_LCD
-  lcd.changeScale(positionKey);
+  lcd.changeScale(scaleId);
 #endif
 }
 
 void Knobs::check() {
    //don't swap as soon as they release button: remember states for button pushed and not
   int buttonMode = digitalRead(ENCODER_MODE_SWITCH_PIN);
-  if (lastButtonMode != buttonMode) {
-     if (buttonMode == HIGH)
-       myEnc->write(position * 4);
-     else
-       myEnc->write(positionKey * 4); 
-  }
+  // if (lastButtonMode != buttonMode) {
+  //    if (buttonMode == HIGH)
+  //      myEnc->write(position * ENCODER_POSITION_MULTIPLIER);
+  //    else
+  //      myEnc->write(positionKey * ENCODER_POSITION_MULTIPLIER); 
+  // }
   
   
-  int newPos = myEnc->read() / 4;
-  
+  int curPos = myEnc->read() / ENCODER_POSITION_MULTIPLIER;
+
   if (buttonMode == HIGH) {
     // no button, change bank
+    int newPos = position + (curPos - lastPos);
     if (newPos != position) {
       DEBUG_PRINT_NUM("encoder: ", newPos);
-      int newInst = newPos % 129;
-      if (newInst < 0)
-        newInst = 128 - newInst;
-      if (newInst > 127) {
-        DEBUG_PRINT_NUM("change bank: ", newInst);
-        server->midiDevice->setBank(MIDI_CHANNEL, 0x78); //DRUMS
-        
-        //previous was melodic, load drum preset
-        changeScale(false, 0);
-
-#if ENABLE_LCD
-        lcd.changeBank("Drums", newInst);
-#endif        
-      }
-      else {     
-        DEBUG_PRINT_NUM("change bank: ", newInst); 
-        
-        server->midiDevice->setBank(MIDI_CHANNEL, 0x79, newInst); //MELODIC
-
-#if ENABLE_LCD        
-        lcd.changeBank("Smurds!", newInst);
-#endif
-        if (position > 127) {
-           //we switched from drums, reload the note scales        
-          changeScale(true, 0);
-        }
-      }
       
+      changeBank(newPos);
+
       position = newPos;
     }
   }
   else { //button is depressed. cheer up, button!
     // change scale
+    
+    int newPos = positionKey + (curPos - lastPos);
     if (newPos != positionKey) {
       positionKey = newPos;
       DEBUG_PRINT_NUM("encoder key: ", positionKey);
@@ -132,6 +146,7 @@ void Knobs::check() {
   }
   
   lastButtonMode = buttonMode;
+  lastPos = curPos;
 
 #if ENABLE_LCD
   lcd.check();

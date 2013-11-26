@@ -19,6 +19,10 @@
 #endif
 #include <Encoder.h>
 
+// set to 1 if using Encoder 1.1. lib, 0 if using 1.0
+#define ENCODER_POSITION_MULTIPLIER 1
+
+
 #if IS_DRUMPANTS
   #define ENCODER_PIN_1 30
   #define ENCODER_PIN_2 11
@@ -78,9 +82,11 @@ struct Knobs {
 
   int32_t position ;
   int32_t positionKey;
+  long lastPos;
 
   bool lastButtonMode;
 
+  void changeBank(int position);
   void changeScale(bool isMelodic, ScaleId scaleId);
 
 public:
