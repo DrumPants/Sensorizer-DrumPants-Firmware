@@ -5,152 +5,30 @@
 #include <SoftwareSerial.h>
 #endif 
 
-#include <SensorizerServer.h>    
+#include <SevenSegmentController.h>
 
+#include <SensorizerServer.h>  
+
+#include "Knobs.h"
 
 SensorizerServer* server;
 
-
+Knobs* knobs;
 
 #define ENCODER_DO_NOT_USE_INTERRUPTS
 #include <Encoder.h>
-
-#define ENCODER_PIN_1 8
-#define ENCODER_PIN_2 9
-#define ENCODER_MODE_SWITCH_PIN 10
-
-
-
-#define NOTE_PRESETS_MELODIC_LENGTH 10
-#define NOTE_PRESETS_DRUMS_LENGTH 4
-
-
-/*
-//var n = [0, 60, 62, 63, 65, 67];
-//major pent
-//var n = [0, 60, 64, 65, 67, 69];
-//minor pentatonic
-var n = [0, 60, 63, 65, 67, 69];
-var ns = [];
-for (var i=0;i < 8; i++) { 
-    for (j in n) {
-        n[j] = n[j] + 1;
-    }
-    console.log(n);
-}
-*/
-
-byte NOTE_PRESETS_MELODIC[NOTE_PRESETS_MELODIC_LENGTH][NOTE_PRESETS_ELEMENT_LENGTH] = {
-        {0, 60, 63, 65, 67, 68},
-        {0, 60, 64, 65, 67, 69},
-        {0, 60, 65, 67, 68, 71},
-        {22, 82, 86, 87, 89, 91},
-        {4, 64, 68, 69, 71, 73},
-        {5, 65, 69, 70, 72, 74},
-        {33, 93, 97, 98, 100, 102},
-	{0, 22, 25, 27, 29, 31},
-	{1, 41, 44, 46, 48, 50},
-	{6, 66, 69, 71, 73, 75}/*,
-	{8, 68, 71, 73, 75, 77}*/
-};
-
-byte NOTE_PRESETS_DRUMS[NOTE_PRESETS_DRUMS_LENGTH][NOTE_PRESETS_ELEMENT_LENGTH] = {
-	{0, 57, 40, 48, 44, 41},
-	{0, 49, 39, 60, 61, 43},
-	{0, 52, 39, 67, 68, 43},
-	{0, 53, 58, 76, 77, 54}
-};
-
-
-
-Encoder myEnc;
-
-void setupKnobs() {
- myEnc.init(ENCODER_PIN_1, ENCODER_PIN_2);
-  
- pinMode(ENCODER_MODE_SWITCH_PIN, INPUT);
- digitalWrite(ENCODER_MODE_SWITCH_PIN, HIGH); //enable pullup 
-
- // init other vars with whatever values are appropriate.
- // this allows us to change things immediately.
- checkKnobs();
-}
-
-int32_t position  = 32;
-int32_t positionKey  = 36;
-
-bool lastButtonMode = HIGH;
-
-void checkKnobs() {
-   //don't swap as soon as they release button: remember states for button pushed and not
-  int buttonMode = digitalRead(ENCODER_MODE_SWITCH_PIN);
-  if (lastButtonMode != buttonMode) {
-     if (buttonMode == HIGH)
-       myEnc.write(position * 4);
-     else
-       myEnc.write(positionKey * 4); 
-  }
-  
-  
-  int newPos = myEnc.read() / 4;
-  
-  if (buttonMode == HIGH) {
-    // no button, change bank
-    if (newPos != position) {
-      DEBUG_PRINT_NUM("encoder: ", newPos);
-      int newInst = newPos % 129;
-      if (newInst < 0)
-        newInst = 128 - newInst;
-      if (newInst > 127) {
-        DEBUG_PRINT_NUM("change bank: ", newInst);
-        server->midiDevice->setBank(MIDI_CHANNEL, 0x78); //DRUMS
-        
-        //previous was melodic, load drum preset
-        server->loadNotes( NOTE_PRESETS_DRUMS[0] );
-      }
-      else {     
-        DEBUG_PRINT_NUM("change bank: ", newInst); 
-        
-        server->midiDevice->setBank(MIDI_CHANNEL, 0x79, newInst); //MELODIC
-        
-        if (position > 127) {
-           //we switched from drums, reload the note scales        
-          server->loadNotes( NOTE_PRESETS_MELODIC[0] );
-        }
-      }
-      
-      position = newPos;
-    }
-  }
-  else { //button is depressed. cheer up, button!
-    // change scale
-    if (newPos != positionKey) {
-      positionKey = newPos;
-      DEBUG_PRINT_NUM("encoder key: ", positionKey);
-      
-      if (server->midiDevice->getBank() == 0x78) { //DRUMS
-        int newInst = abs(positionKey % NOTE_PRESETS_DRUMS_LENGTH);
-        server->loadNotes( NOTE_PRESETS_DRUMS[newInst] );
-      }
-      else { //MELODIC
-        int newInst = abs(positionKey % NOTE_PRESETS_MELODIC_LENGTH);
-        server->loadNotes( NOTE_PRESETS_MELODIC[newInst] );
-        
-      }
-    }
-  }
-  
-  lastButtonMode = buttonMode;
-}
 
 
 void setupServer() {
     server = new SensorizerServer();
 
     server->init();
-
+    
+    knobs = new Knobs();
+    knobs->setup(server);
+    
     // load good drums preset to start
-    server->loadNotes( NOTE_PRESETS_DRUMS[0] );
+    //server->loadNotes( NOTE_PRESETS_DRUMS[0] );
 
     // must wait a second for the MIDI device to boot up before it accepts our messages
     //delay(1000);
@@ -230,16 +108,12 @@ void setup()
   Serial.begin(BAUD_RATE);
 #endif
 
-  setPinModeCallback(ENCODER_PIN_1, INPUT);
-  setPinModeCallback(ENCODER_PIN_2, INPUT);
-  setPinModeCallback(ENCODER_MODE_SWITCH_PIN, INPUT);
-
 
   DEBUG_PRINT("SETUPSERVER")
   setupServer();
 
   DEBUG_PRINT("SETUPKNOBS")
-  setupKnobs();
+  //setupKnobs();
 
   DEBUG_PRINT("END SETUP")
 }
@@ -254,7 +128,8 @@ void loop()
  // Serial.println("loop ser");
  // SerialUSB.println("loop usb");
 
-  checkKnobs();
+  //checkKnobs();
+  knobs->check();
   
   /* SEND FTDI WRITE BUFFER - make sure that the FTDI buffer doesn't go over
    * 60 bytes. use a timer to sending an event character every 4 ms to
