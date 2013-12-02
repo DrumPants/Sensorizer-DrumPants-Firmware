@@ -5,13 +5,16 @@
 /******* hardware version type presets ********/
 
 // for the beta DrumPants PCB:
+// NOTE: all beta presets are >= 10 and it is used to set other constants!
 #define PRESET_BETA 10
+#define PRESET_BETA_RYAN 11
+
 // for the earlier prototypes
 #define PRESET_NEON_GREEN_STRING 3
 #define PRESET_VJACKET_LEATHER 2
 #define PRESET_JEANS 1
 
-#define PRESET PRESET_BETA
+#define PRESET PRESET_BETA_RYAN
 
 /******* END hardware version type presets ********/
 
@@ -46,7 +49,7 @@
 //uncomment this to set serial baud at bluetooth rate. otherwise, USB rate.
 //# define IS_BLUETOOTH
 
-#if PRESET == PRESET_BETA
+#if PRESET >= PRESET_BETA
   #define IS_DUE 1
   #define IS_DRUMPANTS 1
 #else
@@ -76,15 +79,28 @@
 
 #define ENABLE_LOOPER 0
 
+
+// the default num of ticks before a note retriggers
+#define DEFAULT_RETRIGGER_THRESHOLD 50
+
+
 #if IS_DUE
   #define FIRST_USABLE_PIN 2
   
   #define USE_HARDWARE_SERIAL 1
 
+
   // start off on the middle since our sensors only have 6 still.
-  #define ANALOG_PIN_START 1
-  #define ANALOG_PIN_END 7
+  #if PRESET == PRESET_BETA_RYAN
+    #define ANALOG_PIN_START 2
+    #define ANALOG_PIN_END 8
+  #else
+    #define ANALOG_PIN_START 1
+    #define ANALOG_PIN_END 7
+  #endif
+
 #else
+
   #define FIRST_USABLE_PIN 0
 
   // normal arduinos have 6 analog ins

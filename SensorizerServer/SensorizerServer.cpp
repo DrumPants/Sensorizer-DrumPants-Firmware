@@ -116,7 +116,7 @@ void SensorizerServer::loadPreset() {
 
 
 /**************** BETA PANTS ******************/
-#if PRESET == PRESET_BETA
+#if PRESET >= PRESET_BETA
 
 	////////////////////////////
 	// OUTPUT FOR arduino 0
@@ -126,7 +126,7 @@ void SensorizerServer::loadPreset() {
 	s->inRange.high = 0.16353861;
 	s->outRange.low = 0;
 	s->outRange.high = 1;
-	s->cutoffRange.low = 0.01;
+	s->cutoffRange.low = 0.09;
 	s->cutoffRange.high = 1;
 	s->setCutoffType(SensorOutput::CUTOFF_TYPE_VAL_NULLABLE_LOW); //No Cutoff
 	s->multiplyVal = 1;
@@ -156,7 +156,7 @@ void SensorizerServer::loadPreset() {
 	s->inRange.high = 0.16353861;
 	s->outRange.low = 0;
 	s->outRange.high = 1;
-	s->cutoffRange.low = 0.01;
+	s->cutoffRange.low = 0.09;
 	s->cutoffRange.high = 1;
 	s->setCutoffType(SensorOutput::CUTOFF_TYPE_VAL_NULLABLE_LOW); //No Cutoff
 	s->multiplyVal = 1;
@@ -164,7 +164,7 @@ void SensorizerServer::loadPreset() {
 	s->isInvert = false;
 
 	filter = new OneHitDetector();
-	filter->retriggerThreshold = 50;
+	filter->retriggerThreshold = DEFAULT_RETRIGGER_THRESHOLD;
 	s->addOutputFilter(filter);
 
 	m = new MidiMapping(this->midiDevice);
@@ -186,7 +186,7 @@ void SensorizerServer::loadPreset() {
 	s->inRange.high = 0.16353861;
 	s->outRange.low = 0;
 	s->outRange.high = 1;
-	s->cutoffRange.low = 0.01;
+	s->cutoffRange.low = 0.09;
 	s->cutoffRange.high = 1;
 	s->setCutoffType(SensorOutput::CUTOFF_TYPE_VAL_NULLABLE_LOW); //No Cutoff
 	s->multiplyVal = 1;
@@ -194,7 +194,7 @@ void SensorizerServer::loadPreset() {
 	s->isInvert = false;
 
 	filter = new OneHitDetector();
-	filter->retriggerThreshold = 50;
+	filter->retriggerThreshold = DEFAULT_RETRIGGER_THRESHOLD;
 	s->addOutputFilter(filter);
 
 	m = new MidiMapping(this->midiDevice);
@@ -216,7 +216,7 @@ void SensorizerServer::loadPreset() {
 	s->inRange.high = 0.16353861;
 	s->outRange.low = 0;
 	s->outRange.high = 1;
-	s->cutoffRange.low = 0.01;
+	s->cutoffRange.low = 0.09;
 	s->cutoffRange.high = 1;
 	s->setCutoffType(SensorOutput::CUTOFF_TYPE_VAL_NULLABLE_LOW); //No Cutoff
 	s->multiplyVal = 1;
@@ -224,7 +224,7 @@ void SensorizerServer::loadPreset() {
 	s->isInvert = false;
 
 	filter = new OneHitDetector();
-	filter->retriggerThreshold = 50;
+	filter->retriggerThreshold = DEFAULT_RETRIGGER_THRESHOLD;
 	s->addOutputFilter(filter);
 
 	m = new MidiMapping(this->midiDevice);
@@ -246,7 +246,7 @@ void SensorizerServer::loadPreset() {
 	s->inRange.high = 0.16353861;
 	s->outRange.low = 0;
 	s->outRange.high = 1;
-	s->cutoffRange.low = 0.01;
+	s->cutoffRange.low = 0.09;
 	s->cutoffRange.high = 1;
 	s->setCutoffType(SensorOutput::CUTOFF_TYPE_VAL_NULLABLE_LOW); //No Cutoff
 	s->multiplyVal = 1;
@@ -254,7 +254,7 @@ void SensorizerServer::loadPreset() {
 	s->isInvert = false;
 
 	filter = new OneHitDetector();
-	filter->retriggerThreshold = 50;
+	filter->retriggerThreshold = DEFAULT_RETRIGGER_THRESHOLD;
 	s->addOutputFilter(filter);
 
 	m = new MidiMapping(this->midiDevice);
@@ -276,7 +276,7 @@ void SensorizerServer::loadPreset() {
 	s->inRange.high = 0.16353861;
 	s->outRange.low = 0;
 	s->outRange.high = 1;
-	s->cutoffRange.low = 0.01;
+	s->cutoffRange.low = 0.09;
 	s->cutoffRange.high = 1;
 	s->setCutoffType(SensorOutput::CUTOFF_TYPE_VAL_NULLABLE_LOW); //No Cutoff
 	s->multiplyVal = 1;
@@ -284,7 +284,7 @@ void SensorizerServer::loadPreset() {
 	s->isInvert = false;
 
 	filter = new OneHitDetector();
-	filter->retriggerThreshold = 50;
+	filter->retriggerThreshold = DEFAULT_RETRIGGER_THRESHOLD;
 	s->addOutputFilter(filter);
 
 	m = new MidiMapping(this->midiDevice);
@@ -305,7 +305,7 @@ void SensorizerServer::loadPreset() {
 	s->inRange.high = 0.16353861;
 	s->outRange.low = 0;
 	s->outRange.high = 1;
-	s->cutoffRange.low = 0.01;
+	s->cutoffRange.low = 0.09;
 	s->cutoffRange.high = 1;
 	s->setCutoffType(SensorOutput::CUTOFF_TYPE_VAL_NULLABLE_LOW); //No Cutoff
 	s->multiplyVal = 1;
@@ -313,7 +313,7 @@ void SensorizerServer::loadPreset() {
 	s->isInvert = false;
 
 	filter = new OneHitDetector();
-	filter->retriggerThreshold = 50;
+	filter->retriggerThreshold = DEFAULT_RETRIGGER_THRESHOLD;
 	s->addOutputFilter(filter);
 
 	m = new MidiMapping(this->midiDevice);
@@ -334,7 +334,7 @@ void SensorizerServer::loadPreset() {
 	s->inRange.high = 0.16353861;
 	s->outRange.low = 0;
 	s->outRange.high = 1;
-	s->cutoffRange.low = 0.01;
+	s->cutoffRange.low = 0.09;
 	s->cutoffRange.high = 1;
 	s->setCutoffType(SensorOutput::CUTOFF_TYPE_VAL_NULLABLE_LOW); //No Cutoff
 	s->multiplyVal = 1;
@@ -342,7 +342,7 @@ void SensorizerServer::loadPreset() {
 	s->isInvert = false;
 
 	filter = new OneHitDetector();
-	filter->retriggerThreshold = 50;
+	filter->retriggerThreshold = DEFAULT_RETRIGGER_THRESHOLD;
 	s->addOutputFilter(filter);
 
 	m = new MidiMapping(this->midiDevice);
@@ -406,7 +406,7 @@ void SensorizerServer::loadPreset() {
 	s->isInvert = false;
 
 	filter = new OneHitDetector();
-	filter->retriggerThreshold = 50;
+	filter->retriggerThreshold = DEFAULT_RETRIGGER_THRESHOLD;
 	s->addOutputFilter(filter);
 
 	m = new MidiMapping(this->midiDevice);
@@ -436,7 +436,7 @@ void SensorizerServer::loadPreset() {
 	s->isInvert = false;
 
 	filter = new OneHitDetector();
-	filter->retriggerThreshold = 50;
+	filter->retriggerThreshold = DEFAULT_RETRIGGER_THRESHOLD;
 	s->addOutputFilter(filter);
 
 	m = new MidiMapping(this->midiDevice);
@@ -466,7 +466,7 @@ void SensorizerServer::loadPreset() {
 	s->isInvert = false;
 
 	filter = new OneHitDetector();
-	filter->retriggerThreshold = 50;
+	filter->retriggerThreshold = DEFAULT_RETRIGGER_THRESHOLD;
 	s->addOutputFilter(filter);
 
 	m = new MidiMapping(this->midiDevice);
@@ -496,7 +496,7 @@ void SensorizerServer::loadPreset() {
 	s->isInvert = false;
 
 	filter = new OneHitDetector();
-	filter->retriggerThreshold = 50;
+	filter->retriggerThreshold = DEFAULT_RETRIGGER_THRESHOLD;
 	s->addOutputFilter(filter);
 
 	m = new MidiMapping(this->midiDevice);
@@ -559,7 +559,7 @@ void SensorizerServer::loadPreset() {
 	s->isInvert = false;
 
 	filter = new OneHitDetector();
-	filter->retriggerThreshold = 50;
+	filter->retriggerThreshold = DEFAULT_RETRIGGER_THRESHOLD;
 	s->addOutputFilter(filter);
 
 	m = new MidiMapping(this->midiDevice);
@@ -589,7 +589,7 @@ void SensorizerServer::loadPreset() {
 	s->isInvert = false;
 
 	filter = new OneHitDetector();
-	filter->retriggerThreshold = 50;
+	filter->retriggerThreshold = DEFAULT_RETRIGGER_THRESHOLD;
 	s->addOutputFilter(filter);
 
 	m = new MidiMapping(this->midiDevice);
@@ -619,7 +619,7 @@ void SensorizerServer::loadPreset() {
 	s->isInvert = false;
 
 	filter = new OneHitDetector();
-	filter->retriggerThreshold = 50;
+	filter->retriggerThreshold = DEFAULT_RETRIGGER_THRESHOLD;
 	s->addOutputFilter(filter);
 
 	m = new MidiMapping(this->midiDevice);
@@ -649,7 +649,7 @@ void SensorizerServer::loadPreset() {
 	s->isInvert = false;
 
 	filter = new OneHitDetector();
-	filter->retriggerThreshold = 50;
+	filter->retriggerThreshold = DEFAULT_RETRIGGER_THRESHOLD;
 	s->addOutputFilter(filter);
 
 	m = new MidiMapping(this->midiDevice);
@@ -679,7 +679,7 @@ void SensorizerServer::loadPreset() {
 	s->isInvert = true;
 
 	filter = new OneHitDetector();
-	filter->retriggerThreshold = 50;
+	filter->retriggerThreshold = DEFAULT_RETRIGGER_THRESHOLD;
 	s->addOutputFilter(filter);
 
 	m = new MidiMapping(this->midiDevice);
@@ -709,7 +709,7 @@ void SensorizerServer::loadPreset() {
 	s->isInvert = false;
 
 	// filter = new OneHitDetector();
-	// filter->retriggerThreshold = 50;
+	// filter->retriggerThreshold = DEFAULT_RETRIGGER_THRESHOLD;
 	// s->addOutputFilter(filter);
 
 	// m = new MidiMapping(this->midiDevice);
@@ -769,7 +769,7 @@ void SensorizerServer::loadPreset() {
 	s->isInvert = false;
 
 	filter = new OneHitDetector();
-	filter->retriggerThreshold = 50;
+	filter->retriggerThreshold = DEFAULT_RETRIGGER_THRESHOLD;
 	s->addOutputFilter(filter);
 
 	m = new MidiMapping(this->midiDevice);
@@ -799,7 +799,7 @@ void SensorizerServer::loadPreset() {
 	s->isInvert = false;
 
 	filter = new OneHitDetector();
-	filter->retriggerThreshold = 50;
+	filter->retriggerThreshold = DEFAULT_RETRIGGER_THRESHOLD;
 	s->addOutputFilter(filter);
 
 	m = new MidiMapping(this->midiDevice);
@@ -829,7 +829,7 @@ void SensorizerServer::loadPreset() {
 	s->isInvert = false;
 
 	filter = new OneHitDetector();
-	filter->retriggerThreshold = 50;
+	filter->retriggerThreshold = DEFAULT_RETRIGGER_THRESHOLD;
 	s->addOutputFilter(filter);
 
 	m = new MidiMapping(this->midiDevice);
@@ -859,7 +859,7 @@ void SensorizerServer::loadPreset() {
 	s->isInvert = false;
 
 	filter = new OneHitDetector();
-	filter->retriggerThreshold = 50;
+	filter->retriggerThreshold = DEFAULT_RETRIGGER_THRESHOLD;
 	s->addOutputFilter(filter);
 
 	m = new MidiMapping(this->midiDevice);
@@ -955,7 +955,7 @@ s->addVal = 0;
 s->isInvert = false;
 
 filter = new OneHitDetector();
-	filter->retriggerThreshold = 50;
+	filter->retriggerThreshold = DEFAULT_RETRIGGER_THRESHOLD;
 	s->addOutputFilter(filter);
 
 m = new MidiMapping(this->midiDevice);
@@ -981,7 +981,7 @@ s->addVal = 0;
 s->isInvert = false;
 
 filter = new OneHitDetector();
-	filter->retriggerThreshold = 50;
+	filter->retriggerThreshold = DEFAULT_RETRIGGER_THRESHOLD;
 	s->addOutputFilter(filter);
 
 m = new MidiMapping(this->midiDevice);
