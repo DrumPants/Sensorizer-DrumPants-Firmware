@@ -81,7 +81,7 @@
 
 
 // the default num of ticks before a note retriggers
-#define DEFAULT_RETRIGGER_THRESHOLD 70
+#define DEFAULT_RETRIGGER_THRESHOLD 50
 
 
 #if IS_DUE
