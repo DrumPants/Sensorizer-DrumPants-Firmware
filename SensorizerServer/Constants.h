@@ -46,6 +46,9 @@
   #define BLE_TYPE BLE_TYPE_NONE
 #endif
 
+
+#define ENABLE_FIRMATA 1
+
 //uncomment this to set serial baud at bluetooth rate. otherwise, USB rate.
 //# define IS_BLUETOOTH
 

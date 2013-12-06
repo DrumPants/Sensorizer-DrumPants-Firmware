@@ -10,6 +10,11 @@
 #include <SensorizerServer.h>  
 
 
+#if ENABLE_FIRMATA
+  #include <Firmata.h>
+#endif
+
+
 #if IS_DUE 
   #define ENCODER_OPTIMIZE_INTERRUPTS
 #else
@@ -104,10 +109,16 @@ void setup()
   //DEBUG_PRINT_SETUP
 
 #if IS_DUE
+
   Serial.begin(57600);
 
   // this is needed for debug printing on native USB port
   SerialUSB.begin(57600);
+
+  #if ENABLE_FIRMATA
+  Firmata.setFirmwareVersion(0, 1);
+  Firmata.begin(SerialUSB);
+  #endif
 #else
   Serial.begin(BAUD_RATE);
 #endif
@@ -151,7 +162,10 @@ void loop()
 #if !ENABLE_TEST
         server->readPin(pinIdx, val);
 #endif          
- 
+
+#if ENABLE_FIRMATA
+        Firmata.sendAnalog(analogPin, val); 
+#endif 
     }
   }
 
