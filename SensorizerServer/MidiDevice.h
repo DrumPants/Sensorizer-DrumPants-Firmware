@@ -103,6 +103,7 @@ public:
 	void note(bool isOn, int channel, int note, int velocity);
 
 	void cc(int channel, int num, int velocity);
+	void bendPitch(int channel, int velocity);
 
 	//Plays a MIDI note. Doesn't check to see that cmd is greater than 127, or that data values are less than 127
 	// if isSilent is true, it will not alert the listener.

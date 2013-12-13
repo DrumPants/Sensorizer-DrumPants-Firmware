@@ -120,6 +120,22 @@ void MidiDevice::setup() {
 	//For this bank 0x78, the instrument does not matter, only the note
 	//setInstrument(instrument); //Set instrument number. 0xC0 is a 1 data byte command
 	
+	/*** PITCH BEND ***/
+	// from http://www.vsdsp-forum.com/phpbb/viewtopic.php?f=9&t=465
+	// indicate we intend to set pitch bend limites
+	talkMIDI(0xB0|0, 0x65, 00);
+	talkMIDI(0xB0|0, 0x64, 00);
+
+	// set the semitone limits
+	talkMIDI(0xB0|0, 0x06, 24); // 24 should give me a full octave of pitch-bending up and down!!!
+
+	// set the cents limits (fine-tuning)
+	//talkMIDI(0xB0|channel, 0x26, 00);
+
+	// reset the RPN controller
+	talkMIDI(0xB0|0, 0x65, 127);
+	talkMIDI(0xB0|0, 0x64, 127);
+	/*** END PITCH BEND ***/
 	
 	//Serial.println("MidiDevice now setup");
 }
@@ -229,6 +245,9 @@ void MidiDevice::cc(int channel, int num, int velocity) {
 	talkMIDI( (0xB0 | channel), num, velocity);
 }
 
+void MidiDevice::bendPitch(int channel, int velocity) {
+	talkMIDI( (0xE0 | channel), 0, velocity);
+}
 
 /*** for looper listeners ***/
 void MidiDevice::setListener(EventLooper* l) {

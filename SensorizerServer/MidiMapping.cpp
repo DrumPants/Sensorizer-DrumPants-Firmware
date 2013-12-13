@@ -12,6 +12,7 @@
 	const int MidiMapping::NOTE = 0;
 	const int MidiMapping::CONTROL_CHANGE = 1;
 	const int MidiMapping::NOTE_ONE_ONLY = 3;
+	const int MidiMapping::PITCH_BEND = 4;
 
 	
 	
@@ -121,6 +122,12 @@
 					midiDevice->cc(c, n, vel);
 				}
 				break;
+			case MidiMapping::PITCH_BEND:
+				// trottle CCs so we don't overwhelm the device with our mad updates
+				if (metro.hasTicked() != 0) {
+					midiDevice->bendPitch(c, vel);
+				}
+				break;				
 			case MidiMapping::NOTE_ONE_ONLY:
 				int numNULLs = 0;
 				for (int i = 0; i < VALUES_HISTORY_LENGTH; i++) {

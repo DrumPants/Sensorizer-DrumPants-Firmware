@@ -23,6 +23,7 @@ class MidiMapping : public OutputMapping {
 	public: static const int NOTE;
 	public: static const int CONTROL_CHANGE;
 	public: static const int NOTE_ONE_ONLY;
+	public: static const int PITCH_BEND;
 
 	// keeps track of when the last CC was sent so we don't overload things
 	private: Metro metro;
