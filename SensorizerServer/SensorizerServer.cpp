@@ -325,6 +325,7 @@ void SensorizerServer::loadPreset() {
 	s->addVal = 0;
 	s->isInvert = false;
 
+#if PRESET == PRESET_BETA_RYAN	
 	filter = new OneHitDetector();
 	filter->retriggerThreshold = DEFAULT_RETRIGGER_THRESHOLD;
 	s->addOutputFilter(filter);
@@ -334,28 +335,31 @@ void SensorizerServer::loadPreset() {
 	m->note = 60 + i;
 	m->setMsgType(MidiMapping::NOTE);
 	s->addMidiMapping(m);
-	
+#endif	
 	sensorInputs[i++] = s;
 	////////////////////////////
 
 
+#if PRESET == PRESET_BETA	
+
 	////////////////////////////
 	// OUTPUT FOR arduino 7
 	////////////////////////////
+	/// FOOT PEDAL
 	s = new SensorOutput();
 	s->inRange.low = 0;
-	s->inRange.high = 0.16353861;
+	s->inRange.high = 1;
 	s->outRange.low = 0;
 	s->outRange.high = 1;
-	s->cutoffRange.low = 0.1;
+	s->cutoffRange.low = 0.55;
 	s->cutoffRange.high = 1;
 	s->setCutoffType(SensorOutput::CUTOFF_TYPE_VAL_NULLABLE_LOW); //No Cutoff
 	s->multiplyVal = 1;
 	s->addVal = 0;
-	s->isInvert = false;
+	s->isInvert = true;
 
 	filter = new OneHitDetector();
-	filter->retriggerThreshold = DEFAULT_RETRIGGER_THRESHOLD;
+	filter->retriggerThreshold = DEFAULT_RETRIGGER_THRESHOLD * 3;
 	s->addOutputFilter(filter);
 
 	m = new MidiMapping(this->midiDevice);
@@ -397,7 +401,7 @@ void SensorizerServer::loadPreset() {
 	sensorInputs[i++] = s;
 	////////////////////////////
 
-
+#endif
 
 /**************** ARDUINO PANTS ******************/
 
