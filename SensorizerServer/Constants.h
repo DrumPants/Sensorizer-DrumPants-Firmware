@@ -99,7 +99,7 @@
     #define ANALOG_PIN_END 8
   #else
     #define ANALOG_PIN_START 1
-    #define ANALOG_PIN_END 7
+    #define ANALOG_PIN_END 11
   #endif
 
 #else

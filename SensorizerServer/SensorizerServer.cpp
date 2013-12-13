@@ -97,6 +97,9 @@ void SensorizerServer::readPin(int pinIdx, int pinValue) {
 		return;
 	}
 
+	if (sensorInputs[pinIdx] == NULL)
+		return;
+
 	float v = pinValue / 1024.0;
 
 //DEBUG_PRINT_NUM("readPin pin: ", pinIdx)
@@ -353,6 +356,36 @@ void SensorizerServer::loadPreset() {
 
 	filter = new OneHitDetector();
 	filter->retriggerThreshold = DEFAULT_RETRIGGER_THRESHOLD;
+	s->addOutputFilter(filter);
+
+	m = new MidiMapping(this->midiDevice);
+	m->channel = MIDI_CHANNEL;
+	m->note = 60 + i;
+	m->setMsgType(MidiMapping::NOTE);
+	s->addMidiMapping(m);
+	
+	sensorInputs[i++] = s;
+	////////////////////////////
+
+
+	////////////////////////////
+	// OUTPUT FOR arduino 8
+	////////////////////////////
+	/// FOOT PEDAL
+	s = new SensorOutput();
+	s->inRange.low = 0;
+	s->inRange.high = 1;
+	s->outRange.low = 0;
+	s->outRange.high = 1;
+	s->cutoffRange.low = 0.25;
+	s->cutoffRange.high = 1;
+	s->setCutoffType(SensorOutput::CUTOFF_TYPE_VAL_NULLABLE_LOW); //No Cutoff
+	s->multiplyVal = 1;
+	s->addVal = 0;
+	s->isInvert = true;
+
+	filter = new OneHitDetector();
+	filter->retriggerThreshold = DEFAULT_RETRIGGER_THRESHOLD * 2;
 	s->addOutputFilter(filter);
 
 	m = new MidiMapping(this->midiDevice);
