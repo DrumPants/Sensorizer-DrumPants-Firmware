@@ -114,8 +114,9 @@
 
 				break;
 			case MidiMapping::CONTROL_CHANGE:
-				//TODO
-				//midiDevice->cc(c, n, vel);
+				// trottle CCs so we don't overwhelm the device with our mad updates
+				
+				midiDevice->cc(c, n, vel);
 				break;
 			case MidiMapping::NOTE_ONE_ONLY:
 				int numNULLs = 0;

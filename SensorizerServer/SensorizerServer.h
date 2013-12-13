@@ -13,6 +13,8 @@
 
 #include "looper/EventLooper.h"
 
+#include "Metro.h"
+
 #include "Debug.h"
 
 // TODO: these need to be updated for DUE (MORE NOTES!). hacking for now
@@ -34,7 +36,7 @@ private:
 	EventLooper* looper;
 #endif
 
-	int lastTimeTicked; 
+	Metro metro;
 public:
 	//should maybe be private but I don't believe in writing everything twice.
 	MidiDevice* midiDevice;

@@ -151,26 +151,6 @@ void MidiDevice::setVolume(byte channel, byte vol) {
 }
 
 
-/*
-void loop() {
-  while(Serial.available() == 0) ;
-
-  int note = Serial.read();
-  //Good sounding notes range from 27 to 87
-  //So let's take the letter and range it to 27
-  note -= 'a';
-  note += 57;
-
-  Serial.print("Note=");
-  Serial.println(note, DEC);
-
-  //For this bank 0x78, the instrument does not matter, only the note
-  noteOn(0, note, 60);
-
-  //Note will dissapate automatically
-}
-*/
-
 //Send a MIDI note-on message.  Like pressing a piano key
 //channel ranges from 0-15
 void MidiDevice::noteOn(byte channel, byte note, byte attack_velocity) {
@@ -245,6 +225,9 @@ void MidiDevice::note(bool isOn, int channel, int note, int velocity) {
 		noteOff((byte)channel, (byte)note, 0); //TODO: velocity or 0?
 }
 
+void MidiDevice::cc(int channel, int num, int velocity) {
+	talkMIDI( (0xB0 | channel), num, velocity);
+}
 
 
 /*** for looper listeners ***/

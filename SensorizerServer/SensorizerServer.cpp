@@ -50,18 +50,14 @@ void SensorizerServer::init() {
 			sensorInputs[i]->init();
 	}
 
+	metro.timePerTick = TIME_PER_TICK;
 }
 
 void SensorizerServer::tick() {
-	int curTime = millis();
-	int timeEllapsed = curTime - this->lastTimeTicked;
+	int curTime = metro.hasTicked();
 
-	// TODO: if time per tick has not ellapsed from last time, return.
-	if (timeEllapsed < TIME_PER_TICK)
+	if (curTime == 0)
 		return;
-
-
-	this->lastTimeTicked = curTime;
 
 #if ENABLE_LOOPER
 	this->looper->tick(curTime);
@@ -358,14 +354,14 @@ void SensorizerServer::loadPreset() {
 	s->addVal = 0;
 	s->isInvert = true;
 
-	filter = new OneHitDetector();
-	filter->retriggerThreshold = DEFAULT_RETRIGGER_THRESHOLD * 3;
-	s->addOutputFilter(filter);
+	// filter = new OneHitDetector();
+	// filter->retriggerThreshold = DEFAULT_RETRIGGER_THRESHOLD * 3;
+	// s->addOutputFilter(filter);
 
 	m = new MidiMapping(this->midiDevice);
 	m->channel = MIDI_CHANNEL;
-	m->note = 60 + i;
-	m->setMsgType(MidiMapping::NOTE);
+	m->note = 1; // modulation wheel
+	m->setMsgType(MidiMapping::CONTROL_CHANGE);
 	s->addMidiMapping(m);
 	
 	sensorInputs[i++] = s;
