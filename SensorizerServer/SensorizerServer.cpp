@@ -5,6 +5,7 @@
 #include "SensorizerServer.h"
 
 #include "filters/OneHitDetector.h"
+#include "filters/NullableOutputFilter.h"
 
 
 SensorizerServer::SensorizerServer() {
@@ -354,9 +355,8 @@ void SensorizerServer::loadPreset() {
 	s->addVal = 0;
 	s->isInvert = true;
 
-	// filter = new OneHitDetector();
-	// filter->retriggerThreshold = DEFAULT_RETRIGGER_THRESHOLD * 3;
-	// s->addOutputFilter(filter);
+	NullableOutputFilter* nullFilter = new NullableOutputFilter();
+	s->addOutputFilter(nullFilter);
 
 	m = new MidiMapping(this->midiDevice);
 	m->channel = MIDI_CHANNEL;

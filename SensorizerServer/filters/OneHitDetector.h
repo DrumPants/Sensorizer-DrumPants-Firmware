@@ -32,20 +32,12 @@ class OneHitDetector : public OutputFilter {
 	//private: OneHitListener triggerListener;
 	
 	
-	/* (non-Javadoc)
-	 * //@see OutputFilter#setValue(double)
-	 */
-	//@Override
 	public: void setValue(double value);
 
 	OneHitDetector();
 
 	private: void trigger();
 
-	/* (non-Javadoc)
-	 * //@see OutputFilter#value()
-	 */
-	//@Override
 	public: /*virtual*/ double value(); // dont use virtual as it's a little overboard for this.
 	
 	/** 
