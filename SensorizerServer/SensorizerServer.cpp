@@ -361,7 +361,7 @@ void SensorizerServer::loadPreset() {
 	m = new MidiMapping(this->midiDevice);
 	m->channel = MIDI_CHANNEL;
 	m->note = 1; // modulation wheel
-	m->setMsgType(MidiMapping::PITCH_BEND);
+	m->setMsgType(MidiMapping::CONTROL_CHANGE);
 	s->addMidiMapping(m);
 	
 	sensorInputs[i++] = s;
