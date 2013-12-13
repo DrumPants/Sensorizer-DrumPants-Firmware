@@ -11,8 +11,12 @@
 #include "MidiDevice.h"
 #include "OutputMapping.h"
 #include "PendingNoteQueue.h" 
+#include "Metro.h"
 
 #define VALUES_HISTORY_LENGTH 2
+
+// the num of milliseconds between sending CC notes, so we don't overload the pipes.
+#define CC_MESSAGE_THROTTLE_INTERVAL 20
 
 class MidiMapping : public OutputMapping {
 	//types for msgType
@@ -20,7 +24,8 @@ class MidiMapping : public OutputMapping {
 	public: static const int CONTROL_CHANGE;
 	public: static const int NOTE_ONE_ONLY;
 
-	
+	// keeps track of when the last CC was sent so we don't overload things
+	private: Metro metro;
 	
 	// holds every note we sent so we can send a note off later.
 	private: PendingNoteQueue* pendingNoteOffs;
