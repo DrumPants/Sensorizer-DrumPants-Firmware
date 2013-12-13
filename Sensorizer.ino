@@ -12,6 +12,13 @@
 
 #if ENABLE_FIRMATA
   #include <Firmata.h>
+
+  // how many ticks it takes before sending a Firmata update. 
+  // this needs to be throttled because otherwise we overload the Serial buffer and shit freezes.
+  #define FIRMATA_UPDATE_RATE_THROTTLE 10
+
+// how many ticks it's been since the last Firmata update. 
+int firmataThrottleCount = 0;  
 #endif
 
 
@@ -146,6 +153,12 @@ void loop()
   //checkKnobs();
   knobs->check();
   
+#if ENABLE_FIRMATA
+  // while(Firmata.available()) {
+  //   Firmata.processInput();
+  // }
+#endif  
+
   /* SEND FTDI WRITE BUFFER - make sure that the FTDI buffer doesn't go over
    * 60 bytes. use a timer to sending an event character every 4 ms to
    * trigger the buffer to dump. */
@@ -164,7 +177,10 @@ void loop()
 #endif          
 
 #if ENABLE_FIRMATA
+      if (++firmataThrottleCount > FIRMATA_UPDATE_RATE_THROTTLE) {
+        firmataThrottleCount = 0;
         Firmata.sendAnalog(analogPin, val); 
+      }
 #endif 
     }
   }
