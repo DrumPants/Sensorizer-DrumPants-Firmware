@@ -140,6 +140,8 @@
   // TODO: these need to be updated for DUE (MORE NOTES!). hacking for now
   #define NOTE_PRESETS_ELEMENT_LENGTH 11
 
+
+  #define ENABLE_MIDI_IN 1
 #else
 
   // normal arduinos have 6 analog ins

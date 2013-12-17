@@ -22,6 +22,13 @@ int firmataThrottleCount = 0;
 #endif
 
 
+#if ENABLE_MIDI_IN
+  #include <utility/MidiInput.h>
+
+MidiInput* midiIn;
+#endif
+
+
 #if IS_DUE 
   #define ENCODER_OPTIMIZE_INTERRUPTS
 #else
@@ -58,9 +65,6 @@ SensorizerServer* server;
  */
 Knobs* knobs;
 
-
-
-
 void setupServer() {
     // must wait a bit for the MIDI device to boot up before it accepts our messages
     delay(500);
@@ -77,6 +81,11 @@ void setupServer() {
     knobs = new Knobs();    
 #endif
     knobs->setup(server);
+
+#if ENABLE_MIDI_IN
+    // listen for MIDI messages from BLE to change config
+    midiIn = new MidiInput(server);
+#endif    
 }
 
 
@@ -194,6 +203,10 @@ void loop()
   //   Firmata.processInput();
   // }
 #endif  
+
+#if ENABLE_MIDI_IN
+  midiIn->check();
+#endif
 
   /* SEND FTDI WRITE BUFFER - make sure that the FTDI buffer doesn't go over
    * 60 bytes. use a timer to sending an event character every 4 ms to
