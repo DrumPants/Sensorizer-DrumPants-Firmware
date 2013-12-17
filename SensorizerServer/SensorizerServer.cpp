@@ -339,6 +339,10 @@ void SensorizerServer::loadPreset() {
 
 #if PRESET == PRESET_BETA	
 
+#define FOOT_PEDAL_CC_ENABLE 0
+#define FOOT_PEDAL_CC_SEND_NULLS 0
+
+
 	////////////////////////////
 	// OUTPUT FOR arduino 7
 	////////////////////////////
@@ -350,20 +354,39 @@ void SensorizerServer::loadPreset() {
 	s->outRange.high = 1;
 	s->cutoffRange.low = 0.15;
 	s->cutoffRange.high = 1;
-	s->setCutoffType(SensorOutput::CUTOFF_TYPE_VAL_NULLABLE_LOW); //No Cutoff
+#if FOOT_PEDAL_CC_SEND_NULLS || !FOOT_PEDAL_CC_ENABLE
+	s->setCutoffType(SensorOutput::CUTOFF_TYPE_VAL_NULLABLE_LOW); 
+#else
+	s->setCutoffType(SensorOutput::CUTOFF_TYPE_VAL_HARD);
+#endif	
 	s->multiplyVal = 1;
 	s->addVal = 0;
 	s->isInvert = true;
 
+#if FOOT_PEDAL_CC_ENABLE
+	#if FOOT_PEDAL_CC_SEND_NULLS	
 	NullableOutputFilter* nullFilter = new NullableOutputFilter();
 	s->addOutputFilter(nullFilter);
+	#endif 
 
 	m = new MidiMapping(this->midiDevice);
 	m->channel = MIDI_CHANNEL;
 	m->note = 1; // modulation wheel
 	m->setMsgType(MidiMapping::CONTROL_CHANGE);
 	s->addMidiMapping(m);
+#else
 	
+	filter = new OneHitDetector();
+	filter->retriggerThreshold = DEFAULT_RETRIGGER_THRESHOLD * 3;
+	s->addOutputFilter(filter);
+
+	m = new MidiMapping(this->midiDevice);
+	m->channel = MIDI_CHANNEL;
+	m->note = 60 + i;
+	m->setMsgType(MidiMapping::NOTE);
+	s->addMidiMapping(m);
+
+#endif	
 	sensorInputs[i++] = s;
 	////////////////////////////
 

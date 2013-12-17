@@ -14,7 +14,7 @@
 #define PRESET_VJACKET_LEATHER 2
 #define PRESET_JEANS 1
 
-#define PRESET PRESET_BETA
+#define PRESET PRESET_BETA_RYAN
 
 /******* END hardware version type presets ********/
 
@@ -96,7 +96,7 @@
   // start off on the middle since our sensors only have 6 still.
   #if PRESET == PRESET_BETA_RYAN
     #define ANALOG_PIN_START 2
-    #define ANALOG_PIN_END 8
+    #define ANALOG_PIN_END 11
   #else
     #define ANALOG_PIN_START 1
     #define ANALOG_PIN_END 11
