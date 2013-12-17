@@ -102,6 +102,9 @@
     #define ANALOG_PIN_END 11
   #endif
 
+  // TODO: these need to be updated for DUE (MORE NOTES!). hacking for now
+  #define NOTE_PRESETS_ELEMENT_LENGTH 9
+
 #else
 
   #define FIRST_USABLE_PIN 0
@@ -109,6 +112,9 @@
   // normal arduinos have 6 analog ins
   #define ANALOG_PIN_START 0
   #define ANALOG_PIN_END 5
+
+  #define NOTE_PRESETS_ELEMENT_LENGTH 6
+
 #endif
 
 #if IS_BLE
