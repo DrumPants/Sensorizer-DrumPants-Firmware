@@ -9,13 +9,14 @@
 #define PRESET_BETA 10
 #define PRESET_BETA_RYAN 11
 #define PRESET_BETA_STRETCHY 12
+#define PRESET_BETA_NEIL_PEART 14
 
 // for the earlier prototypes
 #define PRESET_NEON_GREEN_STRING 3
 #define PRESET_VJACKET_LEATHER 2
 #define PRESET_JEANS 1
 
-#define PRESET PRESET_BETA
+#define PRESET PRESET_BETA_NEIL_PEART
 
 /******* END hardware version type presets ********/
 
@@ -88,9 +89,7 @@
 #define DEFAULT_RETRIGGER_THRESHOLD 50
 
 
-#if IS_DUE
-  #define FIRST_USABLE_PIN 2
-  
+#if IS_DUE  
   #define USE_HARDWARE_SERIAL 1
 
 
@@ -101,6 +100,9 @@
   #elif PRESET == PRESET_BETA_STRETCHY
     #define ANALOG_PIN_START 2
     #define ANALOG_PIN_END 11
+  #elif PRESET == PRESET_BETA_NEIL_PEART
+    #define ANALOG_PIN_START 0
+    #define ANALOG_PIN_END 11
   #else
     #define ANALOG_PIN_START 1
     #define ANALOG_PIN_END 11
@@ -110,8 +112,6 @@
   #define NOTE_PRESETS_ELEMENT_LENGTH 9
 
 #else
-
-  #define FIRST_USABLE_PIN 0
 
   // normal arduinos have 6 analog ins
   #define ANALOG_PIN_START 0
