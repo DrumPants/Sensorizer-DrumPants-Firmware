@@ -166,6 +166,7 @@ void loop()
   currentMillis = millis();
   if (currentMillis - previousMillis > samplingInterval) {
     previousMillis += samplingInterval;
+
     /* ANALOGREAD - do all analogReads() at the configured sampling interval */
     for(analogPin = ANALOG_PIN_START; analogPin <= ANALOG_PIN_END; analogPin++) {
         byte pinIdx = analogPin - ANALOG_PIN_START;
@@ -177,12 +178,17 @@ void loop()
 #endif          
 
 #if ENABLE_FIRMATA
-      if (++firmataThrottleCount > FIRMATA_UPDATE_RATE_THROTTLE) {
-        firmataThrottleCount = 0;
+      if (firmataThrottleCount == FIRMATA_UPDATE_RATE_THROTTLE) {
         Firmata.sendAnalog(analogPin, val); 
       }
 #endif 
     }
+
+#if ENABLE_FIRMATA
+    if (++firmataThrottleCount > FIRMATA_UPDATE_RATE_THROTTLE) {
+        firmataThrottleCount = 0;
+    }
+#endif
   }
 
 #if ENABLE_LOOPER  
