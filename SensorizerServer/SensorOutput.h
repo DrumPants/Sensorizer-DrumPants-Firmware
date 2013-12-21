@@ -93,6 +93,11 @@ public:
 
 	////@Expose
 	public: OutputFilter* outputFilters[OUTPUT_FILTERS_LENGTH];
+
+	/*** 
+		Returns the output filter at the given index, or null if it doesn't exist
+	***/
+	OutputFilter* getOutputFilter(unsigned int idx);
 	
 	public: SensorOutput();
 	

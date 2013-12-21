@@ -3,11 +3,14 @@
 
 
 #include "SensorizerServer.h"
+#include "Configurator.h"
 
 class MidiInput {
 
 	SensorizerServer* server;
 
+
+	void updateField(byte sensorIdx, byte fieldIdx, byte value);
 
 public:
 	MidiInput(SensorizerServer* server);

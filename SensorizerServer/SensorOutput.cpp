@@ -26,6 +26,15 @@
 	//static const double SensorOutput::SIGNAL_IN_MIN = 0;
 	//static const double SensorOutput::SIGNAL_IN_MAX = 1023;
 
+	OutputFilter* SensorOutput::getOutputFilter(unsigned int idx) {
+
+		if (idx < OUTPUT_FILTERS_LENGTH) {
+			return outputFilters[idx];
+		}
+
+		return NULL;
+	}
+
 	SensorOutput::SensorOutput() {
 		multiplyVal = 1;
 		addVal = 0;
