@@ -377,7 +377,7 @@ void SensorizerServer::loadPreset() {
 #else
 	
 	filter = new OneHitDetector();
-	filter->retriggerThreshold = DEFAULT_RETRIGGER_THRESHOLD * 3;
+	filter->retriggerThreshold = DEFAULT_RETRIGGER_THRESHOLD * 6;
 	s->addOutputFilter(filter);
 
 	m = new MidiMapping(this->midiDevice);
@@ -408,7 +408,7 @@ void SensorizerServer::loadPreset() {
 	s->isInvert = true;
 
 	filter = new OneHitDetector();
-	filter->retriggerThreshold = DEFAULT_RETRIGGER_THRESHOLD * 3;
+	filter->retriggerThreshold = DEFAULT_RETRIGGER_THRESHOLD * 6;
 	s->addOutputFilter(filter);
 
 	m = new MidiMapping(this->midiDevice);
