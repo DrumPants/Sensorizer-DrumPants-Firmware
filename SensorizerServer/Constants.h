@@ -8,13 +8,14 @@
 // NOTE: all beta presets are >= 10 and it is used to set other constants!
 #define PRESET_BETA 10
 #define PRESET_BETA_RYAN 11
+#define PRESET_BETA_STRETCHY 12
 
 // for the earlier prototypes
 #define PRESET_NEON_GREEN_STRING 3
 #define PRESET_VJACKET_LEATHER 2
 #define PRESET_JEANS 1
 
-#define PRESET PRESET_BETA
+#define PRESET PRESET_BETA_STRETCHY
 
 /******* END hardware version type presets ********/
 
@@ -97,6 +98,9 @@
   #if PRESET == PRESET_BETA_RYAN
     #define ANALOG_PIN_START 2
     #define ANALOG_PIN_END 8
+  #elif PRESET == PRESET_BETA_STRETCHY
+    #define ANALOG_PIN_START 2
+    #define ANALOG_PIN_END 11
   #else
     #define ANALOG_PIN_START 1
     #define ANALOG_PIN_END 11
