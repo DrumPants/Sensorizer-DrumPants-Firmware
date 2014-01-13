@@ -1,4 +1,5 @@
 #include "Knobs.h"
+#include "general_midi_sounds.h"
 
 byte NOTE_PRESETS_MELODIC[NOTE_PRESETS_MELODIC_LENGTH][NOTE_PRESETS_ELEMENT_LENGTH] = {
 
@@ -32,15 +33,72 @@ byte NOTE_PRESETS_MELODIC[NOTE_PRESETS_MELODIC_LENGTH][NOTE_PRESETS_ELEMENT_LENG
 byte NOTE_PRESETS_DRUMS[NOTE_PRESETS_DRUMS_LENGTH][NOTE_PRESETS_ELEMENT_LENGTH] = {
 
 #if NOTE_PRESETS_ELEMENT_LENGTH == 6
-	{30, 57, 40, 48, 44, 41},
-	{30, 49, 39, 60, 61, 43},
-	{30, 52, 39, 67, 68, 43},
-	{30, 53, 58, 76, 77, 54}
+{
+    ScratchPull,
+    CrashCymbal2,
+    ElectricSnare,
+    HighMidTom, 
+    PedalHi_hat, 
+    LowFloorTom},
+  {
+    ScratchPull,
+    CrashCymbal1,
+    HandClap,
+    HighBongo, 
+    LowBongo, 
+    HighFloorTom},
+  {
+    ScratchPull,
+    ChineseCymbal,
+    HandClap,
+    HighAgogo, 
+    LowAgogo, 
+    HighFloorTom},
+  {
+    ScratchPull,
+    RideBell,
+    Vibra_slap,
+    HiWoodBlock, 
+    LowWoodBlock, 
+    Tambourine}
 #else
-  {30, 57, 40, 48, 44, 41, 53, 58, 80},
-  {30, 49, 39, 60, 61, 43, 53, 58, 80},
-  {30, 52, 39, 67, 68, 43, 53, 58, 80},
-  {30, 53, 58, 76, 77, 54, 67, 68, 80}
+  {
+    ScratchPull,
+    CrashCymbal2,
+    ElectricSnare,
+    HighMidTom, 
+    PedalHi_hat, 
+    LowFloorTom,
+    RideBell, 
+    Vibra_slap, 
+    MuteTriangle},
+  {
+    ScratchPull,
+    CrashCymbal1,
+    HandClap,
+    HighBongo, 
+    LowBongo, 
+    HighFloorTom,
+    RideBell, 
+    Vibra_slap, 
+    MuteTriangle},
+  {
+    ScratchPull,
+    ChineseCymbal,
+    HandClap,
+    HighAgogo, 
+    LowAgogo, 
+    HighFloorTom,
+    RideBell, 
+    Vibra_slap, 
+    MuteTriangle},
+  {
+    ScratchPull,
+    RideBell,
+    Vibra_slap,
+    HiWoodBlock, 
+    LowWoodBlock, 
+    Tambourine, HighAgogo, LowAgogo, MuteTriangle}
 #endif  
 };
 
