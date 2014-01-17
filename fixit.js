@@ -92,7 +92,7 @@ str =
 "    76, \n" + 
 "    77, \n" + 
 "    54}\n" + 
-"\n" + 
+"#else\n" + 
 "  {\n" + 
 "    ScratchPull,\n" + 
 "    CrashCymbal2,\n" + 
@@ -128,3 +128,4 @@ result = str;
 for (var i in lookup) {
 	result = result.replace(new RegExp(lookup[i], 'g'), i);
 }
+
