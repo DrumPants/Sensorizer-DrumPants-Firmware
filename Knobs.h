@@ -27,13 +27,13 @@
 
 
 #if IS_DRUMPANTS
-  #define ENCODER_PIN_1 30
+  #define ENCODER_PIN_1 12
   #define ENCODER_PIN_2 11
   #define ENCODER_MODE_SWITCH_PIN 32 
 
   // for some reason our common pin is wired to a digital pin.
   // this should be wired to ground
-  #define ENCODER_PIN_COMMON 12
+  #define ENCODER_PIN_COMMON 30
 #else
   #define ENCODER_PIN_1 8
   #define ENCODER_PIN_2 9
