@@ -18,7 +18,7 @@ SensorizerServer::SensorizerServer() {
 
 #if IS_DRUMPANTS
 	// make the BLE repeat all messages we're sending
-	MidiRepeater* repeater = new MidiRepeater();
+	MidiRepeater* repeater = new TranslatingMidiRepeater(this);
 	this->midiDevice->addListener(repeater);
 
 #endif
@@ -1156,4 +1156,21 @@ void SensorizerServer::loadNotes(byte notes[]) {
 				sensorInputs[i]->dropdownMidiMappings[0]->note = notes[min(i, (NOTE_PRESETS_ELEMENT_LENGTH - 1))];
 		}
 	}
+}
+
+int SensorizerServer::getSensorIdxForNote(byte note) {
+	for (int i = 0; i < SENSOR_INPUTS_LENGTH; i++) {
+		if (sensorInputs[i] != NULL) {
+			if (sensorInputs[i]->dropdownMidiMappings[0] != NULL) {
+				if (note == sensorInputs[i]->dropdownMidiMappings[0]->note) {
+					return i;
+ 				}
+			}
+		}
+		else {
+			break;
+		}
+	}
+
+	return -1;
 }

@@ -17,7 +17,7 @@
 
 #include "Debug.h"
 
-#include "MidiRepeater.h"
+#include "TranslatingMidiRepeater.h"
 
 
 #if SENSOR_INPUTS_LENGTH > NOTE_PRESETS_ELEMENT_LENGTH
@@ -62,6 +62,10 @@ public:
 
 	void tick();
 	
+	/****
+		Returns the sensor index that is sending the given note for the curretnly selected scale.
+	***/
+	int getSensorIdxForNote(byte note);
 };
 
 #endif

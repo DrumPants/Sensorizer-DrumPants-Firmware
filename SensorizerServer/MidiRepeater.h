@@ -22,7 +22,7 @@ public:
 	The listener function. Called by a sensor input whenever it sends an output.
 
 	***/
-	void onSendOutput(byte cmd, byte data1, byte data2);
+	virtual void onSendOutput(byte cmd, byte data1, byte data2);
 
 };
 
