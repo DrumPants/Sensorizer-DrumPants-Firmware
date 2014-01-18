@@ -16,13 +16,21 @@ SensorizerServer::SensorizerServer() {
 
 	this->midiDevice = new MidiDevice(); 
 
+#if IS_DRUMPANTS
+	// make the BLE repeat all messages we're sending
+	MidiRepeater* repeater = new MidiRepeater();
+	this->midiDevice->addListener(repeater);
+
+#endif
+
+
 #if ENABLE_LOOPER
 	//set up looper
 	this->looper = new EventLooper();
 	this->looper->setOutputDevice(this->midiDevice);
 
 	// record and loop each output
-	this->midiDevice->setListener(this->looper);
+	this->midiDevice->addListener(this->looper);
 #endif
 }
 

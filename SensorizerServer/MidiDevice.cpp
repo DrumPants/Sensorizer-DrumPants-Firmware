@@ -79,7 +79,7 @@ MidiDevice::MidiDevice() {
 	this->bank = 0x78; // start with DRUMS!
 	this->instrument = 0; // was 30 for piano
 
-	this->listener = NULL;
+	//this->listener = NULL;
 }
 
 MidiDevice::~MidiDevice() {
@@ -93,11 +93,7 @@ void MidiDevice::setup() {
 	
 	//Setup soft serial for MIDI control
 	mySerial->begin(BAUD_RATE_MIDI);
-
-#if IS_DRUMPANTS
-	// also send to BLE
-	Serial1.begin(BAUD_RATE_BLUETOOTH_LE);
-#endif		
+	
 
 #ifndef IS_ARDUINO_SHIM
 	//Reset the VS1053
@@ -205,25 +201,18 @@ void MidiDevice::talkMIDI(byte cmd, byte data1, byte data2, bool isSilent) {
 	if (hasSecondArg)
 		mySerial->write(data2);//print(data2, BYTE);
 
-
-	#if IS_DRUMPANTS
-
-	// also send to BLE
-	Serial1.write(cmd);
-	Serial1.write(data1);
-
-	if (hasSecondArg)
-		Serial1.write(data2);
-
-	#endif
-
-
-  digitalWrite(LED_PIN, LOW);
+  	digitalWrite(LED_PIN, LOW);
 #endif
 
-  if (!isSilent && this->listener != NULL) {
-	this->listener->onSendOutput(cmd, data1, data2);
+  if (!isSilent) {
+
+  	for (int i = 0; i < LISTENERS_LENGTH; i++) {
+	  	if (this->listeners[i] != NULL) {
+			this->listeners[i]->onSendOutput(cmd, data1, data2);
+	  	}
+	}
   }
+
 }
 
 
@@ -249,9 +238,17 @@ void MidiDevice::bendPitch(int channel, int velocity) {
 	talkMIDI( (0xE0 | channel), 0, velocity);
 }
 
-/*** for looper listeners ***/
-void MidiDevice::setListener(EventLooper* l) {
-	this->listener = l;
+/*** for looper listeners.
+
+Silently fails if you try to add more than 2 listeners! ***/
+void MidiDevice::addListener(MidiListener* l) {
+
+	for (int i = 0; i < LISTENERS_LENGTH; i++) {
+	  	if (this->listeners[i] != NULL) {
+			this->listeners[i] = l;
+			break;
+	  	}
+	}
 }
 
 

@@ -17,6 +17,7 @@
 
 #include "Debug.h"
 
+#include "MidiRepeater.h"
 
 
 #if SENSOR_INPUTS_LENGTH > NOTE_PRESETS_ELEMENT_LENGTH

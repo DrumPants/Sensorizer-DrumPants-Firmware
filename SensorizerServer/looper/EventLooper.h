@@ -14,12 +14,13 @@
 #include "LoopLayer.h"
 
 #include "../MidiDevice.h"
+#include "../MidiListener.h"
 
 #define LOOP_LENGTH_IN_SECONDS 8
 #define LOOP_LENGTH_IN_TICKS 512
 #define MAX_LOOP_LAYERS 32
 
-class EventLooper {
+class EventLooper : public MidiListener {
 
 	LoopLayer* layers[MAX_LOOP_LAYERS];
 

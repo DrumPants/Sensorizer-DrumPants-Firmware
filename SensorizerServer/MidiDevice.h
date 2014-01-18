@@ -52,6 +52,10 @@
 
 #include "Debug.h"
 
+#include "MidiListener.h"
+
+#define LISTENERS_LENGTH 2
+
 
 //Tied to VS1053 Reset line
 #if IS_DRUMPANTS 
@@ -81,7 +85,7 @@ private:
 
 	byte instrument, bank;
 
-	EventLooper* listener;
+	MidiListener* listeners[LISTENERS_LENGTH];
 
 public:
 	
@@ -124,7 +128,7 @@ public:
 	/***
 		Sets a listener object and will call onSendOutput() on it whenever a MIDI command is sent.
 	***/
-	void setListener(EventLooper* l);
+	void addListener(MidiListener* l);
 	
 };
 
