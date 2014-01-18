@@ -15,7 +15,7 @@
 #define PRESET_VJACKET_LEATHER 2
 #define PRESET_JEANS 1
 
-#define PRESET PRESET_BETA_STRETCHY
+#define PRESET PRESET_BETA
 
 /******* END hardware version type presets ********/
 
