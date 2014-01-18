@@ -21,7 +21,7 @@ const byte seven_seg_digits[NUM_PRINTABLE_DIGITS][NUM_OUTS] = {
                                                                             
                                       // // EXTENDOTRON
                                       { 1,1,1,0,1,1,1 },  // = A
-                                      { 1,1,1,1,0,1,1 },  // = B
+                                      { 0,0,1,1,1,1,1 },  // = B
                                       { 1,0,0,1,1,1,0 },  // = C
                                       { 0,1,1,1,1,0,1 },  // = D
                                       { 1,0,0,1,1,1,1 },  // = E
@@ -141,12 +141,12 @@ void SevenSegmentController::print(int num) {
   if (startChar < 0) {
       charactersForDigits[0] = '0';
   }
-  // else if (startChar > 0) {
-  //   // translate hundreds into hex-ish notation.
-  //   byte tens = num / 10;
+  else if (startChar > 0) {
+    // translate hundreds into hex-ish notation.
+    byte tens = num / 10;
 
-  //   charactersForDigits[0] = ('A' - 10) + tens;
-  // }
+    charactersForDigits[0] = ('A' - 10) + tens;
+  }
   else {
     charactersForDigits[0] = str.charAt(startChar + 0);
   }
