@@ -79,7 +79,10 @@ MidiDevice::MidiDevice() {
 	this->bank = 0x78; // start with DRUMS!
 	this->instrument = 0; // was 30 for piano
 
-	//this->listener = NULL;
+	//manually init array
+	for (int i = 0; i < LISTENERS_LENGTH; i++) {
+		listeners[i] = NULL;
+	}
 }
 
 MidiDevice::~MidiDevice() {
