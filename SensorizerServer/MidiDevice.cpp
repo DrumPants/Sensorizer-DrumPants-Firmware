@@ -211,7 +211,7 @@ void MidiDevice::talkMIDI(byte cmd, byte data1, byte data2, bool isSilent) {
 
   if (!isSilent) {
 
-  	for (int i = 0; i < LISTENERS_LENGTH; i++) {
+   	for (int i = 0; i < LISTENERS_LENGTH; i++) {
 	  	if (this->listeners[i] != NULL) {
 			this->listeners[i]->onSendOutput(cmd, data1, data2);
 	  	}
@@ -249,7 +249,7 @@ Silently fails if you try to add more than 2 listeners! ***/
 void MidiDevice::addListener(MidiListener* l) {
 
 	for (int i = 0; i < LISTENERS_LENGTH; i++) {
-	  	if (this->listeners[i] != NULL) {
+	  	if (this->listeners[i] == NULL) {
 			this->listeners[i] = l;
 			break;
 	  	}
