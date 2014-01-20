@@ -1,6 +1,10 @@
 #ifndef TranslatingMidiRepeater_h
 #define TranslatingMidiRepeater_h
 
+#include <Arduino.h>
+#include "Constants.h"
+#include "Debug.h"
+
 #include "MidiRepeater.h"
 
 class SensorizerServer;

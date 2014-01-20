@@ -3,10 +3,10 @@
 
 MidiRepeater::MidiRepeater() {
 
-#if IS_DRUMPANTS
+//#if IS_DRUMPANTS
 	// also send to BLE
 	Serial1.begin(BAUD_RATE_BLUETOOTH_LE);
-#endif	
+//#endif	
 }
 
 
@@ -17,7 +17,7 @@ void MidiRepeater::onSendOutput(byte cmd, byte data1, byte data2) {
     //if( (cmd & 0xF0) <= 0xB0)
     bool hasSecondArg = ((cmd & 0xF0) <= 0xB0 || (cmd & 0xF0) == 0xE0);
 
-#if IS_DRUMPANTS
+//#if IS_DRUMPANTS
 
 	// also send to BLE
 	Serial1.write(cmd);
@@ -26,6 +26,6 @@ void MidiRepeater::onSendOutput(byte cmd, byte data1, byte data2) {
 	if (hasSecondArg)
 		Serial1.write(data2);
 
-#endif
+//#endif
 
 }
