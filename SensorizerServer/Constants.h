@@ -47,8 +47,8 @@
   #define BLE_TYPE BLE_TYPE_NONE
 #endif
 
-
-#define ENABLE_FIRMATA 1
+// can't use Firmata on USB and also debug print on USB:
+#define ENABLE_FIRMATA (!ENABLE_DEBUG_PRINTING)
 
 //uncomment this to set serial baud at bluetooth rate. otherwise, USB rate.
 //# define IS_BLUETOOTH
