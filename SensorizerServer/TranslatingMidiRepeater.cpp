@@ -11,10 +11,13 @@ TranslatingMidiRepeater::TranslatingMidiRepeater(SensorizerServer* server) {
 
 
 void TranslatingMidiRepeater::onSendOutput(byte cmd, byte data1, byte data2) {
-    byte idx = server->getSensorIdxForNote(data1);
+    int idx = server->getSensorIdxForNote(data1);
 
     if (idx != -1) {
     	// don't send a 0 note. that's creepy
 	    MidiRepeater::onSendOutput(cmd, idx + 1, data2);
+	}
+	else {
+		DEBUG_PRINT("Failed to find sensor index");
 	}
 }

@@ -87,6 +87,8 @@ MidiDevice::MidiDevice() {
 
 MidiDevice::~MidiDevice() {
 	//delete this->mySerial;
+	//
+	this->destroyListeners();
 }
 
 void MidiDevice::setup() {
@@ -254,6 +256,15 @@ void MidiDevice::addListener(MidiListener* l) {
 	}
 }
 
+void MidiDevice::destroyListeners() {
+	for (int i = 0; i < LISTENERS_LENGTH; i++) {
+	  	if (this->listeners[i] != NULL) {
+			delete this->listeners[i];
+
+			this->listeners[i] = NULL;
+	  	}
+	}
+}
 
 
 

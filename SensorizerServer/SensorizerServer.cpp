@@ -40,9 +40,10 @@ SensorizerServer::~SensorizerServer() {
 			delete sensorInputs[i];
 	}
 
-#if ENABLE_LOOPER
-	delete this->looper;
-#endif
+// not needed anymore: this is handled in midiDevice destructor
+// #if ENABLE_LOOPER
+// 	delete this->looper;
+// #endif
 
 	delete this->midiDevice;
 }

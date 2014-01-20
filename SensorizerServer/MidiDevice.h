@@ -124,11 +124,18 @@ public:
 	void setVolume(byte channel, byte vol);
 
 
-	/*** for looper listeners ***/
-	/***
+	/*** for looper listeners 
+
 		Sets a listener object and will call onSendOutput() on it whenever a MIDI command is sent.
+
+		This takes ownership of the object; it will be freed upon destruction. Do not try to free it again!
 	***/
 	void addListener(MidiListener* l);
+
+	/***
+		Frees all listeners added with addListener()
+	***/
+	void destroyListeners();
 	
 };
 
