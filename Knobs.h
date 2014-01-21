@@ -53,7 +53,7 @@ typedef int BankId;
 
 
 #define NOTE_PRESETS_MELODIC_LENGTH 10
-#define NOTE_PRESETS_DRUMS_LENGTH 4
+#define NOTE_PRESETS_DRUMS_LENGTH 6
 
 /*
 //var n = [0, 60, 62, 63, 65, 67];

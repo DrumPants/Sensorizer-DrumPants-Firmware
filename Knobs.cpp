@@ -60,7 +60,24 @@ byte NOTE_PRESETS_DRUMS[NOTE_PRESETS_DRUMS_LENGTH][NOTE_PRESETS_ELEMENT_LENGTH] 
     Vibra_slap,
     HiWoodBlock, 
     LowWoodBlock, 
-    Tambourine}
+    Tambourine
+  },
+  {
+    ScratchPull,
+    ChineseCymbal,
+    Tambourine,
+    HighTimbale, 
+    LowTimbale, 
+    HighFloorTom
+  },
+  {
+    ScratchPull,
+    ChineseCymbal,
+    ElectricSnare,
+    MuteHiConga, 
+    OpenHiConga, 
+    LowConga
+  }
 #else
   {
     ScratchPull,
@@ -80,7 +97,7 @@ byte NOTE_PRESETS_DRUMS[NOTE_PRESETS_DRUMS_LENGTH][NOTE_PRESETS_ELEMENT_LENGTH] 
     LowBongo, 
     HighFloorTom,
     RideBell, 
-    Vibra_slap, 
+    Claves, 
     MuteTriangle},
   {
     ScratchPull,
@@ -90,15 +107,43 @@ byte NOTE_PRESETS_DRUMS[NOTE_PRESETS_DRUMS_LENGTH][NOTE_PRESETS_ELEMENT_LENGTH] 
     LowAgogo, 
     HighFloorTom,
     RideBell, 
-    Vibra_slap, 
-    MuteTriangle},
+    Claves, 
+    MuteTriangle
+  },
   {
     ScratchPull,
     RideBell,
-    Vibra_slap,
+    Claves,
     HiWoodBlock, 
     LowWoodBlock, 
-    Tambourine, HighAgogo, LowAgogo, MuteTriangle}
+    Tambourine, 
+    HighAgogo, 
+    LowAgogo, 
+    MuteTriangle
+  },
+  {
+    ScratchPull,
+    ChineseCymbal,
+    Tambourine,
+    HighTimbale, 
+    LowTimbale, 
+    HighFloorTom,
+    Cowbell, 
+    Castanets, 
+    Maracas
+  },
+  {
+    ScratchPull,
+    ChineseCymbal,
+    ElectricSnare,
+    MuteHiConga, 
+    OpenHiConga, 
+    LowConga,
+    Cowbell, 
+    CrashCymbal2, 
+    PedalHi_hat
+  }
+
 #endif  
 };
 
