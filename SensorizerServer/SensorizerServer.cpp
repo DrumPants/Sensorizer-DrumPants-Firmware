@@ -197,7 +197,12 @@ void SensorizerServer::loadPreset() {
 	////////////////////////////
 	s = new SensorOutput();
 	s->inRange.low = 0;
+#if PRESET == PRESET_BETA_RYAN	
+	// handle larger peizo type
+	s->inRange.high = 0.56353861;
+#else
 	s->inRange.high = 0.16353861;
+#endif
 	s->outRange.low = 0;
 	s->outRange.high = 1;
 	s->cutoffRange.low = 0.1;
@@ -262,7 +267,12 @@ void SensorizerServer::loadPreset() {
 	////////////////////////////
 	s = new SensorOutput();
 	s->inRange.low = 0;
+#if PRESET == PRESET_BETA_RYAN	
+	// handle larger peizo type
+	s->inRange.high = 0.56353861;
+#else
 	s->inRange.high = 0.16353861;
+#endif
 	s->outRange.low = 0;
 	s->outRange.high = 1;
 	s->cutoffRange.low = 0.1;
@@ -292,7 +302,12 @@ void SensorizerServer::loadPreset() {
 	////////////////////////////
 	s = new SensorOutput();
 	s->inRange.low = 0;
+#if PRESET == PRESET_BETA_RYAN	
+	// handle larger peizo type
+	s->inRange.high = 0.56353861;
+#else
 	s->inRange.high = 0.16353861;
+#endif
 	s->outRange.low = 0;
 	s->outRange.high = 1;
 	s->cutoffRange.low = 0.1;
@@ -321,7 +336,12 @@ void SensorizerServer::loadPreset() {
 	////////////////////////////
 	s = new SensorOutput();
 	s->inRange.low = 0;
+#if PRESET == PRESET_BETA_RYAN	
+	// handle larger peizo type
+	s->inRange.high = 0.56353861;
+#else
 	s->inRange.high = 0.16353861;
+#endif
 	s->outRange.low = 0;
 	s->outRange.high = 1;
 	s->cutoffRange.low = 0.1;
