@@ -346,7 +346,7 @@ void SensorizerServer::loadPreset() {
 	////////////////////////////
 
 
-#if PRESET == PRESET_BETA || PRESET == PRESET_BETA_STRETCHY
+#if PRESET == PRESET_BETA || PRESET == PRESET_BETA_STRETCHY || PRESET == PRESET_BETA_RYAN
 
 #define FOOT_PEDAL_CC_ENABLE 0
 #define FOOT_PEDAL_CC_SEND_NULLS 0
