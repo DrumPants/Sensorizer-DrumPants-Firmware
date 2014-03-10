@@ -87,6 +87,7 @@ public:
 	////@Expose
 	public: MidiMapping* dropdownMidiMappings[MIDI_MAPPINGS_LENGTH];
 
+
 	//current, calculated output 
 	private: double _outputValue;
 	private: double _inputValue;
@@ -98,6 +99,11 @@ public:
 		Returns the output filter at the given index, or null if it doesn't exist
 	***/
 	OutputFilter* getOutputFilter(unsigned int idx);
+
+	/*** 
+		Returns the midi mapping at the given index, or null if it doesn't exist
+	***/
+	MidiMapping* getMidiMapping(unsigned int idx);
 	
 	public: SensorOutput();
 	

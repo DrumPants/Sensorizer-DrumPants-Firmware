@@ -20,7 +20,16 @@ bool Configurator::setField(SensorOutput* output, byte fieldIdx, float value) {
 
 				filter->retriggerThreshold = value;
 			}
-			break;			
+			break;		
+		case 20: {
+				MidiMapping* m = (MidiMapping*)output->getMidiMapping(0); // assume we only do one midi mapping
+
+				if (m == NULL)
+					return false;
+
+				m->note = (value * 127);
+			}
+			break;
 		default:
 			return false;
 	}

@@ -35,6 +35,15 @@
 		return NULL;
 	}
 
+	MidiMapping* SensorOutput::getMidiMapping(unsigned int idx) {
+
+		if (idx < MIDI_MAPPINGS_LENGTH) {
+			return dropdownMidiMappings[idx];
+		}
+
+		return NULL;
+	}
+
 	SensorOutput::SensorOutput() {
 		multiplyVal = 1;
 		addVal = 0;
