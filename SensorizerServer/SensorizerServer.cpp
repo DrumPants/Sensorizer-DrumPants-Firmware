@@ -124,6 +124,10 @@ void SensorizerServer::loadPreset() {
 	this->midiDevice->setVolume(MIDI_CHANNEL, 126);
 
 
+
+/**************** PRODUCTION PANTS ******************/
+
+
 /**************** BETA PANTS ******************/
 #if PRESET >= PRESET_BETA
 
@@ -142,9 +146,11 @@ void SensorizerServer::loadPreset() {
 	s->addVal = 0;
 	s->isInvert = false;
 
+
 #if PRESET == PRESET_BETA_NEIL_PEART
 	filter = new OneHitDetector();
 	filter->retriggerThreshold = 50;
+
 	s->addOutputFilter(filter);
 
 	m = new MidiMapping(this->midiDevice);
@@ -153,7 +159,8 @@ void SensorizerServer::loadPreset() {
 	m->setMsgType(MidiMapping::NOTE);
 	s->addMidiMapping(m);
 
-#endif
+#endif	
+
 
 	sensorInputs[i++] = s;
 	////////////////////////////
