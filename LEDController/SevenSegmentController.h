@@ -22,6 +22,12 @@ Controls a seven-segment LED connected to a darlington array.
 #ifndef IS_DRUMPANTS 
 #define IS_DRUMPANTS 1
 #endif
+#ifndef PRESET_PREPRODUCTION 
+#define PRESET_PREPRODUCTION 20
+#endif
+#ifndef PRESET 
+#define PRESET PRESET_PREPRODUCTION
+#endif
 
 #if IS_DRUMPANTS
 
