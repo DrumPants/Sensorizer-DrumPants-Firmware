@@ -11,12 +11,15 @@
 #define PRESET_BETA_STRETCHY 12
 #define PRESET_BETA_NEIL_PEART 14
 
+// for the beta pre-production PCB (April 2014)
+#define PRESET_PREPRODUCTION 20
+
 // for the earlier prototypes
 #define PRESET_NEON_GREEN_STRING 3
 #define PRESET_VJACKET_LEATHER 2
 #define PRESET_JEANS 1
 
-#define PRESET PRESET_BETA_NEIL_PEART
+#define PRESET PRESET_PREPRODUCTION
 
 /******* END hardware version type presets ********/
 
@@ -88,8 +91,8 @@
 // the default num of ticks before a note retriggers
 #define DEFAULT_RETRIGGER_THRESHOLD 50
 
+#if IS_DUE
 
-#if IS_DUE  
   #define USE_HARDWARE_SERIAL 1
 
 
@@ -100,7 +103,7 @@
   #elif PRESET == PRESET_BETA_STRETCHY
     #define ANALOG_PIN_START 2
     #define ANALOG_PIN_END 11
-  #elif PRESET == PRESET_BETA_NEIL_PEART
+  #elif PRESET >= PRESET_PREPRODUCTION || PRESET == PRESET_BETA_NEIL_PEART
     #define ANALOG_PIN_START 0
     #define ANALOG_PIN_END 11
   #else
