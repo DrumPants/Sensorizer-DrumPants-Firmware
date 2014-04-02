@@ -24,15 +24,23 @@ Controls a seven-segment LED connected to a darlington array.
 #endif
 
 #if IS_DRUMPANTS
-  const unsigned char outs[] = {34, 35, 36, 37, 38, 39, 40};
-  
-  // this is for the LED-LDD-E304NI-RA-Lumex right-angle LED, 
-  // which has different pinouts for A-G depending on which digit you're activating. NICE
-  #define IS_RETARDED_LED 1
-  #if IS_RETARDED_LED
-  const unsigned char outsDigit1[] = {34, 38, 35, 37, 39, 36, 40};
+
+  #if PRESET >= PRESET_PREPRODUCTION
+  	const unsigned char outs[] = {34, 35, 37, 38, 39, 40, 41};
+
+  	#define PIN_DECIMAL_POINT 13
+
+  #else
+	const unsigned char outs[] = {34, 35, 36, 37, 38, 39, 40};
+
+	// this is for the LED-LDD-E304NI-RA-Lumex right-angle LED, 
+	// which has different pinouts for A-G depending on which digit you're activating. NICE
+	#define IS_RETARDED_LED 1
+	#if IS_RETARDED_LED
+		const unsigned char outsDigit1[] = {34, 38, 35, 37, 39, 36, 40};
+  	#endif
   #endif
-  
+
   #define PIN_DIGIT_0 44
   #define PIN_DIGIT_1 45  
 #elif IS_DUE
@@ -73,6 +81,14 @@ public:
 		Prints the given number as its decimal equivalent.
 	***/
 	void print(int num);
+
+
+	/***
+		Sets the decimal point at the given digit on or off.
+
+		@param decimalIdx either 0 or 1.
+	***/
+	void setDecimalPoint(int decimalIdx, bool isOn);
 };
 
 

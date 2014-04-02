@@ -34,7 +34,11 @@ const byte seven_seg_digits[NUM_PRINTABLE_DIGITS][NUM_OUTS] = {
   byte digitToShow = 0;
 
 
-  byte charactersForDigits[NUM_DIGITS] = {'3', '3'};                                              
+  byte charactersForDigits[NUM_DIGITS] = {'3', '3'};
+
+#ifdef PIN_DECIMAL_POINT   
+  bool decimalPoints[NUM_DIGITS] = {false, false};                                           
+#endif
 
 void SevenSegmentController::setup() {
   this->lastUpdate = 0;
@@ -46,6 +50,10 @@ void SevenSegmentController::setup() {
   
    pinMode(PIN_DIGIT_0, OUTPUT);  
    pinMode(PIN_DIGIT_1, OUTPUT);  
+
+#ifdef PIN_DECIMAL_POINT   
+   pinMode(PIN_DECIMAL_POINT, OUTPUT);   
+#endif
 }
 
 
@@ -57,10 +65,14 @@ void SevenSegmentController::tick() {
 
     
 
-    digitToShow = (digitToShow + 1) % 2;
+    digitToShow = (digitToShow + 1) % NUM_DIGITS;
     chooseDigit(digitToShow);
     //showDigit(digitToShow ? digit : digit);
     showChar(charactersForDigits[digitToShow]);
+
+#ifdef PIN_DECIMAL_POINT   
+    digitalWrite(PIN_DECIMAL_POINT, decimalPoints[digitToShow] ? HIGH : LOW);    
+#endif    
 
     this->lastUpdate = curMillis;
   }
@@ -152,4 +164,14 @@ void SevenSegmentController::print(int num) {
   }
 
   charactersForDigits[1] = str.charAt(startChar + 1);
+}
+
+
+
+void SevenSegmentController::setDecimalPoint(int decimalIdx, bool isOn) {
+
+#ifdef PIN_DECIMAL_POINT   
+  decimalPoints[decimalIdx] = isOn;
+#endif
+  
 }
