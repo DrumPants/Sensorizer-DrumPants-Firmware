@@ -28,11 +28,15 @@
 #define BLE_TYPE_NONE 0
 #define BLE_TYPE_BLUEGIGA 1
 #define BLE_TYPE_REDBEARLABS 2
+#define BLE_TYPE_BROADCOM 3
 
 
 
+#if PRESET >= PRESET_PREPRODUCTION
 
-#if PRESET == PRESET_VJACKET_LEATHER
+  #define BLE_TYPE BLE_TYPE_BROADCOM
+
+#elif PRESET == PRESET_VJACKET_LEATHER
 
   // to use BLE:
   //#define BLE_TYPE BLE_TYPE_BLUEGIGA
@@ -69,10 +73,6 @@
 
 #define ENABLE_TEST 0
 
-#define BAUD_RATE_USB 57600
-#define BAUD_RATE_BLUETOOTH 115200
-#define BAUD_RATE_BLUETOOTH_LE 19200
-
 // for the MIDI chip in MidiDevice class
 #if BLE_TYPE == BLE_TYPE_BLUEGIGA
   #define BAUD_RATE_MIDI 19200
@@ -81,6 +81,21 @@
 #else
   #define BAUD_RATE_MIDI 31250
 #endif
+
+
+#define BAUD_RATE_USB 57600
+#define BAUD_RATE_BLUETOOTH 115200
+
+
+#if BLE_TYPE == BLE_TYPE_BLUEGIGA
+  #define BAUD_RATE_BLUETOOTH_LE 19200
+#elif BLE_TYPE == BLE_TYPE_BROADCOM
+  #define BAUD_RATE_BLUETOOTH_LE 115200
+
+  // pre-production pants have the broadcom reset line attached!
+  #define BLE_RESET_PIN 31
+#endif
+
 
 // the channel to send midi notes
 #define MIDI_CHANNEL 0

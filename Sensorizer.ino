@@ -117,7 +117,18 @@ void setup()
 
 #if IS_DUE
 
-  Serial.begin(57600);
+
+  #ifdef BLE_RESET_PIN
+  // broadcom has reset line attached, make sure it's not reseting!
+  // active-low.
+
+  pinMode(BLE_RESET_PIN, OUTPUT);
+  digitalWrite(BLE_RESET_PIN, HIGH); 
+
+  // TODO: uncomment this to implement reprograming the BLE firmware via its HCI UART
+  // Serial.begin(57600);
+
+  #endif
 
   // this is needed for debug printing on native USB port
   SerialUSB.begin(57600);
