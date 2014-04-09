@@ -351,7 +351,7 @@ void SensorizerServer::loadPreset() {
 	s->addVal = 0;
 	s->isInvert = false;
 
-#if PRESET == PRESET_BETA_RYAN	
+#if PRESET == PRESET_BETA_RYAN || PRESET == PRESET_BETA_NEIL_PEART
 	filter = new OneHitDetector();
 	filter->retriggerThreshold = DEFAULT_RETRIGGER_THRESHOLD;
 	s->addOutputFilter(filter);
@@ -364,6 +364,79 @@ void SensorizerServer::loadPreset() {
 #endif	
 	sensorInputs[i++] = s;
 	////////////////////////////
+
+
+// start NEIL PEART
+#if PRESET == PRESET_BETA_NEIL_PEART
+	////////////////////////////
+	// OUTPUT FOR arduino 5
+	////////////////////////////
+	s = new SensorOutput();
+	s->inRange.low = 0;
+#if PRESET == PRESET_BETA_RYAN	
+	// handle larger peizo type
+	s->inRange.high = 0.56353861;
+#else
+	s->inRange.high = 0.16353861;
+#endif
+	s->outRange.low = 0;
+	s->outRange.high = 1;
+	s->cutoffRange.low = 0.1;
+	s->cutoffRange.high = 1;
+	s->setCutoffType(SensorOutput::CUTOFF_TYPE_VAL_NULLABLE_LOW); //No Cutoff
+	s->multiplyVal = 1;
+	s->addVal = 0;
+	s->isInvert = false;
+
+	filter = new OneHitDetector();
+	filter->retriggerThreshold = DEFAULT_RETRIGGER_THRESHOLD;
+	s->addOutputFilter(filter);
+
+	m = new MidiMapping(this->midiDevice);
+	m->channel = MIDI_CHANNEL;
+	m->note = 60 + i;
+	m->setMsgType(MidiMapping::NOTE);
+	s->addMidiMapping(m);
+	
+	sensorInputs[i++] = s;
+	////////////////////////////
+
+
+	////////////////////////////
+	// OUTPUT FOR arduino 6
+	////////////////////////////
+	s = new SensorOutput();
+	s->inRange.low = 0;
+#if PRESET == PRESET_BETA_RYAN	
+	// handle larger peizo type
+	s->inRange.high = 0.56353861;
+#else
+	s->inRange.high = 0.16353861;
+#endif
+	s->outRange.low = 0;
+	s->outRange.high = 1;
+	s->cutoffRange.low = 0.1;
+	s->cutoffRange.high = 1;
+	s->setCutoffType(SensorOutput::CUTOFF_TYPE_VAL_NULLABLE_LOW); //No Cutoff
+	s->multiplyVal = 1;
+	s->addVal = 0;
+	s->isInvert = false;
+
+	filter = new OneHitDetector();
+	filter->retriggerThreshold = DEFAULT_RETRIGGER_THRESHOLD;
+	s->addOutputFilter(filter);
+
+	m = new MidiMapping(this->midiDevice);
+	m->channel = MIDI_CHANNEL;
+	m->note = 60 + i;
+	m->setMsgType(MidiMapping::NOTE);
+	s->addMidiMapping(m);
+
+	sensorInputs[i++] = s;
+	////////////////////////////
+
+#endif
+// end NEIL PEART
 
 
 #if PRESET == PRESET_BETA || PRESET == PRESET_BETA_STRETCHY || PRESET == PRESET_BETA_RYAN
