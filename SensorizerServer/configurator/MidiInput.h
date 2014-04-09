@@ -12,6 +12,8 @@ class MidiInput {
 
 	void updateField(byte sensorIdx, byte fieldIdx, byte value);
 
+	void checkSerial(Stream* input);
+
 public:
 	MidiInput(SensorizerServer* server);
 

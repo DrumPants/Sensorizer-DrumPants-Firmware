@@ -1,7 +1,8 @@
 #include "MidiInput.h"
 #include <Arduino.h>
 
-#define MIDI_SERIAL_IN Serial1
+#define BLE_MIDI_SERIAL_IN (Serial1)
+#define USB_MIDI_SERIAL_IN (SerialUSB)
 
 MidiInput::MidiInput(SensorizerServer* server) {
 	this->server = server;
@@ -10,28 +11,32 @@ MidiInput::MidiInput(SensorizerServer* server) {
 
 void MidiInput::check() {
 
-
 #if IS_DRUMPANTS
+	this->checkSerial(&BLE_MIDI_SERIAL_IN); 
+	this->checkSerial(&USB_MIDI_SERIAL_IN); 
+#endif
+
+}
+
+void MidiInput::checkSerial(Stream* input) {	
+
 
 	// check BLE
 	// TODO: only accepts 3 byte MIDI messages!
-	while (MIDI_SERIAL_IN.available() >= 3) {
-		byte statChan = MIDI_SERIAL_IN.read();
+	while (input->available() >= 3) {
+		byte statChan = input->read();
 		byte status = statChan & 0xF0;
 
 		// respond to CCs
 		if (status == 0xB0) {
 			// channel holds the sensor idx
 			byte channel = statChan & 0x0F;
-			byte num = MIDI_SERIAL_IN.read();
-			byte val = MIDI_SERIAL_IN.read();
+			byte num = input->read();
+			byte val = input->read();
 
 			updateField(channel, num, val);
 		}
 	}
-
-#endif
-
 }
 
 
