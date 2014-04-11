@@ -29,8 +29,8 @@
 #if IS_DRUMPANTS
 
   #if PRESET >= PRESET_PREPRODUCTION
-    #define ENCODER_PIN_1 12
-    #define ENCODER_PIN_2 11
+    #define ENCODER_PIN_1 11
+    #define ENCODER_PIN_2 12
     #define ENCODER_MODE_SWITCH_PIN 32 
 
   #else 
