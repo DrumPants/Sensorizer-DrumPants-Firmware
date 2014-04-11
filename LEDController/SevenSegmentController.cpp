@@ -30,7 +30,7 @@ const byte seven_seg_digits[NUM_PRINTABLE_DIGITS][NUM_OUTS] = {
                                       };
              
 
-#define LED_UPDATE_INTERVAL 10
+#define LED_UPDATE_INTERVAL 1
   byte digitToShow = 0;
 
 
