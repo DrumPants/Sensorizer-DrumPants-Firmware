@@ -31,6 +31,9 @@ int firmataThrottleCount = 0;
 
 #include "Knobs.h"
 
+// for intro sound
+#include "IntroSounds.h"
+
 SensorizerServer* server;
 
 Knobs* knobs;
@@ -145,8 +148,10 @@ void setup()
   DEBUG_PRINT("SETUPSERVER")
   setupServer();
 
-  DEBUG_PRINT("SETUPKNOBS")
-  //setupKnobs();
+  DEBUG_PRINT("PLAYING INTRO SOUNDS")
+  
+  playIntro(server);
+
 
   DEBUG_PRINT("END SETUP")
 }
