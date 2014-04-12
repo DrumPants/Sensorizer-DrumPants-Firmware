@@ -139,7 +139,7 @@ void SensorizerServer::loadPreset() {
 	s->inRange.high = 0.16353861;
 	s->outRange.low = 0;
 	s->outRange.high = 1;
-	s->cutoffRange.low = 0.1;
+	s->cutoffRange.low = 0.2;
 	s->cutoffRange.high = 1;
 	s->setCutoffType(SensorOutput::CUTOFF_TYPE_VAL_NULLABLE_LOW); //No Cutoff
 	s->multiplyVal = 1;
