@@ -144,7 +144,7 @@ void setup()
   delay(6); // ~5ms to warm up and boot
 
   // TODO: uncomment this to implement reprograming the BLE firmware via its HCI UART
-  // Serial.begin(57600);
+  Serial.begin(115200);
 
   #endif
 
@@ -221,6 +221,17 @@ void loop()
     }
 #endif
   }
+
+
+  // relay all debug messages from BLE 
+#if ENABLE_DEBUG_PRINTING && defined(BLE_RESET_PIN)
+
+  while(Serial.available()) {
+    SerialUSB.write(Serial.read());
+  }
+
+#endif
+
 
 #if ENABLE_LOOPER  
   // loop that shit! 
