@@ -102,8 +102,8 @@ struct Knobs {
 
 public:
   Knobs();
-  void setup(SensorizerServer* server);
-  void check();
+  virtual void setup(SensorizerServer* server);
+  virtual void check();
 };
 
 

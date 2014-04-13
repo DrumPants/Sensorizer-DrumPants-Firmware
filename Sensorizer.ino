@@ -29,7 +29,11 @@ int firmataThrottleCount = 0;
 #endif
 #include <Encoder.h>
 
-#include "Knobs.h"
+#if PRESET >= PRESET_PREPRODUCTION
+  #include "KnobsAndButtons.h"
+#else
+  #include "Knobs.h"
+#endif
 
 // for intro sound
 #include "IntroSounds.h"
@@ -64,7 +68,11 @@ void setupServer() {
 
     
     // the setup will load good drums preset to start
-    knobs = new Knobs();
+#if PRESET >= PRESET_PREPRODUCTION
+    knobs = new KnobsAndButtons();
+#else
+    knobs = new Knobs();    
+#endif
     knobs->setup(server);
 }
 
