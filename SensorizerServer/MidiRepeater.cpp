@@ -17,6 +17,7 @@ void MidiRepeater::onSendOutput(byte cmd, byte data1, byte data2) {
     //if( (cmd & 0xF0) <= 0xB0)
     bool hasSecondArg = ((cmd & 0xF0) <= 0xB0 || (cmd & 0xF0) == 0xE0);
 
+	DEBUG_PRINT_NUM("Send to BLE: ", cmd);
 //#if IS_DRUMPANTS
 
 	// also send to BLE
