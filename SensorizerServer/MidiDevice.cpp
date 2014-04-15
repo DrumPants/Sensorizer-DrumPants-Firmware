@@ -218,6 +218,8 @@ void MidiDevice::talkMIDI(byte cmd, byte data1, byte data2, bool isSilent) {
 	}
   }
 
+  DEBUG_PRINT_NUMS("Sent MIDI: ", cmd, data1);
+
 }
 
 

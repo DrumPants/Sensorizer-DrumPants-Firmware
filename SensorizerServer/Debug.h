@@ -3,6 +3,9 @@
 
 #define ENABLE_DEBUG_PRINTING 0
 
+// if 1, we'll relay all debug messages from the BLE module's HCI UART to the SerialToComputer
+#define ENABLE_DEBUG_PRINTING_RELAY_FROM_BLE 0
+
 #if IS_DUE
 	// SerialUSB is BROKEN
 	#define SerialToComputer SerialUSB
@@ -20,9 +23,11 @@
 #if ENABLE_DEBUG_PRINTING
 	#define DEBUG_PRINT(text) PRINT(text)
 	#define DEBUG_PRINT_NUM(text, num) PRINT_NUM(text, num)
+	#define DEBUG_PRINT_NUMS(text, num, num2) PRINT_NUMS(text, num, num2)
 #else
 	#define DEBUG_PRINT(text)   
 	#define DEBUG_PRINT_NUM(text, num)   
+	#define DEBUG_PRINT_NUMS(text, num, num2)
 #endif
 
 #endif

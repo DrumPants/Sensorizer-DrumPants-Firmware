@@ -135,13 +135,19 @@ void SensorizerServer::loadPreset() {
 		// handle sensitive-ass bare peizos
 		#define PIEZO_INRANGE_HIGH 1.0;
 		#define PIEZO_CUTOFFRANGE_LOW 0.38
+
+		#define DEFAULT_FOOT_PEDAL_RETRIGGER_THRESHOLD DEFAULT_RETRIGGER_THRESHOLD
 	#elif PRESET == PRESET_BETA_RYAN
 		// handle larger peizo type
 		#define PIEZO_INRANGE_HIGH 0.56353861	
 		#define PIEZO_CUTOFFRANGE_LOW 0.1
+
+		#define DEFAULT_FOOT_PEDAL_RETRIGGER_THRESHOLD (DEFAULT_RETRIGGER_THRESHOLD * 6)
 	#else
 		#define PIEZO_INRANGE_HIGH 0.16353861
 		#define PIEZO_CUTOFFRANGE_LOW 0.1
+
+		#define DEFAULT_FOOT_PEDAL_RETRIGGER_THRESHOLD (DEFAULT_RETRIGGER_THRESHOLD * 6)
 	#endif
 
 
@@ -150,7 +156,7 @@ void SensorizerServer::loadPreset() {
 	////////////////////////////
 	s = new SensorOutput();
 	s->inRange.low = 0;
-	s->inRange.high = 0.16353861;
+	s->inRange.high = PIEZO_INRANGE_HIGH;
 	s->outRange.low = 0;
 	s->outRange.high = 1;
 	s->cutoffRange.low = PIEZO_CUTOFFRANGE_LOW;
@@ -161,10 +167,9 @@ void SensorizerServer::loadPreset() {
 	s->isInvert = false;
 
 
-#if PRESET == PRESET_BETA_NEIL_PEART
+#if PRESET == PRESET_BETA_NEIL_PEART || PRESET >= PRESET_PREPRODUCTION
 	filter = new OneHitDetector();
-	filter->retriggerThreshold = 50;
-
+	filter->retriggerThreshold = DEFAULT_RETRIGGER_THRESHOLD;
 	s->addOutputFilter(filter);
 
 	m = new MidiMapping(this->midiDevice);
@@ -355,7 +360,7 @@ void SensorizerServer::loadPreset() {
 	s->addVal = 0;
 	s->isInvert = false;
 
-#if PRESET == PRESET_BETA_RYAN || PRESET == PRESET_BETA_NEIL_PEART
+#if PRESET == PRESET_BETA_RYAN || PRESET == PRESET_BETA_NEIL_PEART || PRESET >= PRESET_PREPRODUCTION
 	filter = new OneHitDetector();
 	filter->retriggerThreshold = DEFAULT_RETRIGGER_THRESHOLD;
 	s->addOutputFilter(filter);
@@ -485,7 +490,7 @@ void SensorizerServer::loadPreset() {
 #else
 	
 	filter = new OneHitDetector();
-	filter->retriggerThreshold = DEFAULT_RETRIGGER_THRESHOLD * 6;
+	filter->retriggerThreshold = DEFAULT_FOOT_PEDAL_RETRIGGER_THRESHOLD;
 	s->addOutputFilter(filter);
 
 	m = new MidiMapping(this->midiDevice);
@@ -516,7 +521,7 @@ void SensorizerServer::loadPreset() {
 	s->isInvert = true;
 
 	filter = new OneHitDetector();
-	filter->retriggerThreshold = DEFAULT_RETRIGGER_THRESHOLD * 6;
+	filter->retriggerThreshold = DEFAULT_FOOT_PEDAL_RETRIGGER_THRESHOLD;
 	s->addOutputFilter(filter);
 
 	m = new MidiMapping(this->midiDevice);
@@ -529,6 +534,45 @@ void SensorizerServer::loadPreset() {
 	////////////////////////////
 
 #endif
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 /**************** ARDUINO PANTS ******************/
 

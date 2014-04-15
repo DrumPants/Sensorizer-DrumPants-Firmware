@@ -224,7 +224,7 @@ void loop()
 
 
   // relay all debug messages from BLE 
-#if ENABLE_DEBUG_PRINTING && defined(BLE_RESET_PIN)
+#if ENABLE_DEBUG_PRINTING && ENABLE_DEBUG_PRINTING_RELAY_FROM_BLE && defined(BLE_RESET_PIN)
 
   while(Serial.available()) {
     SerialUSB.write(Serial.read());
