@@ -131,6 +131,20 @@ void SensorizerServer::loadPreset() {
 /**************** BETA PANTS ******************/
 #if PRESET >= PRESET_BETA
 
+	#if PRESET >= PRESET_PREPRODUCTION	
+		// handle sensitive-ass bare peizos
+		#define PIEZO_INRANGE_HIGH 1.0;
+		#define PIEZO_CUTOFFRANGE_LOW 0.3
+	#elif PRESET == PRESET_BETA_RYAN || PRESET == PRESET_BETA_NEIL_PEART
+		// handle larger peizo type
+		#define PIEZO_INRANGE_HIGH 0.56353861	
+		#define PIEZO_CUTOFFRANGE_LOW 0.1
+	#else
+		#define PIEZO_INRANGE_HIGH 0.16353861
+		#define PIEZO_CUTOFFRANGE_LOW 0.1
+	#endif
+
+
 	////////////////////////////
 	// OUTPUT FOR arduino 0
 	////////////////////////////
@@ -139,7 +153,7 @@ void SensorizerServer::loadPreset() {
 	s->inRange.high = 0.16353861;
 	s->outRange.low = 0;
 	s->outRange.high = 1;
-	s->cutoffRange.low = 0.2;
+	s->cutoffRange.low = PIEZO_CUTOFFRANGE_LOW;
 	s->cutoffRange.high = 1;
 	s->setCutoffType(SensorOutput::CUTOFF_TYPE_VAL_NULLABLE_LOW); //No Cutoff
 	s->multiplyVal = 1;
@@ -172,15 +186,10 @@ void SensorizerServer::loadPreset() {
 	////////////////////////////
 	s = new SensorOutput();
 	s->inRange.low = 0;
-#if PRESET == PRESET_BETA_RYAN	
-	// handle larger peizo type
-	s->inRange.high = 0.56353861;
-#else
-	s->inRange.high = 0.16353861;
-#endif
+	s->inRange.high = PIEZO_INRANGE_HIGH;
 	s->outRange.low = 0;
 	s->outRange.high = 1;
-	s->cutoffRange.low = 0.1;
+	s->cutoffRange.low = PIEZO_CUTOFFRANGE_LOW;
 	s->cutoffRange.high = 1;
 	s->setCutoffType(SensorOutput::CUTOFF_TYPE_VAL_NULLABLE_LOW); //No Cutoff
 	s->multiplyVal = 1;
@@ -207,15 +216,10 @@ void SensorizerServer::loadPreset() {
 	////////////////////////////
 	s = new SensorOutput();
 	s->inRange.low = 0;
-#if PRESET == PRESET_BETA_RYAN	
-	// handle larger peizo type
-	s->inRange.high = 0.56353861;
-#else
-	s->inRange.high = 0.16353861;
-#endif
+	s->inRange.high = PIEZO_INRANGE_HIGH;
 	s->outRange.low = 0;
 	s->outRange.high = 1;
-	s->cutoffRange.low = 0.1;
+	s->cutoffRange.low = PIEZO_CUTOFFRANGE_LOW;
 	s->cutoffRange.high = 1;
 	s->setCutoffType(SensorOutput::CUTOFF_TYPE_VAL_NULLABLE_LOW); //No Cutoff
 	s->multiplyVal = 1;
@@ -242,15 +246,10 @@ void SensorizerServer::loadPreset() {
 	////////////////////////////
 	s = new SensorOutput();
 	s->inRange.low = 0;
-#if PRESET == PRESET_BETA_RYAN	
-	// handle larger peizo type
-	s->inRange.high = 0.56353861;
-#else
-	s->inRange.high = 0.16353861;
-#endif
+	s->inRange.high = PIEZO_INRANGE_HIGH;
 	s->outRange.low = 0;
 	s->outRange.high = 1;
-	s->cutoffRange.low = 0.1;
+	s->cutoffRange.low = PIEZO_CUTOFFRANGE_LOW;
 	s->cutoffRange.high = 1;
 	s->setCutoffType(SensorOutput::CUTOFF_TYPE_VAL_NULLABLE_LOW); //No Cutoff
 	s->multiplyVal = 1;
@@ -277,20 +276,10 @@ void SensorizerServer::loadPreset() {
 	////////////////////////////
 	s = new SensorOutput();
 	s->inRange.low = 0;
-#if PRESET == PRESET_BETA_RYAN || PRESET == PRESET_BETA_NEIL_PEART
-	// handle larger peizo type
-	s->inRange.high = 0.56353861;
-#else
-	s->inRange.high = 0.16353861;
-#endif
+	s->inRange.high = PIEZO_INRANGE_HIGH;
 	s->outRange.low = 0;
 	s->outRange.high = 1;
-
-#if PRESET == PRESET_BETA_NEIL_PEART	
-	s->cutoffRange.low = 0.2;
-#else
-	s->cutoffRange.low = 0.1;
-#endif	
+	s->cutoffRange.low = PIEZO_CUTOFFRANGE_LOW;
 	s->cutoffRange.high = 1;
 	s->setCutoffType(SensorOutput::CUTOFF_TYPE_VAL_NULLABLE_LOW); //No Cutoff
 	s->multiplyVal = 1;
@@ -317,15 +306,10 @@ void SensorizerServer::loadPreset() {
 	////////////////////////////
 	s = new SensorOutput();
 	s->inRange.low = 0;
-#if PRESET == PRESET_BETA_RYAN	
-	// handle larger peizo type
-	s->inRange.high = 0.56353861;
-#else
-	s->inRange.high = 0.16353861;
-#endif
+	s->inRange.high = PIEZO_INRANGE_HIGH;
 	s->outRange.low = 0;
 	s->outRange.high = 1;
-	s->cutoffRange.low = 0.1;
+	s->cutoffRange.low = PIEZO_CUTOFFRANGE_LOW;
 	s->cutoffRange.high = 1;
 	s->setCutoffType(SensorOutput::CUTOFF_TYPE_VAL_NULLABLE_LOW); //No Cutoff
 	s->multiplyVal = 1;
@@ -351,15 +335,10 @@ void SensorizerServer::loadPreset() {
 	////////////////////////////
 	s = new SensorOutput();
 	s->inRange.low = 0;
-#if PRESET == PRESET_BETA_RYAN	
-	// handle larger peizo type
-	s->inRange.high = 0.56353861;
-#else
-	s->inRange.high = 0.16353861;
-#endif
+	s->inRange.high = PIEZO_INRANGE_HIGH;
 	s->outRange.low = 0;
 	s->outRange.high = 1;
-	s->cutoffRange.low = 0.1;
+	s->cutoffRange.low = PIEZO_CUTOFFRANGE_LOW;
 	s->cutoffRange.high = 1;
 	s->setCutoffType(SensorOutput::CUTOFF_TYPE_VAL_NULLABLE_LOW); //No Cutoff
 	s->multiplyVal = 1;
@@ -456,7 +435,7 @@ void SensorizerServer::loadPreset() {
 // end NEIL PEART
 
 
-#if PRESET == PRESET_BETA || PRESET == PRESET_BETA_STRETCHY || PRESET == PRESET_BETA_RYAN
+#if PRESET == PRESET_BETA || PRESET == PRESET_BETA_STRETCHY || PRESET == PRESET_BETA_RYAN || PRESET >= PRESET_PREPRODUCTION
 
 #define FOOT_PEDAL_CC_ENABLE 0
 #define FOOT_PEDAL_CC_SEND_NULLS 0
