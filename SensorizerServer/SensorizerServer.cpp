@@ -142,16 +142,19 @@ void SensorizerServer::loadPreset() {
 	s->addVal = 0;
 	s->isInvert = false;
 
-	// filter = new OneHitDetector();
-	// filter->retriggerThreshold = 50;
-	// s->addOutputFilter(filter);
+#if PRESET == PRESET_BETA_NEIL_PEART
+	filter = new OneHitDetector();
+	filter->retriggerThreshold = 50;
+	s->addOutputFilter(filter);
 
-	// m = new MidiMapping(this->midiDevice);
-	// m->channel = MIDI_CHANNEL;
-	// m->note = 60 + i;
-	// m->setMsgType(MidiMapping::NOTE);
-	// s->addMidiMapping(m);
-	
+	m = new MidiMapping(this->midiDevice);
+	m->channel = MIDI_CHANNEL;
+	m->note = 60 + i;
+	m->setMsgType(MidiMapping::NOTE);
+	s->addMidiMapping(m);
+
+#endif
+
 	sensorInputs[i++] = s;
 	////////////////////////////
 
@@ -267,7 +270,7 @@ void SensorizerServer::loadPreset() {
 	////////////////////////////
 	s = new SensorOutput();
 	s->inRange.low = 0;
-#if PRESET == PRESET_BETA_RYAN	
+#if PRESET == PRESET_BETA_RYAN || PRESET == PRESET_BETA_NEIL_PEART
 	// handle larger peizo type
 	s->inRange.high = 0.56353861;
 #else
@@ -275,7 +278,12 @@ void SensorizerServer::loadPreset() {
 #endif
 	s->outRange.low = 0;
 	s->outRange.high = 1;
+
+#if PRESET == PRESET_BETA_NEIL_PEART	
+	s->cutoffRange.low = 0.2;
+#else
 	s->cutoffRange.low = 0.1;
+#endif	
 	s->cutoffRange.high = 1;
 	s->setCutoffType(SensorOutput::CUTOFF_TYPE_VAL_NULLABLE_LOW); //No Cutoff
 	s->multiplyVal = 1;
@@ -369,7 +377,7 @@ void SensorizerServer::loadPreset() {
 // start NEIL PEART
 #if PRESET == PRESET_BETA_NEIL_PEART
 	////////////////////////////
-	// OUTPUT FOR arduino 5
+	// OUTPUT FOR arduino 7
 	////////////////////////////
 	s = new SensorOutput();
 	s->inRange.low = 0;
@@ -403,7 +411,7 @@ void SensorizerServer::loadPreset() {
 
 
 	////////////////////////////
-	// OUTPUT FOR arduino 6
+	// OUTPUT FOR arduino 8
 	////////////////////////////
 	s = new SensorOutput();
 	s->inRange.low = 0;
@@ -422,15 +430,17 @@ void SensorizerServer::loadPreset() {
 	s->addVal = 0;
 	s->isInvert = false;
 
-	filter = new OneHitDetector();
-	filter->retriggerThreshold = DEFAULT_RETRIGGER_THRESHOLD;
-	s->addOutputFilter(filter);
+// THIS SENSOR BE FUCKED UP
 
-	m = new MidiMapping(this->midiDevice);
-	m->channel = MIDI_CHANNEL;
-	m->note = 60 + i;
-	m->setMsgType(MidiMapping::NOTE);
-	s->addMidiMapping(m);
+	// filter = new OneHitDetector();
+	// filter->retriggerThreshold = DEFAULT_RETRIGGER_THRESHOLD;
+	// s->addOutputFilter(filter);
+
+	// m = new MidiMapping(this->midiDevice);
+	// m->channel = MIDI_CHANNEL;
+	// m->note = 60 + i;
+	// m->setMsgType(MidiMapping::NOTE);
+	// s->addMidiMapping(m);
 
 	sensorInputs[i++] = s;
 	////////////////////////////
