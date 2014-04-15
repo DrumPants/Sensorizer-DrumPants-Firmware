@@ -17,16 +17,16 @@ byte NOTE_PRESETS_MELODIC[NOTE_PRESETS_MELODIC_LENGTH][NOTE_PRESETS_ELEMENT_LENG
 	{65, 66, 69, 71, 73, 75}/*,
 	{8, 68, 71, 73, 75, 77}*/
 #else
-  {58, 60, 63, 65, 67, 68, 70, 71, 73},
-  {58, 60, 64, 65, 67, 69, 70, 72, 73},
-  {58, 60, 65, 67, 68, 71, 72, 74, 75},
-  {81, 82, 86, 87, 89, 91, 93, 94, 96},
-  {63, 64, 68, 69, 71, 73, 74, 76, 77},
-  {64, 65, 69, 70, 72, 74, 75, 77, 79},
-  {92, 93, 97, 98, 100, 102, 103, 105, 106},
-  {21, 22, 25, 27, 29, 31, 32, 34, 35},
-  {40, 41, 44, 46, 48, 50, 51, 53, 54},
-  {66, 66, 69, 71, 73, 75, 76, 78, 79}
+  {58, 60, 63, 65, 67, 68, 70, 71, 73, 74, 74},
+  {58, 60, 64, 65, 67, 69, 70, 72, 73, 75, 75},
+  {58, 60, 65, 67, 68, 71, 72, 74, 75, 77, 77},
+  {81, 82, 86, 87, 89, 91, 93, 94, 96, 97, 97},
+  {63, 64, 68, 69, 71, 73, 74, 76, 77, 79, 79},
+  {64, 65, 69, 70, 72, 74, 75, 77, 79, 80, 80},
+  {92, 93, 97, 98, 100, 102, 103, 105, 106, 108, 108},
+  {21, 22, 25, 27, 29, 31, 32, 34, 35, 37, 37},
+  {40, 41, 44, 46, 48, 50, 51, 53, 54, 56, 56},
+  {66, 66, 69, 71, 73, 75, 76, 78, 79, 81, 81}
 #endif
 };
 
@@ -81,17 +81,20 @@ byte NOTE_PRESETS_DRUMS[NOTE_PRESETS_DRUMS_LENGTH][NOTE_PRESETS_ELEMENT_LENGTH] 
   }
 #else
   {
-    OpenHi_hat,
+    AcousticSnare,
     CrashCymbal2,
     ElectricSnare,
     HighMidTom, 
-    PedalHi_hat,
+    OpenHi_hat,
     Low_MidTom,
     HighFloorTom,
     SplashCymbal, 
-    BassDrum1},
+    BassDrum1,
+    PedalHi_hat,
+    Cowbell 
+  },
   {
-    OpenHi_hat,
+    AcousticSnare,
     CrashCymbal1,
     HandClap,
     HighBongo, 
@@ -99,9 +102,12 @@ byte NOTE_PRESETS_DRUMS[NOTE_PRESETS_DRUMS_LENGTH][NOTE_PRESETS_ELEMENT_LENGTH] 
     Low_MidTom, 
     Claves, 
     SplashCymbal,
-    BassDrum1},
+    BassDrum1,
+    PedalHi_hat,
+    Cowbell
+  },
   {
-    OpenHi_hat,
+    AcousticSnare,
     ChineseCymbal,
     HandClap,
     HighAgogo, 
@@ -109,10 +115,12 @@ byte NOTE_PRESETS_DRUMS[NOTE_PRESETS_DRUMS_LENGTH][NOTE_PRESETS_ELEMENT_LENGTH] 
     HighFloorTom,
     SplashCymbal, 
     Claves, 
-    BassDrum1
+    BassDrum1,
+    PedalHi_hat,
+    Cowbell
   },
   {
-    OpenHi_hat,
+    AcousticSnare,
     RideBell,
     Claves,
     HiWoodBlock, 
@@ -120,10 +128,12 @@ byte NOTE_PRESETS_DRUMS[NOTE_PRESETS_DRUMS_LENGTH][NOTE_PRESETS_ELEMENT_LENGTH] 
     Tambourine, 
     HighAgogo, 
     LowAgogo, 
-    BassDrum1
+    BassDrum1,
+    PedalHi_hat,
+    Cowbell
   },
   {
-    OpenHi_hat,
+    AcousticSnare,
     ChineseCymbal,
     Tambourine,
     HighTimbale, 
@@ -131,10 +141,12 @@ byte NOTE_PRESETS_DRUMS[NOTE_PRESETS_DRUMS_LENGTH][NOTE_PRESETS_ELEMENT_LENGTH] 
     HighFloorTom,
     Cowbell, 
     Castanets, 
-    Maracas
+    Maracas,
+    PedalHi_hat,
+    Cowbell
   },
   {
-    OpenHi_hat,
+    AcousticSnare,
     ChineseCymbal,
     ElectricSnare,
     MuteHiConga, 
@@ -142,7 +154,9 @@ byte NOTE_PRESETS_DRUMS[NOTE_PRESETS_DRUMS_LENGTH][NOTE_PRESETS_ELEMENT_LENGTH] 
     LowConga,
     Cowbell, 
     CrashCymbal2, 
-    PedalHi_hat
+    BassDrum1,
+    PedalHi_hat,
+    Cowbell
   }
 
 #endif  
