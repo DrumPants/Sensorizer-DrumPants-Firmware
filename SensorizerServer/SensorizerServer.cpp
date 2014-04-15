@@ -134,7 +134,7 @@ void SensorizerServer::loadPreset() {
 	#if PRESET >= PRESET_PREPRODUCTION	
 		// handle sensitive-ass bare peizos
 		#define PIEZO_INRANGE_HIGH 1.0;
-		#define PIEZO_CUTOFFRANGE_LOW 0.3
+		#define PIEZO_CUTOFFRANGE_LOW 0.38
 	#elif PRESET == PRESET_BETA_RYAN
 		// handle larger peizo type
 		#define PIEZO_INRANGE_HIGH 0.56353861	
