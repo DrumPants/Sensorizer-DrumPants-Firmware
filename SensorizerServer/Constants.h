@@ -1,6 +1,10 @@
 #ifndef SensorizerConstants_h
 #define SensorizerConstants_h
 
+// set to 1 to enable a keyboard-based interface for simulating hits.
+// connect to SerialUSB in with serial monitor to test: type keys '0'-'9' to "hit" various input pins.
+#define ENABLE_TEST_INTERFACE 1
+
 
 /******* hardware version type presets ********/
 
@@ -22,6 +26,7 @@
 #define PRESET PRESET_PREPRODUCTION
 
 /******* END hardware version type presets ********/
+
 
 
 
@@ -56,7 +61,7 @@
 #endif
 
 // can't use Firmata on USB and also debug print on USB:
-#define ENABLE_FIRMATA (!ENABLE_DEBUG_PRINTING)
+#define ENABLE_FIRMATA (!ENABLE_DEBUG_PRINTING && !ENABLE_TEST_INTERFACE)
 
 //uncomment this to set serial baud at bluetooth rate. otherwise, USB rate.
 //# define IS_BLUETOOTH

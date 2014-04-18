@@ -34,8 +34,21 @@ int firmataThrottleCount = 0;
 // for intro sound
 #include "IntroSounds.h"
 
+
+#if ENABLE_TEST_INTERFACE
+  #include "TestInterface.h"
+#endif
+
+
+/**
+ *
+ * THE MEAT OF THE WHOLE OPERATION.
+ */
 SensorizerServer* server;
 
+/**
+ * Handles the UI: knobs and buttons and LEDs.
+ */
 Knobs* knobs;
 
 
@@ -202,6 +215,11 @@ void loop()
     for(analogPin = ANALOG_PIN_START; analogPin <= ANALOG_PIN_END; analogPin++) {
         byte pinIdx = analogPin - ANALOG_PIN_START;
         int val = analogRead(analogPin);
+
+#if ENABLE_TEST_INTERFACE
+        val = getCurrentTestVal(analogPin);
+#endif
+
           
         //DEBUG_PRINT_NUM("check pin ", pinIdx);  
 #if !ENABLE_TEST
@@ -240,6 +258,11 @@ void loop()
   
 #if ENABLE_TEST
   testUpdate();
+#endif
+
+
+#if ENABLE_TEST_INTERFACE
+  testInterfaceUpdate();
   return;
 #endif
 }
@@ -258,9 +281,8 @@ void testUpdate() {
     testCounter = -TEST_INTERVAL;
     
     // try next note once we've done a full one here.
-   // testPin = (testPin + 1) % 4;
+    // testPin = (testPin + 1) % 4;
     DEBUG_PRINT("TEST: reset test");
-    Serial.println("TEST: reset test"); 
   }
   
   
@@ -271,3 +293,6 @@ void testUpdate() {
   server->readPin(testPin, val);
 }
 #endif
+
+
+
