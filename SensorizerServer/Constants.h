@@ -3,7 +3,7 @@
 
 // set to 1 to enable a keyboard-based interface for simulating hits.
 // connect to SerialUSB in with serial monitor to test: type keys '0'-'9' to "hit" various input pins.
-#define ENABLE_TEST_INTERFACE 1
+#define ENABLE_TEST_INTERFACE 0
 
 
 /******* hardware version type presets ********/
