@@ -99,6 +99,12 @@
 
   // pre-production pants have the broadcom reset line attached!
   #define BLE_RESET_PIN 31
+
+  // BLEIO1: connected to P0 of BLE
+  #define BLE_CONFIG_PIN 8
+
+  // BLEIO2: connected to P8 of BLE
+  #define BLE_CONFIG_PIN2 7
 #endif
 
 
