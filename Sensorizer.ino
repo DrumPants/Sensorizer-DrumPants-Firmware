@@ -248,6 +248,11 @@ void loop()
     SerialUSB.write(Serial.read());
   }
 
+  #if ENABLE_ECHO_PUART_FROM_BLE
+  while(Serial1.available()) {
+    SerialUSB.write(Serial1.read());
+  }
+  #endif  
 #endif
 
 
