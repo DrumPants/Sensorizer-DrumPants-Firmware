@@ -25,7 +25,7 @@ struct KnobsAndButtons : public Knobs {
 
   byte volume;
 
-  void setVolume(byte vol);
+  void setVolume(int vol);
 
 public:
   KnobsAndButtons();

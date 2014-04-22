@@ -1,7 +1,7 @@
 #include "KnobsAndButtons.h"
 #include "Metro.h"
 
-#define DEBOUNCE_DELAY 80
+#define DEBOUNCE_DELAY 100
 
 #define VOLUME_UP_PIN 27
 #define VOLUME_DOWN_PIN 26
@@ -25,7 +25,7 @@ KnobsAndButtons::KnobsAndButtons() {
 	pinMode(VOLUME_UP_PIN, INPUT);
 	pinMode(VOLUME_DOWN_PIN, INPUT);
 
-	met.timePerTick = 200;
+	met.timePerTick = 80;
 }
 
 void KnobsAndButtons::check() {
@@ -46,10 +46,12 @@ void KnobsAndButtons::check() {
 	if ((millis() - this->debounceTimer) > DEBOUNCE_DELAY) {
 
 		if (downPressed) {
-			this->setVolume(this->volume - VOLUME_INC);
+			//DEBUG_PRINT("down pressed");
+			this->setVolume((int)(this->volume) - VOLUME_INC);
 		}
 		else if (upPressed) {
-			this->setVolume(this->volume + VOLUME_INC);
+			//DEBUG_PRINT("up pressed");
+			this->setVolume((int)(this->volume) + VOLUME_INC);
 		}
 	}
 
@@ -58,10 +60,11 @@ void KnobsAndButtons::check() {
 }
 
 
-void KnobsAndButtons::setVolume(byte vol) {
-	this->volume = max(0, min(MAX_VOLUME, vol));
+void KnobsAndButtons::setVolume(int vol) {
 
 	if (met.hasTicked()) {
+		this->volume = max(0, min(MAX_VOLUME, vol));
+
 		this->server->midiDevice->setVolume(MIDI_CHANNEL, this->volume);
 
 		DEBUG_PRINT_NUM("Set volume to ", this->volume);
