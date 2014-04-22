@@ -189,6 +189,12 @@ void setup()
   playIntro(server);
 
 
+
+#if ENABLE_TEST_INTERFACE
+  delay(5000); // wait for them to connect the serial monitor
+  testInterfaceSetup();
+#endif
+
   DEBUG_PRINT("END SETUP")
 }
 

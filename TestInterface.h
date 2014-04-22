@@ -12,6 +12,47 @@
 
 int testPins[TESTPINS_LENGTH] = {0,0,0,0,0,0,0,0};
 
+
+void testInterfaceSetup() {
+
+  SerialToComputer.println("========================");
+  SerialToComputer.println("= SENSORIZER TEST MENU =");
+  SerialToComputer.println("========================");
+  SerialToComputer.println("Available key commands:");
+  SerialToComputer.println("");
+  SerialToComputer.println("0-9 : test drumpad hit");
+  SerialToComputer.println("e   : scan for EEPROM");
+  SerialToComputer.println("b   : test BLE programming");
+  SerialToComputer.println("u   : test BLE PUART communication");
+  SerialToComputer.println("r   : run all tests");
+  SerialToComputer.println("========================");
+
+}
+
+/**
+ * [scanForEEPROM description]
+ * @return 0 on success, 1 on failure.
+ */
+int scanForEEPROM() {
+
+}
+/**
+ * [scanForEEPROM description]
+ * @return 0 on success, 1 on failure.
+ */
+int testBLEProgramming() {
+
+}
+/**
+ * [scanForEEPROM description]
+ * @return 0 on success, 1 on failure.
+ */
+int testBLEPUART() {
+
+}
+
+
+
 void testInterfaceUpdate() {
 
   // for (int i = 0; i < TESTPINS_LENGTH; i++) {
@@ -27,6 +68,39 @@ void testInterfaceUpdate() {
 
     if (cmdPin >= 0 && cmdPin < TESTPINS_LENGTH) {
       testPins[cmdPin] = TEST_HIT_MAX;
+    }
+    else {
+      switch (cmd) {
+        case 'e':
+          scanForEEPROM();
+          break;
+        case 'b':
+          testBLEProgramming();
+          break;
+        case 'u':
+          testBLEPUART();
+          break;
+        case 'r':
+
+          int numTestsFailed = scanForEEPROM() +
+              testBLEProgramming() +
+              testBLEPUART();
+
+          if (numTestsFailed == 0) {
+
+            SerialToComputer.println("========================");
+            SerialToComputer.println("= All tests PASSED     =");
+            SerialToComputer.println("========================");
+          }
+          else {
+            SerialToComputer.println("========================");
+            SerialToComputer.print("= ");
+            SerialToComputer.print(numTestsFailed);
+            SerialToComputer.print(" tests FAILED         =");
+            SerialToComputer.println("========================");
+          }
+          break;
+      }
     }
   }
 }
