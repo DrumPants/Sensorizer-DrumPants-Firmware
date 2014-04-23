@@ -20,10 +20,9 @@ void ble_reset() {
   digitalWrite(BLE_RESET_PIN, LOW); 
   delay(2); // 20uS to reset
 
-  pinMode(BLE_RESET_PIN, OUTPUT);
   digitalWrite(BLE_RESET_PIN, HIGH); 
 
-  delay(6); // ~5ms to warm up and boot
+  delay(7); // ~5ms to warm up and boot
 
 #else
   #warning "BLE_RESET_PIN not defined. Your BLEDevice functions will do nothing."

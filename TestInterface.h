@@ -129,7 +129,7 @@ void testInterfaceUpdate() {
             SerialToComputer.println("========================");
             SerialToComputer.print("= ");
             SerialToComputer.print(numTestsFailed);
-            SerialToComputer.print(" tests FAILED         =");
+            SerialToComputer.print("/3 tests FAILED        =");
             SerialToComputer.println("========================");
           }
           break;

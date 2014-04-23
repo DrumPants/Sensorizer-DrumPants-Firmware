@@ -4,6 +4,7 @@
 #include "BLEDevice.h"
 
 #define BLE_PROGRAMMING_TIMEOUT 10000
+#define BLE_RESPONSE_TIMEOUT BLE_PROGRAMMING_TIMEOUT / 4
 
 #define PACKET_LEN 4
 
@@ -14,7 +15,7 @@ void ble_writeToBle(const uint8_t* packet) {
   
   Serial.write(startPacket, PACKET_LEN);
   
-  SerialToComputer.print("\nWrite: ");
+  SerialToComputer.print("\nBLE Write: ");
   SerialToComputer.write(startPacket, PACKET_LEN);
   SerialToComputer.println(" --");
 }
@@ -34,14 +35,35 @@ int ble_testBLEProgramming() {
 		// wait for good measure
 		delay(1000);
 
+		// flush the buffer of whatever's in there before reset
+		while(Serial.available()) {		
+			Serial.read(); 
+	  	}
+
 		ble_writeToBle(startPacket);
 
-		while(Serial.available()) {
-			SerialToComputer.write(Serial.read()); 
+		bool isFound = false;
+		int waitTime = millis();
 
+  		SerialToComputer.print("\nBLE Read: |");
+  		while (millis() - waitTime < BLE_RESPONSE_TIMEOUT) {
+			while(Serial.available()) {
+				isFound = true;
+
+
+				SerialToComputer.write(Serial.read()); 
+
+				//writeToBle(nextPacket);
+	  		}
+	  	}
+
+	  	if (isFound) {
+  			SerialToComputer.println("|\nSUCCESS! BLE Responded");
 			return 0;
-			//writeToBle(nextPacket);
-  		}
+	  	}
+	  	else {
+  			SerialToComputer.println("\nFAILED! BLE did not respond!");
+	  	}
 
   		numAttempts++;
 	}
