@@ -5,6 +5,9 @@
 
 #include "Debug.h"
 
+#include "I2CScanner.h"
+#include "TestBLE.h"
+
 #define TEST_HIT_MAX 1024
 
 #define TEST_HIT_INCREMENT TEST_HIT_MAX / 4
@@ -35,20 +38,47 @@ void testInterfaceSetup() {
  */
 int scanForEEPROM() {
 
+  SerialToComputer.println("========================");
+  SerialToComputer.println("= SCANNING FOR EEPROM  =");
+  SerialToComputer.println("========================");
+
+  int numFound = I2Cscan();
+
+  return (numFound == 0) ? 1 : 0;
 }
+
 /**
- * [scanForEEPROM description]
+ * [testBLEProgramming description]
  * @return 0 on success, 1 on failure.
  */
 int testBLEProgramming() {
+  SerialToComputer.println("========================");
+  SerialToComputer.println("= TESTING BLE PROG     =");
+  SerialToComputer.println("========================");
 
+  int numFailedAttempts =  ble_testBLEProgramming();
+
+  if (numFailedAttempts == 0) {
+    SerialToComputer.println("SUCCESS! BLE responded for programming.");
+  }
+  else {
+    SerialToComputer.println("FAILED! BLE did not respond for programming.");
+  }
+
+  return (numFailedAttempts > 0) ? 1 : 0;
 }
+
 /**
- * [scanForEEPROM description]
+ * [testBLEPUART description]
  * @return 0 on success, 1 on failure.
  */
 int testBLEPUART() {
+  SerialToComputer.println("========================");
+  SerialToComputer.println("= TESTING BLE PUART    =");
+  SerialToComputer.println("========================");
 
+
+  return 0;
 }
 
 
@@ -85,6 +115,9 @@ void testInterfaceUpdate() {
           int numTestsFailed = scanForEEPROM() +
               testBLEProgramming() +
               testBLEPUART();
+
+          // also play a little sumthin' to indicate doneness.
+          testPins[1] = TEST_HIT_MAX;
 
           if (numTestsFailed == 0) {
 
