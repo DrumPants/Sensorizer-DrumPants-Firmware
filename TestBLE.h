@@ -30,7 +30,7 @@ int ble_testBLEProgramming() {
 		// wait for good measure
 		delay(10);
 		
-  		ble_resetAndPrepareForProgramming();
+  		ble_resetAndPrepare(true);
 
 		// wait for good measure
 		delay(1000);

@@ -15,6 +15,10 @@
 void ble_reset() {
 
 #ifdef BLE_RESET_PIN
+
+  // broadcom has reset line attached, make sure it's not reseting!
+  // active-low.
+
   // reset the BLE
   pinMode(BLE_RESET_PIN, OUTPUT);
   digitalWrite(BLE_RESET_PIN, LOW); 
@@ -30,8 +34,16 @@ void ble_reset() {
 
 }
 
-void ble_resetAndPrepareForProgramming() {
-  digitalWrite(BLE_PROGRAMMING_TX_PIN, HIGH); 
+/**
+ * Resets for programming or for normal operation.
+ * @param shouldPrepareForProgramming if true, the BLE chip will wait for programming commands. if false, it will start running.
+ */
+void ble_resetAndPrepare(bool shouldPrepareForProgramming) {
+
+  // if it starts up with the TX line high.
+  // TODO: Not sure what setting the TX pin will do for the actual communication later. Will the UART class successfully regain control of the TX line?
+  pinMode(BLE_PROGRAMMING_TX_PIN, OUTPUT);
+  digitalWrite(BLE_PROGRAMMING_TX_PIN, shouldPrepareForProgramming ? HIGH : LOW); 
 
   ble_reset();
 }
@@ -40,16 +52,8 @@ void ble_setup() {
 
 #ifdef BLE_RESET_PIN
 
-  // broadcom has reset line attached, make sure it's not reseting!
-  // active-low.
-
   // first, set programming HCI UART to low, because the BLE will just wait to be programmed 
-  // if it starts up with the TX line high.
-  // TODO: Not sure what setting the TX pin will do for the actual communication later. Will the UART class successfully regain control of the TX line?
-  pinMode(BLE_PROGRAMMING_TX_PIN, OUTPUT);
-  digitalWrite(BLE_PROGRAMMING_TX_PIN, LOW); 
-
-  ble_reset();
+  ble_resetAndPrepare(false);
 
   // TODO: uncomment this to implement reprograming the BLE firmware via its HCI UART
   Serial.begin(115200);
