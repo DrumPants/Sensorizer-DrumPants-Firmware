@@ -89,6 +89,19 @@ public:
 	};	
 
 	void add(byte channel, byte note) {
+
+		// first look for an existing note, and just extend that one's time.
+		// this way, when the hit the same sensor a bunch, the first hit doesn't cut off the subsequent ones.
+		// this fixes the choppy sound bug.
+		for (int i = endIdx - 1; i >= startIdx; i--) {
+			if (pendingNotes[i].note == note && 
+				pendingNotes[i].channel == channel) {
+
+				pendingNotes[i].timeTillDeath = NOTE_TIME_TILL_DEATH_DEFAULT;		
+				return;
+			}
+		}
+
 		pendingNotes[endIdx].channel = channel;
 		pendingNotes[endIdx].note = note;
 		pendingNotes[endIdx].timeTillDeath = NOTE_TIME_TILL_DEATH_DEFAULT;
