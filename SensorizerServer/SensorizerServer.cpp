@@ -538,7 +538,7 @@ void SensorizerServer::loadPreset() {
 
 
 
-	#if PRESET == PRESET_PREPRODUCTION	
+	#if PRESET >= PRESET_PREPRODUCTION	
 
 	////////////////////////////
 	// OUTPUT FOR arduino 9
@@ -549,7 +549,7 @@ void SensorizerServer::loadPreset() {
 	s->inRange.high = 1.0;
 	s->outRange.low = 0;
 	s->outRange.high = 1;
-	s->cutoffRange.low = 0.01;
+	s->cutoffRange.low = 0.1;
 	s->cutoffRange.high = 1;
 	s->setCutoffType(SensorOutput::CUTOFF_TYPE_VAL_NULLABLE_LOW); //No Cutoff
 	s->multiplyVal = 1;
@@ -579,7 +579,7 @@ void SensorizerServer::loadPreset() {
 	s->inRange.high = 1.0;
 	s->outRange.low = 0;
 	s->outRange.high = 1;
-	s->cutoffRange.low = 0.5;
+	s->cutoffRange.low = 0.1;
 	s->cutoffRange.high = 1;
 	s->setCutoffType(SensorOutput::CUTOFF_TYPE_VAL_NULLABLE_LOW); //No Cutoff
 	s->multiplyVal = 1;
@@ -598,6 +598,7 @@ void SensorizerServer::loadPreset() {
 	
 	sensorInputs[i++] = s;
 	////////////////////////////
+
 
 	#endif
 #endif

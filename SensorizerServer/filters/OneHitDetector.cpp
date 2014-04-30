@@ -14,6 +14,7 @@
 
 		this->retriggerThreshold = 5;
 		this->ticksSinceLastTrigger = 0;
+		this->sensitivityThreshold = 0.2;
 	}
 	
 	
@@ -28,9 +29,16 @@
 		//detect peak in signal and trigger one hit if so
 		if (value < lastVal || value == SensorizerServer::SENSOR_VALUE_NULL) {
 			if (isRising) {
-				trigger();
+				double delta = abs(lastVal - lowVal);
+					
+				if (delta > sensitivityThreshold) {
+					trigger();
+				}
 
 				isRising = false;
+			}
+			else {
+				lowVal = value;
 			}
 		}
 		else {

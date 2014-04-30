@@ -20,11 +20,17 @@ class OneHitDetector : public OutputFilter {
 	 */
 	public: int retriggerThreshold; 
 
+	/***
+	 * The amount of change of a spike from base to peak before it's considered a hit.
+	 */
+	double sensitivityThreshold;
+	
+
 	// unsigned because it needs to overflow without any major hiccups
 	private: unsigned int ticksSinceLastTrigger;
 
 	//for peak detector in setValue()
-	private: double lastVal, triggeredVal;
+	private: double lastVal, triggeredVal, lowVal;
 
 	private: bool isRising;
 
