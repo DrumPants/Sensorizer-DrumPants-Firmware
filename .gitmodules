@@ -1,0 +1,3 @@
+[submodule "SensorizerServer/presets"]
+	path = SensorizerServer/presets
+	url = https://drumpants@bitbucket.org/drumpants/drumpantspresets.git
