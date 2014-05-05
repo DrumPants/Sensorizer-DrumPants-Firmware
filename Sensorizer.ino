@@ -25,7 +25,14 @@ int firmataThrottleCount = 0;
 #if ENABLE_MIDI_IN
   #include <utility/MidiInput.h>
 
+  
+  #include "Debug.h"
+  #include <SensorizerServer.h>
+  #include "ConfigurationStoreEEPROM.h"
+
 MidiInput* midiIn;
+
+ConfigurationStoreEEPROM* configStore;
 #endif
 
 
@@ -83,8 +90,10 @@ void setupServer() {
     knobs->setup(server);
 
 #if ENABLE_MIDI_IN
+    configStore = new ConfigurationStoreEEPROM();
+
     // listen for MIDI messages from BLE to change config
-    midiIn = new MidiInput(server);
+    midiIn = new MidiInput(server, configStore);
 #endif    
 }
 

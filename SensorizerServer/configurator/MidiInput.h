@@ -4,38 +4,21 @@
 
 #include "SensorizerServer.h"
 #include "Configurator.h"
+#include "ConfigurationStore.h"
 
 class MidiInput {
 
 	SensorizerServer* server;
 
+	ConfigurationStore* store;
 
 	void updateField(byte sensorIdx, byte fieldIdx, byte value);
 
 	void checkSerial(Stream* input);
 
 
-	byte dirtySensors[SENSOR_INPUTS_LENGTH];
-
-	/**
-	 * Marks the given field for the given sensor as needing to be saved to EEPROM.
-	 * @param sensorIdx from MIDI msg
-	 * @param fieldIdx  from MIDI msg
-	 */
-	void setDirty(int sensorIdx, int fieldIdx);
-
-	/**
-	 * Saves all dirty fields to the EEPROM.
-	 */
-	void saveDirty();
-
-	/**
-	 * Resets dirty flags for all sensors.
-	 */
-	void clearDirty();
-
 public:
-	MidiInput(SensorizerServer* server);
+	MidiInput(SensorizerServer* server, ConfigurationStore* store);
 
 
 	/*** 

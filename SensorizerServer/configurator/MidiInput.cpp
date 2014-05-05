@@ -6,10 +6,9 @@
 #define BLE_MIDI_SERIAL_IN (Serial1)
 #define USB_MIDI_SERIAL_IN (SerialUSB)
 
-MidiInput::MidiInput(SensorizerServer* server) {
+MidiInput::MidiInput(SensorizerServer* server, ConfigurationStore* store) {
 	this->server = server;
-
-	this->clearDirty();
+	this->store = store;
 }
 
 
@@ -54,31 +53,14 @@ void MidiInput::updateField(byte sensorIdx, byte fieldIdx, byte val) {
 			float value = (float)val / 127.0;
 
 			if (Configurator::setField(sensorInput, fieldIdx, value)) {
-				this->setDirty(sensorIdx, fieldIdx);
+				store->setSensor(sensorIdx, fieldIdx, value);
 			}
 
 		}
 	}
 	// we only save when they tell us they're done editing. don't want to burn out that eeprom!
 	else if (sensorIdx == CHANNEL_COMMAND_SAVE) {
-		this->saveDirty();
+		store->saveSensors();
 	}
 }
 
-
-void MidiInput::clearDirty() {
-	memset(&(this->dirtySensors[0]), 0, sizeof(this->dirtySensors));
-}
-
-void MidiInput::setDirty(int sensorIdx, int fieldIdx) {
-	this->dirtySensors[sensorIdx] = 1;
-}
-
-void MidiInput::saveDirty() {
-
-	for (int i = 0; i < SENSOR_INPUTS_LENGTH; i++) {
-		if (this->dirtySensors[i] > 0) {
-			// TODO: save to EEPROM
-		}
-	}
-}
