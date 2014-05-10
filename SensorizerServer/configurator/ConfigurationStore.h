@@ -11,12 +11,12 @@ class ConfigurationStore {
 
 protected:
 
-	virtual void write(int address, byte* data, int dataLength);
-	virtual void read(int address, byte* data, int dataLength);
+	virtual void write(unsigned int address, byte* data, int dataLength);
+	virtual void read(unsigned int address, byte* data, int dataLength);
 
 public:
 	
-	ConfigurationStore();
+	ConfigurationStore(SensorizerServer* server);
 
 	/**
 	 * Sets the data for a given sensor to be saved. 
@@ -35,7 +35,7 @@ public:
 	 */
 	void saveSensor(int sensorIdx);
 
-	void loadSensors(SensorizerServer* server);
+	void loadSensors();
 
 	/**
 	 * Saves all dirty sensors to EEPROM. 
@@ -46,6 +46,7 @@ public:
 
 private: 
 
+	SensorizerServer* server;
 
 	byte dirtySensors[SENSOR_INPUTS_LENGTH];
 

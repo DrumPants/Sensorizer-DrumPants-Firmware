@@ -90,7 +90,7 @@ void setupServer() {
     knobs->setup(server);
 
 #if ENABLE_MIDI_IN
-    configStore = new ConfigurationStoreEEPROM();
+    configStore = new ConfigurationStoreEEPROM(server);
 
     // listen for MIDI messages from BLE to change config
     midiIn = new MidiInput(server, configStore);

@@ -15,8 +15,8 @@ public:
 
 protected:
 
-	void write(int address, byte* data, int dataLength);
-	void read(int address, byte* data, int dataLength);
+	void write(unsigned int address, byte* data, int dataLength);
+	void read(unsigned int address, byte* data, int dataLength);
 
 
 };

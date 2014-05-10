@@ -1,26 +1,15 @@
 #include "Configurator.h"
 
-/**** MIDI CC MESSAGE CONSTANTS FOR FIELDS ****/
 
-#define	INRANGE_HIGH 1  
-#define	INRANGE_LOW 2  
-#define	OUTRANGE_HIGH 3  
-#define	OUTRANGE_LOW 4  
-#define	CUTOFFRANGE_HIGH 5  
-#define	CUTOFFRANGE_LOW 6  
-#define	MULTIPLYVAL 7  
-#define	ADDVAL 8  
-#define	ISINVERT 9  
-#define	MIDIMAPPING_MSGTYPE 10  
-#define	MIDIMAPPING_CHANNEL 11  
-#define	MIDIMAPPING_NOTE 12  
-#define	MIDIMAPPING_DURATION 13  
-#define	MIDIMAPPING_MIDIDEVICENAME 14  
-#define	ONEHITDETECTOR_RETRIGGERTHRESHOLD 15  
-#define	ONEHITDETECTOR_SENSITIVITYTHRESHOLD 16  
+bool Configurator::setField(SensorizerServer* server, byte sensorIdx, byte fieldIdx, byte byteVal) {
+	SensorOutput* output = server->sensorInputs[sensorIdx];
+	
+	if (output == NULL) {
+		return false;
+	}
+	
+	float value = (float)val / 127.0;
 
-
-bool Configurator::setField(SensorOutput* output, byte fieldIdx, float value) {
 
 	switch (fieldIdx) {
 
@@ -237,3 +226,9 @@ bool Configurator::setField(SensorOutput* output, byte fieldIdx, float value) {
 
 	return true;
 }
+
+
+byte Configurator::getField(SensorizerServer* server, byte sensorIdx, byte fieldIdx) {
+
+}
+
