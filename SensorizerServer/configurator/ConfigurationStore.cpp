@@ -1,4 +1,9 @@
 #include "ConfigurationStore.h"
+#include "Configurator.h"
+
+#define CONFIGURATOR_FIELDS_LENGTH (CONFIGURATOR_FIELDS_END + 1)
+
+#define GET_ADDRESS_FOR_SENSOR(sensorIdx) (sensorIdx * CONFIGURATOR_FIELDS_LENGTH)
 
 ConfigurationStore::ConfigurationStore(SensorizerServer* server) {
 	this->server = server;
@@ -9,35 +14,43 @@ void ConfigurationStore::saveSensor(int sensorIdx) {
 	//SensorOutput* sensor = this->server->sensorInputs[sensorIdx];
 
 	// include the first byte, which is the dirty bit (fields start at byte 1)
-	byte dataToStore[CONFIGURATOR_FIELDS_END];
+	byte dataToStore[CONFIGURATOR_FIELDS_LENGTH];
 
 	// mark as dirty
 	dataToStore[0] = 1;
 
 	for (int fieldIdx = CONFIGURATOR_FIELDS_START; fieldIdx <= CONFIGURATOR_FIELDS_END; fieldIdx++) {
 
-		byte value = Configurator::getFieldValue(server, sensorIdx, fieldIdx);
+		byte value = Configurator::getField(this->server, sensorIdx, fieldIdx);
 		dataToStore[fieldIdx] = value;
 	}
 
 
-	int address = sensorIdx * (CONFIGURATOR_FIELDS_END + 1);
+	int address = GET_ADDRESS_FOR_SENSOR(sensorIdx);
 
 	// do page writes
-	this->write(address, dataToStore, CONFIGURATOR_FIELDS_END);
+	this->write(address, dataToStore, CONFIGURATOR_FIELDS_LENGTH);
 
 } 
 
-void ConfigurationStore::loadSensors(SensorizerServer* server){
+void ConfigurationStore::loadSensors(){
 	
 	for (int sensorIdx = 0; sensorIdx < SENSOR_INPUTS_LENGTH; sensorIdx++) {
 
-		for (int fieldIdx = CONFIGURATOR_FIELDS_START; fieldIdx <= CONFIGURATOR_FIELDS_END; fieldIdx++) {
+		// include the first byte, which is the dirty bit (fields start at byte 1)
+		byte dataFromStore[CONFIGURATOR_FIELDS_LENGTH];
 
-			// TODO: get value from EEPROM
+		// get value from EEPROM
+		this->read(GET_ADDRESS_FOR_SENSOR(sensorIdx), dataFromStore, CONFIGURATOR_FIELDS_LENGTH);
 
-			if (!Configurator::setField(server, sensorIdx, fieldIdx, value)) {
-				DEBUG_PRINT_NUM(F("Failed to save sensor field: ", i));
+		// only load the values if the user has actually saved something there: check dirty bit 
+		if (dataFromStore[0] == 1) {
+			for (int fieldIdx = CONFIGURATOR_FIELDS_START; fieldIdx <= CONFIGURATOR_FIELDS_END; fieldIdx++) {
+				byte value = dataFromStore[fieldIdx];
+
+				if (!Configurator::setField(this->server, sensorIdx, fieldIdx, value)) {
+					DEBUG_PRINT_NUM("Failed to save sensor field: ", i);
+				}
 			}
 		}
 	}
@@ -68,13 +81,15 @@ void ConfigurationStore::saveSensors() {
 			this->saveSensor(i);
 		}
 	}
+
+	this->clearDirty();
 }
 
 
 void ConfigurationStore::write(unsigned int address, byte* data, int dataLength) {
-	DEBUG_PRINT_NUMS(F("Virtual writing to config store "), address, dataLength);
+	DEBUG_PRINT_NUMS("Virtual writing to config store ", address, dataLength);
 }
 
 void ConfigurationStore::read(unsigned int address, byte* data, int dataLength) {
-	DEBUG_PRINT_NUMS(F("Reading from EEPROM "), address, dataLength);
+	DEBUG_PRINT_NUMS("Reading from EEPROM ", address, dataLength);
 }

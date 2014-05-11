@@ -1,22 +1,18 @@
 #include "Configurator.h"
 
-
-bool Configurator::setField(SensorizerServer* server, byte sensorIdx, byte fieldIdx, byte byteVal) {
+bool Configurator::setField(SensorizerServer* server, byte sensorIdx, byte fieldIdx, byte value) {
 	SensorOutput* output = server->sensorInputs[sensorIdx];
 	
 	if (output == NULL) {
 		return false;
 	}
 	
-	float value = (float)val / 127.0;
-
-
 	switch (fieldIdx) {
 
 
 		case INRANGE_HIGH: {
 
-				output->inRange.high = value;
+				output->inRange.high = (float)(value) / 127.0f;
 
 			}
 
@@ -25,7 +21,7 @@ bool Configurator::setField(SensorizerServer* server, byte sensorIdx, byte field
 
 		case INRANGE_LOW: {
 
-				output->inRange.low = value;
+				output->inRange.low = (float)(value) / 127.0f;
 
 			}
 
@@ -34,7 +30,7 @@ bool Configurator::setField(SensorizerServer* server, byte sensorIdx, byte field
 
 		case OUTRANGE_HIGH: {
 
-				output->outRange.high = value;
+				output->outRange.high = (float)(value) / 127.0f;
 
 			}
 
@@ -43,7 +39,7 @@ bool Configurator::setField(SensorizerServer* server, byte sensorIdx, byte field
 
 		case OUTRANGE_LOW: {
 
-				output->outRange.low = value;
+				output->outRange.low = (float)(value) / 127.0f;
 
 			}
 
@@ -52,7 +48,7 @@ bool Configurator::setField(SensorizerServer* server, byte sensorIdx, byte field
 
 		case CUTOFFRANGE_HIGH: {
 
-				output->cutoffRange.high = value;
+				output->cutoffRange.high = (float)(value) / 127.0f;
 
 			}
 
@@ -61,40 +57,13 @@ bool Configurator::setField(SensorizerServer* server, byte sensorIdx, byte field
 
 		case CUTOFFRANGE_LOW: {
 
-				output->cutoffRange.low = value;
+				output->cutoffRange.low = (float)(value) / 127.0f;
 
 			}
 
 			break;
 
 
-		case MULTIPLYVAL: {
-
-				output->multiplyVal = value;
-
-			}
-
-			break;
-
-
-		case ADDVAL: {
-
-				output->addVal = value;
-
-			}
-
-			break;
-
-
-		case ISINVERT: {
-
-				output->isInvert = value;
-
-			}
-
-			break;
-
-/*
 		case MIDIMAPPING_MSGTYPE: {
 
 				MidiMapping* filter = (MidiMapping*)output->getMidiMapping(0); // TODO DERRRP???
@@ -102,14 +71,14 @@ bool Configurator::setField(SensorizerServer* server, byte sensorIdx, byte field
 				if (filter == NULL)
 					return false;
 
-				filter->msgType = (value);
+				filter->msgType = value;
 			
 
 
 			}
 
 			break;
-*/
+
 
 		case MIDIMAPPING_CHANNEL: {
 
@@ -118,7 +87,7 @@ bool Configurator::setField(SensorizerServer* server, byte sensorIdx, byte field
 				if (filter == NULL)
 					return false;
 
-				filter->channel = (value * 127);
+				filter->channel = value;
 			
 
 
@@ -134,7 +103,7 @@ bool Configurator::setField(SensorizerServer* server, byte sensorIdx, byte field
 				if (filter == NULL)
 					return false;
 
-				filter->note = (value * 127);
+				filter->note = value;
 			
 
 
@@ -150,7 +119,7 @@ bool Configurator::setField(SensorizerServer* server, byte sensorIdx, byte field
 				if (filter == NULL)
 					return false;
 
-				filter->duration = (value * 700);
+				filter->duration = ((float)(value) / 127.0f) * 700;
 			
 
 
@@ -166,7 +135,7 @@ bool Configurator::setField(SensorizerServer* server, byte sensorIdx, byte field
 				if (filter == NULL)
 					return false;
 
-				filter->retriggerThreshold = (value);
+				filter->retriggerThreshold = ((float)(value) / 127.0f) * 300;
 			
 
 
@@ -182,7 +151,7 @@ bool Configurator::setField(SensorizerServer* server, byte sensorIdx, byte field
 				if (filter == NULL)
 					return false;
 
-				filter->sensitivityThreshold = (value);
+				filter->sensitivityThreshold = (float)(value) / 127.0f;
 			
 
 
@@ -192,34 +161,6 @@ bool Configurator::setField(SensorizerServer* server, byte sensorIdx, byte field
 
 
 
-/*
-		case 1:
-			output->inRange.high = value;
-
-			break;
-		case 3:
-			output->cutoffRange.low = value;
-
-			break;
-		case 10: {
-				OneHitDetector* filter = (OneHitDetector*)output->getOutputFilter(0); // TODO DERRRP???
-
-				if (filter == NULL)
-					return false;
-
-				filter->retriggerThreshold = value;
-			}
-			break;		
-		case 20: {
-				MidiMapping* m = (MidiMapping*)output->getMidiMapping(0); // assume we only do one midi mapping
-
-				if (m == NULL)
-					return false;
-
-				m->note = (value * 127);
-			}
-			break;
-*/
 		default:
 			return false;
 	}
@@ -229,6 +170,167 @@ bool Configurator::setField(SensorizerServer* server, byte sensorIdx, byte field
 
 
 byte Configurator::getField(SensorizerServer* server, byte sensorIdx, byte fieldIdx) {
+	SensorOutput* output = server->sensorInputs[sensorIdx];
+	
+	if (output == NULL) {
+		return CONFIGURATOR_ERROR_RETURN_CODE_FAILURE;
+	}
+	
+	switch (fieldIdx) {
 
+
+		case INRANGE_HIGH: {
+
+				return output->inRange.high * 127;
+
+			}
+
+			break;
+
+
+		case INRANGE_LOW: {
+
+				return output->inRange.low * 127;
+
+			}
+
+			break;
+
+
+		case OUTRANGE_HIGH: {
+
+				return output->outRange.high * 127;
+
+			}
+
+			break;
+
+
+		case OUTRANGE_LOW: {
+
+				return output->outRange.low * 127;
+
+			}
+
+			break;
+
+
+		case CUTOFFRANGE_HIGH: {
+
+				return output->cutoffRange.high * 127;
+
+			}
+
+			break;
+
+
+		case CUTOFFRANGE_LOW: {
+
+				return output->cutoffRange.low * 127;
+
+			}
+
+			break;
+
+
+		case MIDIMAPPING_MSGTYPE: {
+
+				MidiMapping* filter = (MidiMapping*)output->getMidiMapping(0); // TODO DERRRP???
+
+				if (filter == NULL)
+					return CONFIGURATOR_ERROR_RETURN_CODE_FAILURE;
+
+				return filter->msgType;
+			
+
+
+			}
+
+			break;
+
+
+		case MIDIMAPPING_CHANNEL: {
+
+				MidiMapping* filter = (MidiMapping*)output->getMidiMapping(0); // TODO DERRRP???
+
+				if (filter == NULL)
+					return CONFIGURATOR_ERROR_RETURN_CODE_FAILURE;
+
+				return filter->channel;
+			
+
+
+			}
+
+			break;
+
+
+		case MIDIMAPPING_NOTE: {
+
+				MidiMapping* filter = (MidiMapping*)output->getMidiMapping(0); // TODO DERRRP???
+
+				if (filter == NULL)
+					return CONFIGURATOR_ERROR_RETURN_CODE_FAILURE;
+
+				return filter->note;
+			
+
+
+			}
+
+			break;
+
+
+		case MIDIMAPPING_DURATION: {
+
+				MidiMapping* filter = (MidiMapping*)output->getMidiMapping(0); // TODO DERRRP???
+
+				if (filter == NULL)
+					return CONFIGURATOR_ERROR_RETURN_CODE_FAILURE;
+
+				return ((float)(filter->duration) / 700.0f) * 127;
+			
+
+
+			}
+
+			break;
+
+
+		case ONEHITDETECTOR_RETRIGGERTHRESHOLD: {
+
+				OneHitDetector* filter = (OneHitDetector*)output->getOutputFilter(0); // TODO DERRRP???
+
+				if (filter == NULL)
+					return CONFIGURATOR_ERROR_RETURN_CODE_FAILURE;
+
+				return ((float)(filter->retriggerThreshold) / 300.0f) * 127;
+			
+
+
+			}
+
+			break;
+
+
+		case ONEHITDETECTOR_SENSITIVITYTHRESHOLD: {
+
+				OneHitDetector* filter = (OneHitDetector*)output->getOutputFilter(0); // TODO DERRRP???
+
+				if (filter == NULL)
+					return CONFIGURATOR_ERROR_RETURN_CODE_FAILURE;
+
+				return filter->sensitivityThreshold * 127;
+			
+
+
+			}
+
+			break;
+
+
+
+		default:
+			return CONFIGURATOR_ERROR_RETURN_CODE_FAILURE;
+	}
 }
-

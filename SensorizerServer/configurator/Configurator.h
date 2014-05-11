@@ -18,19 +18,18 @@
 #define	OUTRANGE_LOW 4  
 #define	CUTOFFRANGE_HIGH 5  
 #define	CUTOFFRANGE_LOW 6  
-#define	MULTIPLYVAL 7  
-#define	ADDVAL 8  
-#define	ISINVERT 9  
-#define	MIDIMAPPING_MSGTYPE 10  
-#define	MIDIMAPPING_CHANNEL 11  
-#define	MIDIMAPPING_NOTE 12  
-#define	MIDIMAPPING_DURATION 13  
-#define	MIDIMAPPING_MIDIDEVICENAME 14  
-#define	ONEHITDETECTOR_RETRIGGERTHRESHOLD 15  
-#define	ONEHITDETECTOR_SENSITIVITYTHRESHOLD 16  
+#define	MIDIMAPPING_MSGTYPE 7  
+#define	MIDIMAPPING_CHANNEL 8  
+#define	MIDIMAPPING_NOTE 9  
+#define	MIDIMAPPING_DURATION 10  
+#define	ONEHITDETECTOR_RETRIGGERTHRESHOLD 11  
+#define	ONEHITDETECTOR_SENSITIVITYTHRESHOLD 12  
 
 #define CONFIGURATOR_FIELDS_START INRANGE_HIGH
 #define CONFIGURATOR_FIELDS_END ONEHITDETECTOR_SENSITIVITYTHRESHOLD
+
+
+#define CONFIGURATOR_ERROR_RETURN_CODE_FAILURE 0
 
 class Configurator {
 
@@ -43,7 +42,9 @@ public:
 	static bool setField(SensorizerServer* server, byte sensorIdx, byte fieldIdx, byte byteVal);
 
 	/***
-		Gets the current value for the given field index
+		Gets the current value for the given field index.
+
+		Returns CONFIGURATOR_ERROR_RETURN_CODE_FAILURE if sensor or field is not found.
 
 	***/
 	static byte getField(SensorizerServer* server, byte sensorIdx, byte fieldIdx);

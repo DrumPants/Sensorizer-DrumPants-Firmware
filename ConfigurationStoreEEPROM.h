@@ -7,11 +7,12 @@
 
 #include <Arduino.h>
 #include <utility/ConfigurationStore.h>
+#include <SensorizerServer.h>
 
 class ConfigurationStoreEEPROM : public ConfigurationStore {
 
 public: 
-	ConfigurationStoreEEPROM();
+	ConfigurationStoreEEPROM(SensorizerServer* server);
 
 protected:
 

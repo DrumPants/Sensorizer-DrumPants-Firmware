@@ -32,7 +32,7 @@ class MidiMapping : public OutputMapping {
 	private: PendingNoteQueue* pendingNoteOffs;
 	
 	////@Expose
-	private: int msgType;
+	public: int msgType;
 
 	public: int getMsgType();
 
