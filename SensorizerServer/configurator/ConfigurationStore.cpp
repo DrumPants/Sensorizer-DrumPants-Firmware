@@ -16,8 +16,8 @@ void ConfigurationStore::saveSensor(int sensorIdx) {
 	// include the first byte, which is the dirty bit (fields start at byte 1)
 	byte dataToStore[CONFIGURATOR_FIELDS_LENGTH];
 
-	// mark as dirty
-	dataToStore[0] = 1;
+	// mark as dirty with the current file version number so we don't try to load from an earlier version.
+	dataToStore[CONFIGURATOR_VERSION_FIELD_IDX] = CONFIGURATOR_VERSION;
 
 	for (int fieldIdx = CONFIGURATOR_FIELDS_START; fieldIdx <= CONFIGURATOR_FIELDS_END; fieldIdx++) {
 
@@ -44,7 +44,7 @@ void ConfigurationStore::loadSensors(){
 		this->read(GET_ADDRESS_FOR_SENSOR(sensorIdx), dataFromStore, CONFIGURATOR_FIELDS_LENGTH);
 
 		// only load the values if the user has actually saved something there: check dirty bit 
-		if (dataFromStore[0] == 1) {
+		if (dataFromStore[CONFIGURATOR_VERSION_FIELD_IDX] == CONFIGURATOR_VERSION) {
 			for (int fieldIdx = CONFIGURATOR_FIELDS_START; fieldIdx <= CONFIGURATOR_FIELDS_END; fieldIdx++) {
 				byte value = dataFromStore[fieldIdx];
 

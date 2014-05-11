@@ -32,7 +32,7 @@ int firmataThrottleCount = 0;
 
 MidiInput* midiIn;
 
-ConfigurationStoreEEPROM* configStore;
+ConfigurationStore* configStore;
 #endif
 
 

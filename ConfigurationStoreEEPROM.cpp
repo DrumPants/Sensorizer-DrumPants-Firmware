@@ -3,9 +3,9 @@
 #include "Debug.h"
 #include <SensorizerServer.h>
 
-// ConfigurationStoreEEPROM::ConfigurationStoreEEPROM(SensorizerServer* s) {
-// 	ConfigurationStore::ConfigurationStore(s);
-// }
+ConfigurationStoreEEPROM::ConfigurationStoreEEPROM(SensorizerServer* s)  : ConfigurationStore(s) {
+	
+}
 
 void ConfigurationStoreEEPROM::write(unsigned int address, byte* data, int dataLength) {
 	DEBUG_PRINT_NUMS("Writing to EEPROM ", address, dataLength);

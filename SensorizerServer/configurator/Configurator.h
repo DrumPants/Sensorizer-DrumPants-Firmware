@@ -10,6 +10,16 @@
 #include "filters/OneHitDetector.h"
 #include "filters/NullableOutputFilter.h"
 
+/**
+ * The Version of the preset file format saved to disk. This is stored in the preset at offset CONFIGURATOR_VERSION_FIELD_IDX to make sure we're not using bad data.
+ */
+#define CONFIGURATOR_VERSION 1
+
+/**
+ * WHere the version of the config files is stored on a page. Check this against current version to see if it's usable or should be overwritten.
+ */
+#define CONFIGURATOR_VERSION_FIELD_IDX 0
+
 /**** MIDI CC MESSAGE CONSTANTS FOR FIELDS ****/
 
 #define	INRANGE_HIGH 1  
