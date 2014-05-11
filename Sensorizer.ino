@@ -56,10 +56,6 @@ ConfigurationStore* configStore;
 #include <Wire.h>
 #include "BLEDevice.h"
 
-#if ENABLE_TEST_INTERFACE
-  #include "TestInterface.h"
-#endif
-
 
 /**
  *
@@ -71,6 +67,14 @@ SensorizerServer* server;
  * Handles the UI: knobs and buttons and LEDs.
  */
 Knobs* knobs;
+
+
+
+#if ENABLE_TEST_INTERFACE
+  #include "TestInterface.h"
+#endif
+
+
 
 void setupServer() {
     // must wait a bit for the MIDI device to boot up before it accepts our messages

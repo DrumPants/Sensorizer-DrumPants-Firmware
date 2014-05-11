@@ -43,7 +43,7 @@ void ConfigurationStore::loadSensors(){
 		// get value from EEPROM
 		this->read(GET_ADDRESS_FOR_SENSOR(sensorIdx), dataFromStore, CONFIGURATOR_FIELDS_LENGTH);
 
-		// only load the values if the user has actually saved something there: check dirty bit 
+		// only load the values if the user has actually saved something there: check version also so we don't load bad data 
 		if (dataFromStore[CONFIGURATOR_VERSION_FIELD_IDX] == CONFIGURATOR_VERSION) {
 			for (int fieldIdx = CONFIGURATOR_FIELDS_START; fieldIdx <= CONFIGURATOR_FIELDS_END; fieldIdx++) {
 				byte value = dataFromStore[fieldIdx];

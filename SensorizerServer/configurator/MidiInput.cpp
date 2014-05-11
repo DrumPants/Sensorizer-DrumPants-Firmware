@@ -43,17 +43,28 @@ void MidiInput::checkSerial(Stream* input) {
 }
 
 
-void MidiInput::updateField(byte sensorIdx, byte fieldIdx, byte val) {
+bool MidiInput::updateField(byte sensorIdx, byte fieldIdx, byte val) {
 	// channel holds the sensor idx, so only accept valid values
 	if (sensorIdx < SENSOR_INPUTS_LENGTH) {
 	
 		if (Configurator::setField(this->server, sensorIdx, fieldIdx, val)) {
 			store->setSensor(sensorIdx, fieldIdx, val);
+
+			return true;
 		}
 	}
 	// we only save when they tell us they're done editing. don't want to burn out that eeprom!
 	else if (sensorIdx == CHANNEL_COMMAND_SAVE) {
-		store->saveSensors();
+		this->saveConfiguration();
+
+		return true;
 	}
+
+	return false;
+}
+
+
+void MidiInput::saveConfiguration() {
+	store->saveSensors();
 }
 

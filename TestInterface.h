@@ -7,6 +7,7 @@
 
 #include "I2CScanner.h"
 #include "TestBLE.h"
+#include <utility/TestConfigurator.h>
 
 #define TEST_HIT_MAX 1024
 
@@ -25,6 +26,7 @@ void testInterfaceSetup() {
   SerialToComputer.println("");
   SerialToComputer.println("0-9 : test drumpad hit");
   SerialToComputer.println("e   : scan for EEPROM");
+  SerialToComputer.println("c   : test configurator");
   SerialToComputer.println("b   : test BLE programming");
   SerialToComputer.println("u   : test BLE PUART communication");
   SerialToComputer.println("r   : run all tests");
@@ -45,6 +47,30 @@ int scanForEEPROM() {
   int numFound = I2Cscan();
 
   return (numFound == 0) ? 1 : 0;
+}
+
+/**
+ * [testConfigurator description]
+ * @return 0 on success, 1 on failure.
+ */
+int testConfigurator() {
+
+  SerialToComputer.println("========================");
+  SerialToComputer.println("=  TEST CONFIGURATOR   =");
+  SerialToComputer.println("========================");
+
+  int numErrors = configurator_testEEPROM(midiIn, server, configStore);
+
+  if (numErrors == 0) {
+    SerialToComputer.println("SUCCESS! Configurator saved correctly.");
+  }
+  else {
+    SerialToComputer.print("FAILED! Configurator failed with ");
+    SerialToComputer.print(numErrors);
+    SerialToComputer.println(" errors.");
+  }
+
+  return numErrors;
 }
 
 /**
@@ -110,11 +136,15 @@ void testInterfaceUpdate() {
         case 'u':
           testBLEPUART();
           break;
+        case 'c':
+          testConfigurator();
+          break;
         case 'r':
 
           int numTestsFailed = scanForEEPROM() +
               testBLEProgramming() +
-              testBLEPUART();
+              testBLEPUART() +
+              testConfigurator();
 
           // also play a little sumthin' to indicate doneness.
           testPins[1] = TEST_HIT_MAX;
@@ -127,9 +157,9 @@ void testInterfaceUpdate() {
           }
           else {
             SerialToComputer.println("========================");
-            SerialToComputer.print("= ");
+            SerialToComputer.print("=   ");
             SerialToComputer.print(numTestsFailed);
-            SerialToComputer.print("/3 tests FAILED        =");
+            SerialToComputer.print("/4 tests FAILED      =");
             SerialToComputer.println("========================");
           }
           break;
