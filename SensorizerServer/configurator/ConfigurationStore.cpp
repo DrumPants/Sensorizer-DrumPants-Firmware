@@ -100,5 +100,10 @@ void ConfigurationStore::write(unsigned int address, byte* data, int dataLength)
 }
 
 void ConfigurationStore::read(unsigned int address, byte* data, int dataLength) {
-	DEBUG_PRINT_NUMS("Reading from EEPROM ", address, dataLength);
+	DEBUG_PRINT_NUMS("Virtual Reading from EEPROM ", address, dataLength);
+}
+
+
+void ConfigurationStore::eraseAllAndReset() {
+	DEBUG_PRINT("Virtual Clearing all EEPROM memory!");
 }

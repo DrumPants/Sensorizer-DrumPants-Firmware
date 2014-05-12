@@ -23,6 +23,10 @@ class ConfigurationStoreEEPROM : public ConfigurationStore {
 public: 
 	ConfigurationStoreEEPROM(SensorizerServer* server);
 
+	/**
+	 * Wipes the configuration memory and resets to factory defaults.
+	 */
+	void eraseAllAndReset();
 protected:
 
 	void write(unsigned int address, byte* data, int dataLength);

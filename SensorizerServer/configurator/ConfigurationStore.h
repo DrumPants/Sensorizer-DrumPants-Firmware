@@ -44,6 +44,11 @@ public:
 	 */
 	void saveSensors();
 
+	/**
+	 * Wipes the configuration memory and resets to factory defaults.
+	 */
+	virtual void eraseAllAndReset();
+
 private: 
 
 	SensorizerServer* server;

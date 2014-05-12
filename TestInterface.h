@@ -19,6 +19,10 @@ int testPins[TESTPINS_LENGTH] = {0,0,0,0,0,0,0,0};
 
 void testInterfaceSetup() {
 
+  while (!SerialToComputer) {
+    
+  }
+
   SerialToComputer.println("========================");
   SerialToComputer.println("= SENSORIZER TEST MENU =");
   SerialToComputer.println("========================");
@@ -27,6 +31,7 @@ void testInterfaceSetup() {
   SerialToComputer.println("0-9 : test drumpad hit");
   SerialToComputer.println("e   : scan for EEPROM");
   SerialToComputer.println("c   : test configurator");
+  SerialToComputer.println("D   : wipe all configurator EEPROM memory! (capital D)");
   SerialToComputer.println("b   : test BLE programming");
   SerialToComputer.println("u   : test BLE PUART communication");
   SerialToComputer.println("r   : run all tests");
@@ -71,6 +76,19 @@ int testConfigurator() {
   }
 
   return numErrors;
+}
+
+int testResetEEPROM() {
+
+  SerialToComputer.println("===============================");
+  SerialToComputer.println("=  RESET TO FACTORY DEFAULTS  =");
+  SerialToComputer.println("===============================");
+
+  configStore->eraseAllAndReset();
+
+  SerialToComputer.println(" Erased all memory!");
+
+  return 0;
 }
 
 /**
@@ -139,12 +157,17 @@ void testInterfaceUpdate() {
         case 'c':
           testConfigurator();
           break;
+        case 'D':
+          testResetEEPROM();
+          break;
         case 'r':
 
           int numTestsFailed = scanForEEPROM() +
               testBLEProgramming() +
               testBLEPUART() +
-              testConfigurator();
+              testConfigurator() +
+              // and finally reset to factory defaults so it doesn't load rando stuff.
+              testResetEEPROM();
 
           // also play a little sumthin' to indicate doneness.
           testPins[1] = TEST_HIT_MAX;
