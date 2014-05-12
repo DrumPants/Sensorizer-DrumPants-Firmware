@@ -102,6 +102,9 @@ void setupServer() {
 
     // listen for MIDI messages from BLE to change config
     midiIn = new MidiInput(server, configStore);
+
+    // now load all saved sensor config data, clearing defaults.
+    configStore->loadSensors();
 #endif    
 }
 
