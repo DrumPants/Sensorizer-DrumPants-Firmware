@@ -1,9 +1,18 @@
 #include "ConfigurationStore.h"
 #include "Configurator.h"
 
+#include "Constants.h"
+
 #define CONFIGURATOR_FIELDS_LENGTH (CONFIGURATOR_FIELDS_END + 1)
 
 #define GET_ADDRESS_FOR_SENSOR(sensorIdx) (sensorIdx * CONFIGURATOR_FIELDS_LENGTH)
+
+#if EEPROM_SIZE_IN_KBITS < 4
+	// for the first betas, we don't have enough room to save all the sensors. only save half of them
+	#define SENSOR_INPUTS_TO_SAVE_LENGTH 2
+#else 
+	#define SENSOR_INPUTS_TO_SAVE_LENGTH SENSOR_INPUTS_LENGTH
+#endif
 
 ConfigurationStore::ConfigurationStore(SensorizerServer* server) {
 	this->server = server;
@@ -75,7 +84,7 @@ void ConfigurationStore::setDirty(int sensorIdx, int fieldIdx) {
 
 void ConfigurationStore::saveSensors() {
 
-	for (int i = 0; i < SENSOR_INPUTS_LENGTH; i++) {
+	for (int i = 0; i < SENSOR_INPUTS_TO_SAVE_LENGTH; i++) {
 		if (this->dirtySensors[i] > 0) {
 			// TODO: save to EEPROM
 			this->saveSensor(i);

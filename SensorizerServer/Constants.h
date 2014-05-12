@@ -41,6 +41,13 @@
 
   #define BLE_TYPE BLE_TYPE_BROADCOM
 
+  // for the Configurator
+  #if PRESET == PRESET_PREPRODUCTION
+    #define EEPROM_SIZE_IN_KBITS 1
+  #else
+    #define EEPROM_SIZE_IN_KBITS 4
+  #endif
+
 #elif PRESET == PRESET_VJACKET_LEATHER
 
   // to use BLE:

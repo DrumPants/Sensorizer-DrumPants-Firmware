@@ -28,6 +28,11 @@ int firmataThrottleCount = 0;
   
   #include "Debug.h"
   #include <SensorizerServer.h>
+
+// need to include this here so ConfigurationStoreEEPROM can use it.
+  #include <Wire.h>
+  #include <I2C_eeprom.h>
+
   #include "ConfigurationStoreEEPROM.h"
 
 MidiInput* midiIn;
@@ -53,7 +58,6 @@ ConfigurationStore* configStore;
 #include "IntroSounds.h"
 
 // need to include this here so BLEDevice can use it.
-#include <Wire.h>
 #include "BLEDevice.h"
 
 
