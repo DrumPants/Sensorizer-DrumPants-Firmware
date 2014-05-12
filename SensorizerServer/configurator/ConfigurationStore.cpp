@@ -49,7 +49,7 @@ void ConfigurationStore::loadSensors(){
 				byte value = dataFromStore[fieldIdx];
 
 				if (!Configurator::setField(this->server, sensorIdx, fieldIdx, value)) {
-					DEBUG_PRINT_NUM("Failed to save sensor field: ", i);
+					DEBUG_PRINT_NUMS("Failed to save sensor field: ", sensorIdx, fieldIdx);
 				}
 			}
 		}
