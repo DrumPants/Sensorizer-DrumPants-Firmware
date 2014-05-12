@@ -9,7 +9,7 @@
 
 #if EEPROM_SIZE_IN_KBITS < 4
 	// for the first betas, we don't have enough room to save all the sensors. only save half of them
-	#define SENSOR_INPUTS_TO_SAVE_LENGTH 2
+	#define SENSOR_INPUTS_TO_SAVE_LENGTH (SENSOR_INPUTS_LENGTH / 2)
 #else 
 	#define SENSOR_INPUTS_TO_SAVE_LENGTH SENSOR_INPUTS_LENGTH
 #endif
@@ -44,7 +44,7 @@ void ConfigurationStore::saveSensor(int sensorIdx) {
 
 void ConfigurationStore::loadSensors(){
 	
-	for (int sensorIdx = 0; sensorIdx < SENSOR_INPUTS_LENGTH; sensorIdx++) {
+	for (int sensorIdx = 0; sensorIdx < SENSOR_INPUTS_TO_SAVE_LENGTH; sensorIdx++) {
 
 		// include the first byte, which is the dirty bit (fields start at byte 1)
 		byte dataFromStore[CONFIGURATOR_FIELDS_LENGTH];
