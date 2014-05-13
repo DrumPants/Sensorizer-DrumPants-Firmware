@@ -6,11 +6,28 @@
 #include "Configurator.h"
 #include "ConfigurationStore.h"
 
+/***
+	Time in milliseconds to wait after the last update before saving config to storage.
+
+	This tries to save the EEPROM to write as infrequently as possible. 
+
+	Ten seconds seems legit: long enough for them to decide to be done changing values, 
+	but not too long that they might turn off the device before anything was saved.
+***/
+#define AUTOSAVE_DELAY (10 * 1000)
+
 class MidiInput {
 
 	SensorizerServer* server;
 
 	ConfigurationStore* store;
+
+	/**
+	 * System Time in milliseconds of when the last update happened.
+	 *
+	 * If 0, no updates have been performed.
+	 */
+	unsigned long lastUpdatedTime;
 
 	/**
 	 * Changes configuration on the server as well as saves to EEPROM store.

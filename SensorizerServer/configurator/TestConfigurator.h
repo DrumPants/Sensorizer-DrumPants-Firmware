@@ -65,6 +65,7 @@ int configurator_testEEPROM(MidiInput* midi, SensorizerServer* server, Configura
 		DEBUG_PRINT("Configurator load failed: note not loaded");
 	}
 
+	DEBUG_PRINT("NOTE: Configurator autosave should happen in 10 seconds.");
 
 	return numErrors;
 }

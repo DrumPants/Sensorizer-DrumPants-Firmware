@@ -9,6 +9,8 @@
 MidiInput::MidiInput(SensorizerServer* server, ConfigurationStore* store) {
 	this->server = server;
 	this->store = store;
+
+	this->lastUpdatedTime = 0;
 }
 
 
@@ -18,6 +20,13 @@ void MidiInput::check() {
 	this->checkSerial(&BLE_MIDI_SERIAL_IN); 
 	this->checkSerial(&USB_MIDI_SERIAL_IN); 
 #endif
+
+	// autosave if they have any pending updates
+	unsigned long curTime = millis();
+	if (lastUpdatedTime > 0 && curTime > lastUpdatedTime + AUTOSAVE_DELAY) {
+		DEBUG_PRINT("Auto-saving configuration");
+		this->saveConfiguration();
+	}
 
 }
 
@@ -50,6 +59,7 @@ bool MidiInput::updateField(byte sensorIdx, byte fieldIdx, byte val) {
 		if (Configurator::setField(this->server, sensorIdx, fieldIdx, val)) {
 			store->setSensor(sensorIdx, fieldIdx, val);
 
+			lastUpdatedTime = millis();
 			return true;
 		}
 	}
@@ -66,5 +76,7 @@ bool MidiInput::updateField(byte sensorIdx, byte fieldIdx, byte val) {
 
 void MidiInput::saveConfiguration() {
 	store->saveSensors();
+
+	lastUpdatedTime = 0;
 }
 
