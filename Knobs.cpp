@@ -1,6 +1,11 @@
 #include "Knobs.h"
 #include "general_midi_sounds.h"
 
+#define PRESETS_END_MELODIC 127
+#define PRESETS_START_DRUMS (PRESETS_END_MELODIC + 1)
+// this is so each drum scale is actually also a bank. TODO make this better
+#define PRESETS_END_DRUMS (PRESETS_START_DRUMS + NOTE_PRESETS_DRUMS_LENGTH)
+
 byte NOTE_PRESETS_MELODIC[NOTE_PRESETS_MELODIC_LENGTH][NOTE_PRESETS_ELEMENT_LENGTH] = {
 
 
@@ -164,7 +169,7 @@ byte NOTE_PRESETS_DRUMS[NOTE_PRESETS_DRUMS_LENGTH][NOTE_PRESETS_ELEMENT_LENGTH] 
 
 Knobs::Knobs() { 
   lastPos = 0; 
-  position  = 128; // start with DRUMS!
+  position  = PRESETS_END_MELODIC + 1; // start with DRUMS!
   positionKey  = 1;
   lastButtonMode = HIGH;
 }
@@ -198,16 +203,16 @@ void Knobs::setup(SensorizerServer* server) {
 
 void Knobs::changeBank(int newPos) {
   // give drums 12 spots so we don't miss them with the bad encoder.
-  int newInst = abs(newPos) % 139; 
+  int newInst = abs(newPos) % PRESETS_END_DRUMS; 
   
   //if (newInst < 0)
   //  newInst = 128 - newInst;
-  if (newInst > 127) {
+  if (newInst > PRESETS_END_MELODIC) {
     DEBUG_PRINT_NUM("change drum bank: ", newInst);
     server->midiDevice->setBank(MIDI_CHANNEL, 0x78); //DRUMS
     
     //previous was melodic, load drum preset
-    changeScale(false, 0);
+    changeScale(false, (newInst - PRESETS_START_DRUMS) % NOTE_PRESETS_DRUMS_LENGTH);
 
 #if ENABLE_LCD
     lcd.changeBank("Drums", newInst);
@@ -218,7 +223,7 @@ void Knobs::changeBank(int newPos) {
     
     server->midiDevice->setBank(MIDI_CHANNEL, 0x79, newInst); //MELODIC
 
-    if (position > 127) {
+    if (position > PRESETS_END_MELODIC) {
        //we switched from drums, reload the note scales        
       changeScale(true, 0);
     }
