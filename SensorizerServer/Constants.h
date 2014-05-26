@@ -15,15 +15,18 @@
 #define PRESET_BETA_STRETCHY 12
 #define PRESET_BETA_NEIL_PEART 14
 
-// for the beta pre-production PCB (April 2014)
+// for the beta pre-production Black PCB (April 2014)
 #define PRESET_PREPRODUCTION 20
+
+// for the beta pre-production Red PCB (May 2014)
+#define PRESET_PREPRODUCTION_RED 21
 
 // for the earlier prototypes
 #define PRESET_NEON_GREEN_STRING 3
 #define PRESET_VJACKET_LEATHER 2
 #define PRESET_JEANS 1
 
-#define PRESET PRESET_PREPRODUCTION
+#define PRESET PRESET_PREPRODUCTION_RED
 
 /******* END hardware version type presets ********/
 
