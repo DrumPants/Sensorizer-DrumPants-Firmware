@@ -131,6 +131,8 @@ void SensorizerServer::loadPreset() {
 /**************** BETA PANTS ******************/
 #if PRESET >= PRESET_BETA
 
+	#define DEFAULT_FOOT_PEDAL_SENSITIVITY_THRESHOLD 0.3
+
 	#if PRESET >= PRESET_PREPRODUCTION	
 		// handle sensitive-ass bare peizos
 		#define PIEZO_INRANGE_HIGH 1.0;
@@ -490,9 +492,11 @@ void SensorizerServer::loadPreset() {
 #else
 	
 	// this one connection is weird on some of the boards: gets triggered by other piezos
-	#if PRESET != PRESET_PREPRODUCTION	
+	//#if PRESET != PRESET_PREPRODUCTION	
 	filter = new OneHitDetector();
 	filter->retriggerThreshold = DEFAULT_FOOT_PEDAL_RETRIGGER_THRESHOLD;
+	filter->sensitivityThreshold = DEFAULT_FOOT_PEDAL_SENSITIVITY_THRESHOLD;
+	filter->sensitivityThreshold = DEFAULT_FOOT_PEDAL_SENSITIVITY_THRESHOLD;
 	s->addOutputFilter(filter);
 
 	m = new MidiMapping(this->midiDevice);
@@ -500,7 +504,7 @@ void SensorizerServer::loadPreset() {
 	m->note = 60 + i;
 	m->setMsgType(MidiMapping::NOTE);
 	s->addMidiMapping(m);
-	#endif
+	//#endif
 
 #endif	
 	sensorInputs[i++] = s;
@@ -525,6 +529,7 @@ void SensorizerServer::loadPreset() {
 
 	filter = new OneHitDetector();
 	filter->retriggerThreshold = DEFAULT_FOOT_PEDAL_RETRIGGER_THRESHOLD;
+	filter->sensitivityThreshold = DEFAULT_FOOT_PEDAL_SENSITIVITY_THRESHOLD;
 	s->addOutputFilter(filter);
 
 	m = new MidiMapping(this->midiDevice);
@@ -558,6 +563,7 @@ void SensorizerServer::loadPreset() {
 
 	filter = new OneHitDetector();
 	filter->retriggerThreshold = DEFAULT_FOOT_PEDAL_RETRIGGER_THRESHOLD;
+	filter->sensitivityThreshold = DEFAULT_FOOT_PEDAL_SENSITIVITY_THRESHOLD;
 	s->addOutputFilter(filter);
 
 	m = new MidiMapping(this->midiDevice);
@@ -588,6 +594,7 @@ void SensorizerServer::loadPreset() {
 
 	filter = new OneHitDetector();
 	filter->retriggerThreshold = DEFAULT_FOOT_PEDAL_RETRIGGER_THRESHOLD;
+	filter->sensitivityThreshold = DEFAULT_FOOT_PEDAL_SENSITIVITY_THRESHOLD;
 	s->addOutputFilter(filter);
 
 	m = new MidiMapping(this->midiDevice);
