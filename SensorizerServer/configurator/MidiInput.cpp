@@ -52,7 +52,7 @@ void MidiInput::checkSerial(Stream* input) {
 }
 
 
-inline byte MidiInput::getHandshakeResponse(byte handshakeRequest, byte value) {
+byte MidiInput::getHandshakeResponse(byte handshakeRequest, byte value) {
 	return ((int)handshakeRequest + (int)value + 420) % 127;
 }
 
