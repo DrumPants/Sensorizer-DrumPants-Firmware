@@ -3,7 +3,7 @@
 
 // set to 1 to enable a keyboard-based interface for simulating hits.
 // connect to SerialUSB in with serial monitor to test: type keys '0'-'9' to "hit" various input pins.
-#define ENABLE_TEST_INTERFACE 0
+#define ENABLE_TEST_INTERFACE 1
 
 
 /******* hardware version type presets ********/
@@ -27,6 +27,9 @@
 #define PRESET_JEANS 1
 
 #define PRESET PRESET_PREPRODUCTION_RED
+
+
+#define FIRMWARE_VERSION (PRESET)
 
 /******* END hardware version type presets ********/
 

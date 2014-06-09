@@ -66,6 +66,8 @@ int testConfigurator() {
 
   int numErrors = configurator_testEEPROM(midiIn, server, configStore);
 
+  numErrors += configurator_testGetVersion(midiIn);
+
   if (numErrors == 0) {
     SerialToComputer.println("SUCCESS! Configurator saved correctly.");
   }

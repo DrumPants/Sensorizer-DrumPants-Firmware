@@ -70,4 +70,36 @@ int configurator_testEEPROM(MidiInput* midi, SensorizerServer* server, Configura
 	return numErrors;
 }
 
+
+/**
+ * Tests configuring sensors and writing to EEPROM.
+ * @param  midi   [description]
+ * @return        0 on success, number of errors otherwise
+ */
+int configurator_testGetVersion(MidiInput* midi) {
+	int numErrors = 0;
+
+	byte handshake = rand() * 127;
+	byte boardHandshakeResponse = midi->getHandshakeResponse(handshake, PRESET);
+	byte handshakeResponse = midi->getHandshakeResponse(handshake, FIRMWARE_VERSION);
+
+	DEBUG_PRINT_NUM("Requesting firmware version with handshake:", handshake);
+
+	if (!midi->updateField(CHANNEL_COMMAND_REPORT_FIRMWARE_VERSION, 1, handshake)) {
+		numErrors++;
+	}
+
+	DEBUG_PRINT_NUM("Firmware Handshake response should be:", handshakeResponse);
+	DEBUG_PRINT_NUM("Board Handshake response should be:", boardHandshakeResponse);
+
+
+	DEBUG_PRINT_NUM("Requesting serial number with handshake:", handshake);
+
+	if (!midi->updateField(CHANNEL_COMMAND_REPORT_SERIAL_NUMBER, 1, handshake)) {
+		numErrors++;
+	}
+
+	return numErrors;
+}
+
 #endif

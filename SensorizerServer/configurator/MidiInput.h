@@ -16,6 +16,19 @@
 ***/
 #define AUTOSAVE_DELAY (10 * 1000)
 
+
+enum ChannelCommand : byte {
+	CHANNEL_COMMAND_SAVE = 127,
+
+	// these three commands report the requested number as byte1, and a valid handshake response as byte2
+	// the handshake response is whatever the requestor sent as byte2, combined with the response it will send in byte1. cheapest, lamest attempt at security/DRM.
+	CHANNEL_COMMAND_REPORT_BOARD_VERSION = 126,
+	CHANNEL_COMMAND_REPORT_FIRMWARE_VERSION = 125,
+	CHANNEL_COMMAND_REPORT_SERIAL_NUMBER = 124
+};
+
+
+
 class MidiInput {
 
 	SensorizerServer* server;
@@ -41,6 +54,31 @@ class MidiInput {
 	void checkSerial(Stream* input);
 
 
+	/**
+	 * Sends a response to a request over both BLE and USB, including the correct security response based on the securty check given by requestor.
+	 * @param command          The command byte: what values are you sending? Must be 0-127.
+	 * @param value            The value.
+	 * @param handshakeRequest The security check given by the requestor as the second value in the packet.
+	 */
+	void sendResponse(ChannelCommand command, byte value, byte handshakeRequest);
+
+	/**
+	 * Sends a raw response message over the given output Stream.		
+	 * @param input   Output stream
+	 * @param command [description]
+	 * @param value1  [description]
+	 * @param value2  [description]
+	 */
+	void sendResponse(Stream* input, ChannelCommand command, byte value1, byte value2);
+
+	/**
+	 * Returns a valid handshake response for the given request and value.
+	 * @param  handshakeRequest [description]
+	 * @param  value            [description]
+	 * @return                  [description]
+	 */
+	byte getHandshakeResponse(byte handshakeRequest, byte value);
+
 public:
 	MidiInput(SensorizerServer* server, ConfigurationStore* store);
 
@@ -62,6 +100,12 @@ public:
 	 * @param midi the object to test.
 	 */
 	friend int configurator_testEEPROM(MidiInput* midi, SensorizerServer* server, ConfigurationStore* store);
+
+	/**
+	 * For testing. Only used by TestConfigurator.h
+	 * @param midi the object to test.
+	 */
+	friend int configurator_testGetVersion(MidiInput* midi);
 };
 
 #endif
