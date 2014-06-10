@@ -4,7 +4,7 @@
 #define BLE_MIDI_SERIAL_IN (Serial1)
 #define USB_MIDI_SERIAL_IN (SerialUSB)
 
-#define COMMAND_STATUS_BYTE_FLAG 0xB0
+#define COMMAND_STATUS_BYTE_FLAG (0xB0)
 
 MidiInput::MidiInput(SensorizerServer* server, ConfigurationStore* store) {
 	this->server = server;
@@ -56,10 +56,12 @@ byte MidiInput::getHandshakeResponse(byte handshakeRequest, byte value) {
 	return ((int)handshakeRequest + (int)value + 420) % 127;
 }
 
-void MidiInput::sendResponse(Stream* input, ChannelCommand command, byte value1, byte value2) {
-	input->write((byte)(COMMAND_STATUS_BYTE_FLAG & (byte)command));
-	input->write(value1);
-	input->write(value2);
+void MidiInput::sendResponse(Stream* input, ChannelCommand command, byte value) {
+	byte statCmd = (byte)(COMMAND_STATUS_BYTE_FLAG | COMMAND_STATUS_CHANNEL);
+
+	input->write(statCmd);
+	input->write((byte)command);
+	input->write(value);
 }
 
 void MidiInput::sendResponse(ChannelCommand command, byte value, byte handshakeRequest) {
@@ -68,8 +70,8 @@ void MidiInput::sendResponse(ChannelCommand command, byte value, byte handshakeR
 	byte handshakeResponse = this->getHandshakeResponse(handshakeRequest, value);
 
 	#if IS_DRUMPANTS
-		this->sendResponse(&BLE_MIDI_SERIAL_IN, command, value, handshakeResponse); 
-		this->sendResponse(&USB_MIDI_SERIAL_IN, command, value, handshakeResponse); 
+		this->sendResponse(&BLE_MIDI_SERIAL_IN, command, value); 
+		this->sendResponse(&USB_MIDI_SERIAL_IN, command, value); 
 	#endif
 }
 
@@ -85,26 +87,33 @@ bool MidiInput::updateField(byte sensorIdx, byte fieldIdx, byte val) {
 			return true;
 		}
 	}
-	// we only save when they tell us they're done editing. don't want to burn out that eeprom!
-	else if (sensorIdx == CHANNEL_COMMAND_SAVE) {
-		this->saveConfiguration();
+	// not a sensor update - it's a special command. fieldIdx is the ChannelCommand.
+	else if (sensorIdx == COMMAND_STATUS_CHANNEL) {
 
-		return true;
-	}
-	else if (sensorIdx == CHANNEL_COMMAND_REPORT_SERIAL_NUMBER) {
+		switch (fieldIdx) {
+			// we only save when they tell us they're done editing. don't want to burn out that eeprom!
+			case CHANNEL_COMMAND_SAVE:
+				this->saveConfiguration();
 
-		// TODO: get serial number from EEPROM!
-		this->sendResponse(CHANNEL_COMMAND_REPORT_SERIAL_NUMBER, 1, val);
+				return true;
+				break;
 
-		return true;
-	}
-	else if (sensorIdx == CHANNEL_COMMAND_REPORT_FIRMWARE_VERSION) {
+			case CHANNEL_COMMAND_REPORT_SERIAL_NUMBER:
+				// TODO: get serial number from EEPROM!
+				this->sendResponse(CHANNEL_COMMAND_REPORT_SERIAL_NUMBER, 1, val);
+				return true;
+				break;
 
-		this->sendResponse(CHANNEL_COMMAND_REPORT_FIRMWARE_VERSION, FIRMWARE_VERSION, val);
+			case CHANNEL_COMMAND_REPORT_FIRMWARE_VERSION:
+				this->sendResponse(CHANNEL_COMMAND_REPORT_FIRMWARE_VERSION, FIRMWARE_VERSION, val);
+				// fall through!
 
-		this->sendResponse(CHANNEL_COMMAND_REPORT_BOARD_VERSION, PRESET, val);
+			case CHANNEL_COMMAND_REPORT_BOARD_VERSION:
+				this->sendResponse(CHANNEL_COMMAND_REPORT_BOARD_VERSION, PRESET, val);
 
-		return true;
+				return true;
+				break;
+		}
 	}
 
 	return false;

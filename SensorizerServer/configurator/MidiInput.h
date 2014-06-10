@@ -16,6 +16,8 @@
 ***/
 #define AUTOSAVE_DELAY (10 * 1000)
 
+// this is sent as a channel in a status byte to indicate a command is in the second byte (like CHANNEL_COMMAND_SAVE)
+#define COMMAND_STATUS_CHANNEL (0x0F)
 
 enum ChannelCommand : byte {
 	CHANNEL_COMMAND_SAVE = 127,
@@ -66,10 +68,9 @@ class MidiInput {
 	 * Sends a raw response message over the given output Stream.		
 	 * @param input   Output stream
 	 * @param command [description]
-	 * @param value1  [description]
-	 * @param value2  [description]
+	 * @param value  [description]
 	 */
-	void sendResponse(Stream* input, ChannelCommand command, byte value1, byte value2);
+	void sendResponse(Stream* input, ChannelCommand command, byte value);
 
 	/**
 	 * Returns a valid handshake response for the given request and value.

@@ -85,7 +85,7 @@ int configurator_testGetVersion(MidiInput* midi) {
 
 	DEBUG_PRINT_NUM("Requesting firmware version with handshake:", handshake);
 
-	if (!midi->updateField(CHANNEL_COMMAND_REPORT_FIRMWARE_VERSION, 1, handshake)) {
+	if (!midi->updateField(COMMAND_STATUS_CHANNEL, CHANNEL_COMMAND_REPORT_FIRMWARE_VERSION, handshake)) {
 		numErrors++;
 	}
 
@@ -95,7 +95,7 @@ int configurator_testGetVersion(MidiInput* midi) {
 
 	DEBUG_PRINT_NUM("Requesting serial number with handshake:", handshake);
 
-	if (!midi->updateField(CHANNEL_COMMAND_REPORT_SERIAL_NUMBER, 1, handshake)) {
+	if (!midi->updateField(COMMAND_STATUS_CHANNEL, CHANNEL_COMMAND_REPORT_SERIAL_NUMBER, handshake)) {
 		numErrors++;
 	}
 
