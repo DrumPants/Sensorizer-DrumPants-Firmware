@@ -132,7 +132,7 @@ void SensorizerServer::loadPreset() {
 #if PRESET >= PRESET_BETA
 
 	#define DEFAULT_FOOT_PEDAL_SENSITIVITY_THRESHOLD 0.3
-	#define FOOT_PEDAL_CUTOFF_LOW 0.35
+	#define FOOT_PEDAL_CUTOFF_LOW 0.55
 
 	#if PRESET >= PRESET_PREPRODUCTION	
 		// handle sensitive-ass bare peizos
