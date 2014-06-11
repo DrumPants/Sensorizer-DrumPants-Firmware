@@ -132,6 +132,7 @@ void SensorizerServer::loadPreset() {
 #if PRESET >= PRESET_BETA
 
 	#define DEFAULT_FOOT_PEDAL_SENSITIVITY_THRESHOLD 0.3
+	#define FOOT_PEDAL_CUTOFF_LOW 0.35
 
 	#if PRESET >= PRESET_PREPRODUCTION	
 		// handle sensitive-ass bare peizos
@@ -448,8 +449,42 @@ void SensorizerServer::loadPreset() {
 	sensorInputs[i++] = s;
 	////////////////////////////
 
-#endif
+
 // end NEIL PEART
+
+#elif PRESET >= PRESET_PREPRODUCTION
+
+	////////////////////////////
+	// OUTPUT FOR arduino 7
+	////////////////////////////
+	s = new SensorOutput();
+	s->inRange.low = 0;
+	s->inRange.high = PIEZO_INRANGE_HIGH;
+	s->outRange.low = 0;
+	s->outRange.high = 1;
+	s->cutoffRange.low = PIEZO_CUTOFFRANGE_LOW;
+	s->cutoffRange.high = 1;
+	s->setCutoffType(SensorOutput::CUTOFF_TYPE_VAL_NULLABLE_LOW); //No Cutoff
+	s->multiplyVal = 1;
+	s->addVal = 0;
+	s->isInvert = false;
+
+	filter = new OneHitDetector();
+	filter->retriggerThreshold = DEFAULT_RETRIGGER_THRESHOLD;
+	s->addOutputFilter(filter);
+
+	m = new MidiMapping(this->midiDevice);
+	m->channel = MIDI_CHANNEL;
+	m->note = 60 + i;
+	m->setMsgType(MidiMapping::NOTE);
+	s->addMidiMapping(m);
+	
+	sensorInputs[i++] = s;
+	////////////////////////////
+
+
+#endif
+// END WERID CRAP: TODO: REDO THIS
 
 
 #if PRESET == PRESET_BETA || PRESET == PRESET_BETA_STRETCHY || PRESET == PRESET_BETA_RYAN || PRESET >= PRESET_PREPRODUCTION
@@ -459,7 +494,7 @@ void SensorizerServer::loadPreset() {
 
 
 	////////////////////////////
-	// OUTPUT FOR arduino 7
+	// OUTPUT FOR arduino 8
 	////////////////////////////
 	/// FOOT PEDAL
 	s = new SensorOutput();
@@ -467,7 +502,7 @@ void SensorizerServer::loadPreset() {
 	s->inRange.high = 1;
 	s->outRange.low = 0;
 	s->outRange.high = 1;
-	s->cutoffRange.low = 0.15;
+	s->cutoffRange.low = FOOT_PEDAL_CUTOFF_LOW;
 	s->cutoffRange.high = 1;
 #if FOOT_PEDAL_CC_SEND_NULLS || !FOOT_PEDAL_CC_ENABLE
 	s->setCutoffType(SensorOutput::CUTOFF_TYPE_VAL_NULLABLE_LOW); 
@@ -492,10 +527,9 @@ void SensorizerServer::loadPreset() {
 #else
 	
 	// this one connection is weird on some of the boards: gets triggered by other piezos
-	//#if PRESET != PRESET_PREPRODUCTION	
+	//#if PRESET < PRESET_PREPRODUCTION	
 	filter = new OneHitDetector();
 	filter->retriggerThreshold = DEFAULT_FOOT_PEDAL_RETRIGGER_THRESHOLD;
-	filter->sensitivityThreshold = DEFAULT_FOOT_PEDAL_SENSITIVITY_THRESHOLD;
 	filter->sensitivityThreshold = DEFAULT_FOOT_PEDAL_SENSITIVITY_THRESHOLD;
 	s->addOutputFilter(filter);
 
@@ -512,7 +546,7 @@ void SensorizerServer::loadPreset() {
 
 
 	////////////////////////////
-	// OUTPUT FOR arduino 8
+	// OUTPUT FOR arduino 9
 	////////////////////////////
 	/// FOOT PEDAL
 	s = new SensorOutput();
@@ -520,7 +554,7 @@ void SensorizerServer::loadPreset() {
 	s->inRange.high = 1;
 	s->outRange.low = 0;
 	s->outRange.high = 1;
-	s->cutoffRange.low = 0.55;
+	s->cutoffRange.low = FOOT_PEDAL_CUTOFF_LOW;
 	s->cutoffRange.high = 1;
 	s->setCutoffType(SensorOutput::CUTOFF_TYPE_VAL_NULLABLE_LOW); //No Cutoff
 	s->multiplyVal = 1;
@@ -546,7 +580,7 @@ void SensorizerServer::loadPreset() {
 	#if PRESET >= PRESET_PREPRODUCTION	
 
 	////////////////////////////
-	// OUTPUT FOR arduino 9
+	// OUTPUT FOR arduino 10
 	////////////////////////////
 	/// FOOT PEDAL
 	s = new SensorOutput();
@@ -554,7 +588,7 @@ void SensorizerServer::loadPreset() {
 	s->inRange.high = 1.0;
 	s->outRange.low = 0;
 	s->outRange.high = 1;
-	s->cutoffRange.low = 0.1;
+	s->cutoffRange.low = FOOT_PEDAL_CUTOFF_LOW;
 	s->cutoffRange.high = 1;
 	s->setCutoffType(SensorOutput::CUTOFF_TYPE_VAL_NULLABLE_LOW); //No Cutoff
 	s->multiplyVal = 1;
@@ -577,7 +611,7 @@ void SensorizerServer::loadPreset() {
 
 
 	////////////////////////////
-	// OUTPUT FOR arduino 10
+	// OUTPUT FOR arduino 11
 	////////////////////////////
 	/// FOOT PEDAL
 	s = new SensorOutput();
@@ -585,7 +619,7 @@ void SensorizerServer::loadPreset() {
 	s->inRange.high = 1.0;
 	s->outRange.low = 0;
 	s->outRange.high = 1;
-	s->cutoffRange.low = 0.1;
+	s->cutoffRange.low = FOOT_PEDAL_CUTOFF_LOW;
 	s->cutoffRange.high = 1;
 	s->setCutoffType(SensorOutput::CUTOFF_TYPE_VAL_NULLABLE_LOW); //No Cutoff
 	s->multiplyVal = 1;
