@@ -32,6 +32,7 @@ void testInterfaceSetup() {
   SerialToComputer.println("e   : scan for EEPROM");
   SerialToComputer.println("c   : test configurator");
   SerialToComputer.println("D   : wipe all configurator EEPROM memory! (capital D)");
+  SerialToComputer.println("a   : test config reporting");
   SerialToComputer.println("b   : test BLE programming");
   SerialToComputer.println("u   : test BLE PUART communication");
   SerialToComputer.println("r   : run all tests");
@@ -127,7 +128,19 @@ int testBLEPUART() {
   return 0;
 }
 
+/**
+ * [testBLEPUART description]
+ * @return 0 on success, 1 on failure.
+ */
+int testConfigReport() {
+  SerialToComputer.println("========================");
+  SerialToComputer.println("= TESTING CONFIG REPORT=");
+  SerialToComputer.println("========================");
 
+  configurator_testSendConfig(midiIn);
+
+  return 0;
+}
 
 void testInterfaceUpdate() {
 
@@ -161,6 +174,9 @@ void testInterfaceUpdate() {
           break;
         case 'D':
           testResetEEPROM();
+          break;
+        case 'a':
+          testConfigReport();
           break;
         case 'r':
 

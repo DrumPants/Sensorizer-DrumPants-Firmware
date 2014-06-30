@@ -102,4 +102,16 @@ int configurator_testGetVersion(MidiInput* midi) {
 	return numErrors;
 }
 
+
+int configurator_testSendConfig(MidiInput* midi) {
+	int numErrors = 0;
+	//midi->sendEntireConfiguration();
+
+	if (!midi->updateField(COMMAND_STATUS_CHANNEL | CHANNEL_COMMAND_REPORT_ALL_PRESETS, CHANNEL_COMMAND_REPORT_ALL_PRESETS, 1)) {
+		numErrors++;
+	}
+
+	return numErrors;
+}
+
 #endif

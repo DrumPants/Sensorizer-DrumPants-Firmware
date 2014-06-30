@@ -20,15 +20,15 @@
 #define COMMAND_STATUS_CHANNEL (0x0F)
 
 enum ChannelCommand : byte {
-	CHANNEL_COMMAND_SAVE = 127,
+	CHANNEL_COMMAND_SAVE = 0x0F,
 
 	// these three commands report the requested number as byte1, and a valid handshake response as byte2
 	// the handshake response is whatever the requestor sent as byte2, combined with the response it will send in byte1. cheapest, lamest attempt at security/DRM.
-	CHANNEL_COMMAND_REPORT_BOARD_VERSION = 126,
-	CHANNEL_COMMAND_REPORT_FIRMWARE_VERSION = 125,
-	CHANNEL_COMMAND_REPORT_SERIAL_NUMBER = 124,
+	CHANNEL_COMMAND_REPORT_BOARD_VERSION = 0x0E,
+	CHANNEL_COMMAND_REPORT_FIRMWARE_VERSION = 0x0D,
+	CHANNEL_COMMAND_REPORT_SERIAL_NUMBER = 0x0C,
 
-	CHANNEL_COMMAND_REPORT_ALL_PRESETS = 123
+	CHANNEL_COMMAND_REPORT_ALL_PRESETS = 0x0B
 };
 
 
@@ -99,6 +99,11 @@ public:
 	void saveConfiguration();
 
 	/**
+	 * Sends all presets and version numbers over USB. This is a blocking call!
+	 */
+	void sendEntireConfiguration();
+
+	/**
 	 * For testing. Only used by TestConfigurator.h
 	 * @param midi the object to test.
 	 */
@@ -109,6 +114,8 @@ public:
 	 * @param midi the object to test.
 	 */
 	friend int configurator_testGetVersion(MidiInput* midi);
+
+	friend int configurator_testSendConfig(MidiInput* midi);
 };
 
 #endif

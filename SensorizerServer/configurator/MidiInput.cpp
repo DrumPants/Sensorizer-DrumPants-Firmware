@@ -141,7 +141,7 @@ void MidiInput::sendEntireConfiguration() {
 
 #if IS_DRUMPANTS
 	// send sysex start
-	USB_MIDI_SERIAL_IN->write(START_SYSEX);
+	USB_MIDI_SERIAL_IN.write(START_SYSEX);
 
 	// send version info
 	this->updateField(COMMAND_STATUS_CHANNEL, CHANNEL_COMMAND_REPORT_SERIAL_NUMBER, 1);
@@ -150,19 +150,19 @@ void MidiInput::sendEntireConfiguration() {
 	// send all fields for all sensors
 	for (byte sensorIdx = 0; sensorIdx < SENSOR_INPUTS_LENGTH; sensorIdx++) {
 		for (int fieldIdx = CONFIGURATOR_FIELDS_START; fieldIdx <= CONFIGURATOR_FIELDS_END; fieldIdx++) {
-			int val = store->getSensor(this->server, sensorIdx, fieldIdx);
+			int val = Configurator::getField(this->server, sensorIdx, fieldIdx);
 
 			if (val != CONFIGURATOR_ERROR_RETURN_CODE_FAILURE) {
 				// TODO: send these via bluetooth as well?
-				USB_MIDI_SERIAL_IN->write(COMMAND_STATUS_BYTE_FLAG | sensorIdx);
-				USB_MIDI_SERIAL_IN->write(fieldIdx);
-				USB_MIDI_SERIAL_IN->write(val);
+				USB_MIDI_SERIAL_IN.write(COMMAND_STATUS_BYTE_FLAG | sensorIdx);
+				USB_MIDI_SERIAL_IN.write(fieldIdx);
+				USB_MIDI_SERIAL_IN.write(val);
 			}
 		}
 	}
 
 	// end sysex
-	USB_MIDI_SERIAL_IN->write(START_SYSEX);
+	USB_MIDI_SERIAL_IN.write(START_SYSEX);
 #endif	
 
 }
