@@ -26,7 +26,9 @@ enum ChannelCommand : byte {
 	// the handshake response is whatever the requestor sent as byte2, combined with the response it will send in byte1. cheapest, lamest attempt at security/DRM.
 	CHANNEL_COMMAND_REPORT_BOARD_VERSION = 126,
 	CHANNEL_COMMAND_REPORT_FIRMWARE_VERSION = 125,
-	CHANNEL_COMMAND_REPORT_SERIAL_NUMBER = 124
+	CHANNEL_COMMAND_REPORT_SERIAL_NUMBER = 124,
+
+	CHANNEL_COMMAND_REPORT_ALL_PRESETS = 123
 };
 
 
