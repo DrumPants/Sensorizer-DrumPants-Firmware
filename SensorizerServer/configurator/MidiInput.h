@@ -20,15 +20,15 @@
 #define COMMAND_STATUS_CHANNEL (0x0F)
 
 enum ChannelCommand : byte {
-	CHANNEL_COMMAND_SAVE = 0x0F,
+	CHANNEL_COMMAND_SAVE = 0x7F,
 
 	// these three commands report the requested number as byte1, and a valid handshake response as byte2
 	// the handshake response is whatever the requestor sent as byte2, combined with the response it will send in byte1. cheapest, lamest attempt at security/DRM.
-	CHANNEL_COMMAND_REPORT_BOARD_VERSION = 0x0E,
-	CHANNEL_COMMAND_REPORT_FIRMWARE_VERSION = 0x0D,
-	CHANNEL_COMMAND_REPORT_SERIAL_NUMBER = 0x0C,
+	CHANNEL_COMMAND_REPORT_BOARD_VERSION = 0x7E,
+	CHANNEL_COMMAND_REPORT_FIRMWARE_VERSION = 0x7D,
+	CHANNEL_COMMAND_REPORT_SERIAL_NUMBER = 0x7C,
 
-	CHANNEL_COMMAND_REPORT_ALL_PRESETS = 0x0B
+	CHANNEL_COMMAND_REPORT_ALL_PRESETS = 0x7B
 };
 
 

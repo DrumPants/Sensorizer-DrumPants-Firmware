@@ -7,9 +7,9 @@
 #define COMMAND_STATUS_BYTE_FLAG (0xB0)
 
 // start a MIDI SysEx message
-#define START_SYSEX  0xF0  
+#define START_SYSEX	0xF0  
 // end a MIDI SysEx message
-#define END_SYSEX    0xF7  
+#define END_SYSEX 	0xF7  
 
 MidiInput::MidiInput(SensorizerServer* server, ConfigurationStore* store) {
 	this->server = server;
@@ -140,16 +140,22 @@ void MidiInput::saveConfiguration() {
 void MidiInput::sendEntireConfiguration() {
 
 #if IS_DRUMPANTS
+
+DEBUG_PRINT("sendEntireConfiguration");	
 	// send sysex start
 	USB_MIDI_SERIAL_IN.write(START_SYSEX);
 
+DEBUG_PRINT("SEND FIRMWARE_VERSION");
 	// send version info
 	this->updateField(COMMAND_STATUS_CHANNEL, CHANNEL_COMMAND_REPORT_SERIAL_NUMBER, 1);
 	this->updateField(COMMAND_STATUS_CHANNEL, CHANNEL_COMMAND_REPORT_FIRMWARE_VERSION, 1);
 
 	// send all fields for all sensors
 	for (byte sensorIdx = 0; sensorIdx < SENSOR_INPUTS_LENGTH; sensorIdx++) {
+
+DEBUG_PRINT_NUM("SEND SENSOR CONFIG", sensorIdx);		
 		for (int fieldIdx = CONFIGURATOR_FIELDS_START; fieldIdx <= CONFIGURATOR_FIELDS_END; fieldIdx++) {
+DEBUG_PRINT_NUM("SEND SENSOR FIELD", fieldIdx);
 			int val = Configurator::getField(this->server, sensorIdx, fieldIdx);
 
 			if (val != CONFIGURATOR_ERROR_RETURN_CODE_FAILURE) {
@@ -158,11 +164,14 @@ void MidiInput::sendEntireConfiguration() {
 				USB_MIDI_SERIAL_IN.write(fieldIdx);
 				USB_MIDI_SERIAL_IN.write(val);
 			}
+			else {
+				DEBUG_PRINT_NUM("Failed to retreive config field value ", fieldIdx);
+			}
 		}
 	}
 
 	// end sysex
-	USB_MIDI_SERIAL_IN.write(START_SYSEX);
+	USB_MIDI_SERIAL_IN.write(END_SYSEX);
 #endif	
 
 }

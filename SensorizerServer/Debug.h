@@ -1,10 +1,10 @@
 #ifndef SensorizerDebug_h
 #define SensorizerDebug_h
 
-#define ENABLE_DEBUG_PRINTING 1
+#define ENABLE_DEBUG_PRINTING 0
 
 // if 1, we'll relay all debug messages from the BLE module's HCI UART to the SerialToComputer
-#define ENABLE_DEBUG_PRINTING_RELAY_FROM_BLE 1
+#define ENABLE_DEBUG_PRINTING_RELAY_FROM_BLE 0
 
 #if IS_DUE
 	// SerialUSB is BROKEN
