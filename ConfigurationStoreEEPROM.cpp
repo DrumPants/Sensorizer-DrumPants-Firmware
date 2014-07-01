@@ -30,4 +30,7 @@ void ConfigurationStoreEEPROM::eraseAllAndReset() {
 		DEBUG_PRINT_NUM("Erasing EEPROM block", i);
     	eeprom.writeBlock(i, empty, TEMPBUFFSIZE);
     }
+
+    // reload defaults
+    ConfigurationStore::loadSensors();
 }

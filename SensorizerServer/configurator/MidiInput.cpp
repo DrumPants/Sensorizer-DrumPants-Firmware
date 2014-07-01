@@ -119,6 +119,10 @@ bool MidiInput::updateField(byte sensorIdx, byte fieldIdx, byte val) {
 				return true;
 				break;
 
+			case CHANNEL_COMMAND_RESET_TO_DEFAULTS:
+
+  				store->eraseAllAndReset();
+  				// fall through!
 			case CHANNEL_COMMAND_REPORT_ALL_PRESETS:
 				this->sendEntireConfiguration();
 				return true;
