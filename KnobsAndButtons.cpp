@@ -8,7 +8,7 @@
 
 // things start to distort at 127 volume.
 #define MAX_VOLUME 120
-#define NUM_VOLUME_LEVELS 10
+#define NUM_VOLUME_LEVELS 20
 #define VOLUME_INC (MAX_VOLUME / NUM_VOLUME_LEVELS)
 
 Metro met;
