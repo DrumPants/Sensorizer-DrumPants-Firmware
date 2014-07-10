@@ -29,8 +29,17 @@
 #if IS_DRUMPANTS
 
   #if PRESET >= PRESET_PREPRODUCTION
-    #define ENCODER_PIN_1 11
-    #define ENCODER_PIN_2 12
+
+    #if PRESET >= PRESET_PREPRODUCTION_RED
+      // new knob is backwards
+      #define ENCODER_PIN_1 12
+      #define ENCODER_PIN_2 11
+    #else
+      #define ENCODER_PIN_1 11
+      #define ENCODER_PIN_2 12
+    #endif
+
+ 
     #define ENCODER_MODE_SWITCH_PIN 32 
 
   #else 
