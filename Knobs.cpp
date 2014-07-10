@@ -86,47 +86,47 @@ byte NOTE_PRESETS_DRUMS[NOTE_PRESETS_DRUMS_LENGTH][NOTE_PRESETS_ELEMENT_LENGTH] 
   }
 #else
   {
-    AcousticSnare,
-    CrashCymbal2,
-    ElectricSnare,
-    HighMidTom, 
-    OpenHi_hat,
-    Low_MidTom,
-    HighFloorTom,
-    SplashCymbal, 
-    BassDrum1,
-    PedalHi_hat,
+    AcousticSnare,  // A2
+    Low_MidTom,     // B2
+    HandClap,       // C2
+    HighMidTom,     // D2
+    CrashCymbal2,   // A1
+    OpenHi_hat,     // B1
+    SplashCymbal,   // C1
+    HighFloorTom,   // D1
+    AcousticBassDrum,// A3
+    PedalHi_hat,    // B3
     Cowbell 
   },
   {
-    AcousticSnare,
-    CrashCymbal1,
-    HandClap,
-    HighBongo, 
-    LowBongo, 
-    Low_MidTom, 
-    Claves, 
-    SplashCymbal,
-    BassDrum1,
-    PedalHi_hat,
+    AcousticSnare,    // A2
+    LowBongo,         // B2
+    HandClap,         // C2
+    Low_MidTom,       // D2
+    CrashCymbal1,     // A1
+    HighBongo,        // B1
+    Claves,           // C1
+    SplashCymbal,     // D1
+    BassDrum1,        // A3
+    PedalHi_hat,      // B3
+    Cowbell
+  },
+  {
+    ElectricSnare,    // A2
+    ChineseCymbal,    // B2
+    HandClap,         // C2
+    HighAgogo,        // D2
+    LowAgogo,         // A1
+    HighFloorTom,     // B1
+    SplashCymbal,     // C1
+    Claves,           // D1
+    BassDrum1,        // A3
+    PedalHi_hat,      // B3
     Cowbell
   },
   {
     AcousticSnare,
-    ChineseCymbal,
-    HandClap,
-    HighAgogo, 
-    LowAgogo, 
-    HighFloorTom,
-    SplashCymbal, 
-    Claves, 
-    BassDrum1,
-    PedalHi_hat,
-    Cowbell
-  },
-  {
-    AcousticSnare,
-    RideBell,
+    RideCymbal,
     Claves,
     HiWoodBlock, 
     LowWoodBlock, 
@@ -139,16 +139,16 @@ byte NOTE_PRESETS_DRUMS[NOTE_PRESETS_DRUMS_LENGTH][NOTE_PRESETS_ELEMENT_LENGTH] 
   },
   {
     AcousticSnare,
-    ChineseCymbal,
+    LowTimbale,
     Tambourine,
-    HighTimbale, 
-    LowTimbale, 
-    HighFloorTom,
+    HighFloorTom, 
+    ChineseCymbal, 
+    HighTimbale,
     Cowbell, 
     Castanets, 
-    Maracas,
+    BassDrum1,
     PedalHi_hat,
-    Cowbell
+    Maracas
   },
   {
     AcousticSnare,
