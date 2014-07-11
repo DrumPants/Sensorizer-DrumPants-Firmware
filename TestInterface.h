@@ -29,6 +29,7 @@ void testInterfaceSetup() {
   SerialToComputer.println("Available key commands:");
   SerialToComputer.println("");
   SerialToComputer.println("0-9 : test drumpad hit");
+  SerialToComputer.println("j   : test disconnection detector");
   SerialToComputer.println("e   : scan for EEPROM");
   SerialToComputer.println("c   : test configurator");
   SerialToComputer.println("D   : wipe all configurator EEPROM memory! (capital D)");
@@ -142,6 +143,28 @@ int testConfigReport() {
   return 0;
 }
 
+int testSensorJackSwitches() {
+
+  SerialToComputer.println("========================");
+  SerialToComputer.println("= TESTING SENSOR JACKS =");
+  SerialToComputer.println("========================");
+
+  for (int i = ANALOG_PIN_START; i < ANALOG_PIN_END; i++) {
+ 
+    SerialToComputer.print("Sensor ");
+    SerialToComputer.print(i);
+
+    if (isSensorPluggedIn(i)) {
+      SerialToComputer.println(" plugged in.");
+    }
+    else {
+      SerialToComputer.println(" unplugged!");
+    }
+  }
+
+  return 0;
+}
+
 void testInterfaceUpdate() {
 
   // for (int i = 0; i < TESTPINS_LENGTH; i++) {
@@ -177,6 +200,9 @@ void testInterfaceUpdate() {
           break;
         case 'a':
           testConfigReport();
+          break;
+        case 'j':
+          testSensorJackSwitches();
           break;
         case 'r':
 

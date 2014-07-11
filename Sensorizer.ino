@@ -249,7 +249,6 @@ void loop()
           val = analogRead(analogPin);
         }
         else {
-
           // default to 0 if not plugged in? is that a good idea for foot pedals?
           val = 0;
         }
