@@ -28,6 +28,8 @@ void initSensorJackSwitches() {
 
 }
 
+//int inputThrottle = 0;
+
 /**
  * 
 	Checks the switch on a sensor jack to determine if a sensor is actually plugged in.
@@ -72,8 +74,16 @@ bool isSensorPluggedIn(int analogPinIdx) {
 	}
 
 	// TODO: optimize by caching the read each tick.
-	if (jackToRead >= 0 && digitalRead(jackToRead) == LOW) {
-		return false;
+	if (jackToRead >= 0) {
+		int switchVal = digitalRead(jackToRead);
+		
+		// if (++inputThrottle % (20 * 12) == 0) {
+		// 	DEBUG_PRINT_NUMS("sensor swtich jack: ", analogPinIdx, switchVal);
+		// }
+
+		if (switchVal == HIGH) {
+			return false;
+		}
 	}
 
 #endif
