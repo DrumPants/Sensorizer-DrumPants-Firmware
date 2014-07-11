@@ -9,6 +9,8 @@
 
 #include <SensorizerServer.h>  
 
+#include "SensorJackSwitches.h"
+
 
 #if ENABLE_FIRMATA
   #include <Firmata.h>
@@ -202,6 +204,8 @@ void setup()
   testInterfaceSetup();
 #endif
 
+  initSensorJackSwitches();
+
   DEBUG_PRINT("END SETUP")
 }
 
@@ -239,7 +243,17 @@ void loop()
     /* ANALOGREAD - do all analogReads() at the configured sampling interval */
     for(analogPin = ANALOG_PIN_START; analogPin <= ANALOG_PIN_END; analogPin++) {
         byte pinIdx = analogPin - ANALOG_PIN_START;
-        int val = analogRead(analogPin);
+        int val;
+
+        if (isSensorPluggedIn(analogPin)) {
+          val = analogRead(analogPin);
+        }
+        else {
+
+          // default to 0 if not plugged in? is that a good idea for foot pedals?
+          val = 0;
+        }
+         
 
 #if ENABLE_TEST_INTERFACE
         val = getCurrentTestVal(analogPin);
