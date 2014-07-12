@@ -245,7 +245,11 @@ void loop()
         byte pinIdx = analogPin - ANALOG_PIN_START;
         int val;
 
-        if (isSensorPluggedIn(analogPin)) {
+
+        // so the problem is that isSensorPluggedIn() only detects whether the foot pedal is plugged in, not the rest of the DrumPads.
+        // and the problem with that is if they press all the way down on the foot pedal, it will register as disconnected.
+        // therefore we should not use this method as of yet.
+        if (true) { //isSensorPluggedIn(analogPin)) {
           val = analogRead(analogPin);
         }
         else {
