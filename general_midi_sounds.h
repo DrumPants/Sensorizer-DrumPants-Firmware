@@ -36,7 +36,7 @@ FROM VS1053b DATASHEET ***/
 #define Cowbell 56
 #define CrashCymbal2 57
 #define Vibra_slap 58
-#define RideCymbal 2 59
+#define RideCymbal2 59
 #define HighBongo 60
 #define LowBongo 61
 #define MuteHiConga 62

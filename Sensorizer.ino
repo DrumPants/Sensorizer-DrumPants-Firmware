@@ -9,6 +9,8 @@
 
 #include <SensorizerServer.h>  
 
+#include "SensorJackSwitches.h"
+
 
 #if ENABLE_FIRMATA
   #include <Firmata.h>
@@ -202,6 +204,8 @@ void setup()
   testInterfaceSetup();
 #endif
 
+  initSensorJackSwitches();
+
   DEBUG_PRINT("END SETUP")
 }
 
@@ -239,7 +243,20 @@ void loop()
     /* ANALOGREAD - do all analogReads() at the configured sampling interval */
     for(analogPin = ANALOG_PIN_START; analogPin <= ANALOG_PIN_END; analogPin++) {
         byte pinIdx = analogPin - ANALOG_PIN_START;
-        int val = analogRead(analogPin);
+        int val;
+
+
+        // so the problem is that isSensorPluggedIn() only detects whether the foot pedal is plugged in, not the rest of the DrumPads.
+        // and the problem with that is if they press all the way down on the foot pedal, it will register as disconnected.
+        // therefore we should not use this method as of yet.
+        if (true) { //isSensorPluggedIn(analogPin)) {
+          val = analogRead(analogPin);
+        }
+        else {
+          // default to 0 if not plugged in? is that a good idea for foot pedals?
+          val = 0;
+        }
+         
 
 #if ENABLE_TEST_INTERFACE
         val = getCurrentTestVal(analogPin);
