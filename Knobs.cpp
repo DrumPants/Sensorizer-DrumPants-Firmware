@@ -126,7 +126,7 @@ byte NOTE_PRESETS_DRUMS[NOTE_PRESETS_DRUMS_LENGTH][NOTE_PRESETS_ELEMENT_LENGTH] 
   },
   {
     AcousticSnare,
-    RideCymbal1,
+    CrashCymbal2,
     Claves,
     HiWoodBlock, 
     LowWoodBlock, 
