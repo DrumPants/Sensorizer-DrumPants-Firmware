@@ -17,7 +17,7 @@
 
   // how many ticks it takes before sending a Firmata update. 
   // this needs to be throttled because otherwise we overload the Serial buffer and shit freezes.
-  #define FIRMATA_UPDATE_RATE_THROTTLE 20
+  #define FIRMATA_UPDATE_RATE_THROTTLE 10
 
 // how many ticks it's been since the last Firmata update. 
 int firmataThrottleCount = 0;  
@@ -270,6 +270,7 @@ void loop()
 
 #if ENABLE_FIRMATA
       if (firmataThrottleCount == FIRMATA_UPDATE_RATE_THROTTLE) {
+        // TODO: send average!
         Firmata.sendAnalog(analogPin, val); 
       }
 #endif 
