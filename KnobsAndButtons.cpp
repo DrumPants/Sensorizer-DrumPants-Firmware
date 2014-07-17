@@ -14,7 +14,7 @@
 Metro met;
 
 KnobsAndButtons::KnobsAndButtons() {
-	Knobs::Knobs();
+	Knobs();
 
 	this->setVolume(MAX_VOLUME);
 

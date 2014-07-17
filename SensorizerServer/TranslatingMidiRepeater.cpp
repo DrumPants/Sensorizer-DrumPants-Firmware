@@ -3,7 +3,7 @@
 #include "SensorizerServer.h"
 
 TranslatingMidiRepeater::TranslatingMidiRepeater(SensorizerServer* server) {
-	MidiRepeater::MidiRepeater();
+	MidiRepeater();
 
 	this->server = server;
 }
