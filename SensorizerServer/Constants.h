@@ -73,8 +73,11 @@
   #define BLE_TYPE BLE_TYPE_NONE
 #endif
 
+// disables firmata and only sends the MIDI notes (same as BLE)
+#define ENABLE_SENDING_MIDI_OVER_USB 1
+
 // can't use Firmata on USB and also debug print on USB:
-#define ENABLE_FIRMATA (!ENABLE_DEBUG_PRINTING && !ENABLE_TEST_INTERFACE)
+#define ENABLE_FIRMATA (!ENABLE_DEBUG_PRINTING && !ENABLE_TEST_INTERFACE && !ENABLE_SENDING_MIDI_OVER_USB)
 
 //uncomment this to set serial baud at bluetooth rate. otherwise, USB rate.
 //# define IS_BLUETOOTH
