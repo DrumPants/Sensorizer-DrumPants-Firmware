@@ -178,8 +178,9 @@ void setup()
 
   ble_setup(); 
 
-  // this is needed for debug printing on native USB port
-  SerialUSB.begin(57600);
+  // this is needed for debug printing on native USB port,
+  // as well as Firmata and MIDIRepeater
+  SerialUSB.begin(BAUD_RATE_USB);
 
   #if ENABLE_FIRMATA
   Firmata.setFirmwareVersion(0, 1);
