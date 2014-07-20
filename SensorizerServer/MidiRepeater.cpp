@@ -21,11 +21,12 @@ void MidiRepeater::onSendOutput(byte cmd, byte data1, byte data2) {
 //#if IS_DRUMPANTS
 
 	// also send to BLE
-	this->write(cmd);
-	this->write(data1);
+	this->writeToSerial(cmd);
+	this->writeToSerial(data1);
 
-	if (hasSecondArg)
-		this->write(data2);
+	if (hasSecondArg) {
+		this->writeToSerial(data2);
+	}
 
 //#endif
 

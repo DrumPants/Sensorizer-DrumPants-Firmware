@@ -11,6 +11,7 @@
 
 #include "SensorJackSwitches.h"
 
+#include <Heartbeat.h>
 
 #if ENABLE_FIRMATA
   #include <Firmata.h>
@@ -74,7 +75,7 @@ SensorizerServer* server;
  */
 Knobs* knobs;
 
-
+Heartbeat heartbeat;
 
 #if ENABLE_TEST_INTERFACE
   #include "TestInterface.h"
@@ -223,6 +224,8 @@ void loop()
   //checkKnobs();
   knobs->check();
   
+  heartbeat.tick();
+
 #if ENABLE_FIRMATA
   // while(Firmata.available()) {
   //   Firmata.processInput();
