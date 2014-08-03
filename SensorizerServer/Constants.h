@@ -33,7 +33,8 @@
 
 /******* END hardware version type presets ********/
 
-
+// only enable jack switches on the new boards that have the proper pulldown resistors
+#define ENABLE_JACK_SWITCHES (PRESET > PRESET_PREPRODUCTION_RED)
 
 
 #define BLE_TYPE_NONE 0

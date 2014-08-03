@@ -144,7 +144,7 @@ void SensorizerServer::loadPreset() {
 			#define PIEZO_CUTOFFRANGE_LOW 0.38
 		#else
 			// handle plastic peizos
-			#define PIEZO_INRANGE_HIGH 0.6;
+			#define PIEZO_INRANGE_HIGH 0.8;
 			#define PIEZO_CUTOFFRANGE_LOW 0.1
 		#endif
 	
@@ -160,6 +160,17 @@ void SensorizerServer::loadPreset() {
 		#define PIEZO_CUTOFFRANGE_LOW 0.1
 
 		#define DEFAULT_FOOT_PEDAL_RETRIGGER_THRESHOLD (DEFAULT_RETRIGGER_THRESHOLD * 6)
+	#endif
+
+	// fix for signal bleed: set C and D ports to much higher cutoff if we can't detect them with jack switches
+	#if ENABLE_JACK_SWITCHES
+		#define PIEZO_C_D_CUTOFFRANGE_LOW PIEZO_CUTOFFRANGE_LOW
+	#else
+		#if PRESET >= PRESET_PREPRODUCTION
+			#define PIEZO_C_D_CUTOFFRANGE_LOW 0.45
+		#else
+			#define PIEZO_C_D_CUTOFFRANGE_LOW 0.2
+		#endif
 	#endif
 
 
@@ -236,7 +247,7 @@ void SensorizerServer::loadPreset() {
 	s->inRange.high = PIEZO_INRANGE_HIGH;
 	s->outRange.low = 0;
 	s->outRange.high = 1;
-	s->cutoffRange.low = PIEZO_CUTOFFRANGE_LOW;
+	s->cutoffRange.low = PIEZO_C_D_CUTOFFRANGE_LOW;
 	s->cutoffRange.high = 1;
 	s->setCutoffType(SensorOutput::CUTOFF_TYPE_VAL_NULLABLE_LOW); //No Cutoff
 	s->multiplyVal = 1;
@@ -266,7 +277,7 @@ void SensorizerServer::loadPreset() {
 	s->inRange.high = PIEZO_INRANGE_HIGH;
 	s->outRange.low = 0;
 	s->outRange.high = 1;
-	s->cutoffRange.low = PIEZO_CUTOFFRANGE_LOW;
+	s->cutoffRange.low = PIEZO_C_D_CUTOFFRANGE_LOW;
 	s->cutoffRange.high = 1;
 	s->setCutoffType(SensorOutput::CUTOFF_TYPE_VAL_NULLABLE_LOW); //No Cutoff
 	s->multiplyVal = 1;
@@ -365,7 +376,7 @@ void SensorizerServer::loadPreset() {
 	s->inRange.high = PIEZO_INRANGE_HIGH;
 	s->outRange.low = 0;
 	s->outRange.high = 1;
-	s->cutoffRange.low = PIEZO_CUTOFFRANGE_LOW;
+	s->cutoffRange.low = PIEZO_C_D_CUTOFFRANGE_LOW;
 	s->cutoffRange.high = 1;
 	s->setCutoffType(SensorOutput::CUTOFF_TYPE_VAL_NULLABLE_LOW); //No Cutoff
 	s->multiplyVal = 1;
@@ -471,7 +482,7 @@ void SensorizerServer::loadPreset() {
 	s->inRange.high = PIEZO_INRANGE_HIGH;
 	s->outRange.low = 0;
 	s->outRange.high = 1;
-	s->cutoffRange.low = PIEZO_CUTOFFRANGE_LOW;
+	s->cutoffRange.low = PIEZO_C_D_CUTOFFRANGE_LOW;
 	s->cutoffRange.high = 1;
 	s->setCutoffType(SensorOutput::CUTOFF_TYPE_VAL_NULLABLE_LOW); //No Cutoff
 	s->multiplyVal = 1;
