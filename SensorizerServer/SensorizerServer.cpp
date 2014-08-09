@@ -141,7 +141,7 @@ void SensorizerServer::loadPreset() {
 		#if BARE_PIEZOS
 			// handle sensitive-ass bare peizos
 			#define PIEZO_INRANGE_HIGH 1.0;
-			#define PIEZO_CUTOFFRANGE_LOW 0.38
+			#define PIEZO_CUTOFFRANGE_LOW 0.6
 		#else
 			// handle plastic peizos
 			#define PIEZO_INRANGE_HIGH 0.8;
