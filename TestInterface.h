@@ -143,7 +143,13 @@ int testConfigReport() {
   return 0;
 }
 
+/**
+ * [testSensorJackSwitches tests if jack switches are working.]
+ * @return 0 if at least one jack (3 sensors) is plugged in, 1 on failure.
+ */
 int testSensorJackSwitches() {
+  int numSensorsPluggedIn = 0;
+
 
   SerialToComputer.println("========================");
   SerialToComputer.println("= TESTING SENSOR JACKS =");
@@ -156,13 +162,15 @@ int testSensorJackSwitches() {
 
     if (isSensorPluggedIn(i)) {
       SerialToComputer.println(" plugged in.");
+      numSensorsPluggedIn++;
     }
     else {
       SerialToComputer.println(" unplugged!");
     }
   }
 
-  return 0;
+  // if one jack is plugged in, that means at least 3 sensors should have been counted.
+  return (numSensorsPluggedIn > 2) ? 0 : 1;
 }
 
 void testInterfaceUpdate() {
