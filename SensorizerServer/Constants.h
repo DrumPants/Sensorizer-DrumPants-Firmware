@@ -21,12 +21,15 @@
 // for the beta pre-production Red PCB (May 2014)
 #define PRESET_PREPRODUCTION_RED 21
 
+// for the beta pre-production Red PCB (May 2014)
+#define PRESET_PREPRODUCTION_CHINA 22
+
 // for the earlier prototypes
 #define PRESET_NEON_GREEN_STRING 3
 #define PRESET_VJACKET_LEATHER 2
 #define PRESET_JEANS 1
 
-#define PRESET PRESET_PREPRODUCTION_RED
+#define PRESET PRESET_PREPRODUCTION_CHINA
 
 
 #define FIRMWARE_VERSION (PRESET)
@@ -156,7 +159,7 @@
   #endif
 
   // TODO: these need to be updated for DUE (MORE NOTES!). hacking for now
-  #define NOTE_PRESETS_ELEMENT_LENGTH 11
+  #define NOTE_PRESETS_ELEMENT_LENGTH 12
 
 
   #define ENABLE_MIDI_IN 1
