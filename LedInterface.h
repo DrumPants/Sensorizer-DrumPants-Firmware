@@ -21,6 +21,11 @@ typedef int BankId;
  
 struct LEDInterface {
 
+	// holds the current bank for temporary printing to something else.
+	BankId curBank;
+
+	int numTicksLeftForTemporary;
+
 	SevenSegmentController* led;
 
 public: 
@@ -38,6 +43,9 @@ public:
 
 	void changeBank(const char* label, BankId bankId);
 	void changeScale(ScaleId scaleId);
+
+
+	void showTemporarily(int num);
 };
 
 

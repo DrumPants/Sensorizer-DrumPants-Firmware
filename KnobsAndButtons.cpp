@@ -68,5 +68,7 @@ void KnobsAndButtons::setVolume(int vol) {
 		this->server->midiDevice->setVolume(MIDI_CHANNEL, this->volume);
 
 		DEBUG_PRINT_NUM("Set volume to ", this->volume);
+
+		this->lcd.showTemporarily(this->volume / NUM_VOLUME_LEVELS);
 	}
 }
