@@ -1,7 +1,7 @@
 
 #include "LedInterface.h"
 
-#define NUM_TICKS_FOR_TEMPORARY_DISPLAY 1000
+#define NUM_TICKS_FOR_TEMPORARY_DISPLAY 40000
 
 void LEDInterface::setup() {
   led->setup(); 
@@ -31,12 +31,12 @@ void LEDInterface::changeBank(const char* label, BankId bankId) {
   this->curBank = bankId;
 
   led->print(bankId);
-  led->setDecimalPoint(0, false);
+  led->setDecimalPoint(1, false);
 }
 
 void LEDInterface::changeScale(ScaleId scaleId) {
   led->print(scaleId);
-  led->setDecimalPoint(0, true);
+  led->setDecimalPoint(1, true);
 }
 
 void LEDInterface::showTemporarily(int num) {

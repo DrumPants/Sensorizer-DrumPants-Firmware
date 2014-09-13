@@ -22,6 +22,9 @@ byte NOTE_PRESETS_MELODIC[NOTE_PRESETS_MELODIC_LENGTH][NOTE_PRESETS_ELEMENT_LENG
 	{65, 66, 69, 71, 73, 75}/*,
 	{8, 68, 71, 73, 75, 77}*/
 #else
+  /**** generated with scale_generator.js ****/
+  
+  // KEY OF C
   // Scale major
   {36, 38, 40, 41, 43, 45, 47, 48, 50, 52, 53, 55},
   {60, 62, 64, 65, 67, 69, 71, 72, 74, 76, 77, 79},
@@ -65,6 +68,7 @@ byte NOTE_PRESETS_MELODIC[NOTE_PRESETS_MELODIC_LENGTH][NOTE_PRESETS_ELEMENT_LENG
   {84, 85, 88, 94, 91, 92, 89, 96, 97, 100, 101, 103},
 
 
+  // OTHER KEYS
 
   // Key 61
   // Scale major
