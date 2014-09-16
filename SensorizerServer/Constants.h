@@ -135,8 +135,10 @@
 
 
 // the default num of ticks before a note retriggers
-#define DEFAULT_RETRIGGER_THRESHOLD 50
+#define DEFAULT_RETRIGGER_THRESHOLD 100
 #define DEFAULT_RETRIGGER_THRESHOLD_FOOT_PEDAL 100
+
+#define DEFAULT_SENSITIVITY_THRESHOLD 0.05
 
 #if IS_DUE
 

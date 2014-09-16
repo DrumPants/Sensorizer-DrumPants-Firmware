@@ -121,7 +121,7 @@ void SensorizerServer::loadPreset() {
 	MidiMapping* m;
 	OneHitDetector* filter;
 	
-	this->midiDevice->setVolume(MIDI_CHANNEL, 126);
+	//this->midiDevice->setVolume(MIDI_CHANNEL, 126);
 
 
 
@@ -131,7 +131,7 @@ void SensorizerServer::loadPreset() {
 /**************** BETA PANTS ******************/
 #if PRESET >= PRESET_BETA
 
-	#define DEFAULT_FOOT_PEDAL_SENSITIVITY_THRESHOLD 0.3
+	#define DEFAULT_FOOT_PEDAL_SENSITIVITY_THRESHOLD 0.5
 	#define FOOT_PEDAL_CUTOFF_LOW 0.55
 
 	#if PRESET >= PRESET_PREPRODUCTION	
@@ -142,6 +142,10 @@ void SensorizerServer::loadPreset() {
 			// handle sensitive-ass bare peizos
 			#define PIEZO_INRANGE_HIGH 1.0;
 			#define PIEZO_CUTOFFRANGE_LOW 0.6
+		#elif PRESET >= PRESET_PREPRODUCTION_CHINA
+			// handle plastic, 24mm peizos
+			#define PIEZO_INRANGE_HIGH 0.45;
+			#define PIEZO_CUTOFFRANGE_LOW 0.1
 		#else
 			// handle plastic peizos
 			#define PIEZO_INRANGE_HIGH 0.8;

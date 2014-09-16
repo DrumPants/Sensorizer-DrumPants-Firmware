@@ -14,7 +14,7 @@
 
 		this->retriggerThreshold = 5;
 		this->ticksSinceLastTrigger = 0;
-		this->sensitivityThreshold = 0.2;
+		this->sensitivityThreshold = DEFAULT_SENSITIVITY_THRESHOLD;
 	}
 	
 	

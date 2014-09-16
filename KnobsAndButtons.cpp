@@ -8,6 +8,9 @@
 
 // things start to distort at 127 volume.
 #define MAX_VOLUME 120
+
+#define DEFAULT_VOLUME 90
+
 // TURN IT UP TO ELEVEN!
 #define NUM_VOLUME_LEVELS 11
 #define VOLUME_INC (MAX_VOLUME / NUM_VOLUME_LEVELS)
@@ -17,7 +20,7 @@ Metro met;
 KnobsAndButtons::KnobsAndButtons() {
 	Knobs();
 
-	this->setVolume(MAX_VOLUME);
+	this->setVolume(DEFAULT_VOLUME);
 
 	this->debounceTimer = millis();
 	this->downButtonPressed = false;
