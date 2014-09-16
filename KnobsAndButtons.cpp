@@ -1,14 +1,15 @@
 #include "KnobsAndButtons.h"
 #include "Metro.h"
 
-#define DEBOUNCE_DELAY 100
+#define DEBOUNCE_DELAY 110
 
 #define VOLUME_UP_PIN 27
 #define VOLUME_DOWN_PIN 26
 
 // things start to distort at 127 volume.
 #define MAX_VOLUME 120
-#define NUM_VOLUME_LEVELS 20
+// TURN IT UP TO ELEVEN!
+#define NUM_VOLUME_LEVELS 11
 #define VOLUME_INC (MAX_VOLUME / NUM_VOLUME_LEVELS)
 
 Metro met;
@@ -69,6 +70,6 @@ void KnobsAndButtons::setVolume(int vol) {
 
 		DEBUG_PRINT_NUM("Set volume to ", this->volume);
 
-		this->lcd.showTemporarily(this->volume / NUM_VOLUME_LEVELS);
+		this->lcd.showTemporarily(min(NUM_VOLUME_LEVELS, this->volume / VOLUME_INC)); // use min as a makeshift floor function
 	}
 }
