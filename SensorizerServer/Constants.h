@@ -21,7 +21,7 @@
 // for the beta pre-production Red PCB (May 2014)
 #define PRESET_PREPRODUCTION_RED 21
 
-// for the beta pre-production Red PCB (May 2014)
+// for the final pre-production Red PCB (Sept 2014)
 #define PRESET_PREPRODUCTION_CHINA 22
 
 // for the earlier prototypes
