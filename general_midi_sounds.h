@@ -4,6 +4,7 @@ GENERAL MIDI 2 DRUM SOUNDS
 
 FROM VS1053b DATASHEET ***/
 
+#define MIDI_GM2_DRUM_BANK_START 27
 #define HighQ 27
 #define Slap 28
 #define ScratchPush 29
@@ -65,3 +66,4 @@ FROM VS1053b DATASHEET ***/
 #define Castanets 85
 #define MuteSurdo 86
 #define OpenSurdo 87
+#define MIDI_GM2_DRUM_BANK_END 87

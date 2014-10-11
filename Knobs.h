@@ -113,6 +113,7 @@ struct Knobs {
 
   void changeBank(int position);
   void changeScale(bool isMelodic, ScaleId scaleId);
+  void changeDrumScale(int positionKey);
 
 public:
   Knobs();

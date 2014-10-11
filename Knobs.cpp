@@ -325,7 +325,6 @@ void Knobs::setup(SensorizerServer* server) {
 }
 
 void Knobs::changeBank(int newPos) {
-  // give drums 12 spots so we don't miss them with the bad encoder.
   int newInst = abs(newPos) % PRESETS_END_DRUMS; 
   
   //if (newInst < 0)
@@ -376,6 +375,36 @@ void Knobs::changeScale(bool isMelodic, int positionKey) {
 #endif
 }
 
+// changes drum scale offset
+void Knobs::changeDrumScale(int positionKey) {
+
+#define MIDI_GM2_DRUM_BANK_NUM_SOUNDS (MIDI_GM2_DRUM_BANK_END - MIDI_GM2_DRUM_BANK_START)    
+    
+  int scaleId;
+
+  // create a new bank by offsetting all the notes in the current one 
+  // cheap way of adding more banks.
+  scaleId = abs(positionKey) % MIDI_GM2_DRUM_BANK_NUM_SOUNDS;
+
+  byte offset = scaleId;
+  byte newScale[NOTE_PRESETS_ELEMENT_LENGTH];
+
+  for (int i = 0; i < NOTE_PRESETS_ELEMENT_LENGTH; i++) {
+    // TODO: remember which drum bank we're on instead of always using the first one! (0 index)
+    newScale[i] = (((NOTE_PRESETS_DRUMS[0][i] + offset) - MIDI_GM2_DRUM_BANK_START) % (MIDI_GM2_DRUM_BANK_NUM_SOUNDS )) + MIDI_GM2_DRUM_BANK_START;
+  }
+
+  server->loadNotes(newScale);
+
+#if ENABLE_LCD
+  lcd.changeScale(scaleId);
+#endif
+}
+
+
+
+
+
 void Knobs::check() {
    //don't swap as soon as they release button: remember states for button pushed and not
   int buttonMode = digitalRead(ENCODER_MODE_SWITCH_PIN);
@@ -409,7 +438,7 @@ void Knobs::check() {
       DEBUG_PRINT_NUM("encoder key: ", positionKey);
       
       if (server->midiDevice->getBank() == 0x78) { //DRUMS
-        changeScale(false, positionKey);
+        changeDrumScale(positionKey);
       }
       else { //MELODIC
         changeScale(true, positionKey);
