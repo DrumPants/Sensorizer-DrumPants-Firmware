@@ -32,7 +32,18 @@
 #define PRESET PRESET_PREPRODUCTION_CHINA
 
 
-#define FIRMWARE_VERSION (PRESET)
+
+// the firmware version is modifed by SKU flag which is bit 7
+#define BOARD_SKU_MODIFIER_PRO (0x00)
+#define BOARD_SKU_MODIFIER_BASIC (0x40)
+
+// set to BOARD_SKU_MODIFIER_BASIC for Basic kit (no bluetooth),
+// or BOARD_SKU_MODIFIER_PRO for Pro/Neil Peart kits (Bluetooth)
+#define BOARD_SKU BOARD_SKU_MODIFIER_PRO
+
+
+// the firmware version is modifed by SKU flag which is bit 7
+#define FIRMWARE_VERSION (BOARD_SKU | PRESET)
 
 /******* END hardware version type presets ********/
 
