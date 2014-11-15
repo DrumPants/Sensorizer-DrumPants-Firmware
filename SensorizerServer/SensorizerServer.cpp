@@ -1435,12 +1435,35 @@ void SensorizerServer::loadNotes(byte notes[]) {
 	}
 }
 
+// this is a very stupip way of doing this. this function should not exist
 int SensorizerServer::getSensorIdxForNote(byte note) {
 	for (int i = 0; i < SENSOR_INPUTS_LENGTH; i++) {
 		if (sensorInputs[i] != NULL) {
 			if (sensorInputs[i]->dropdownMidiMappings[0] != NULL) {
 				if (note == sensorInputs[i]->dropdownMidiMappings[0]->note) {
+
+
+#if PRESET >= PRESET_PREPRODUCTION
+					// now we do something really silly. 
+					// the first batch drumpads are wired incorrectly - the drumpads are swapped in position.
+					// so we need to unswap them here, so the apps' graphics line up correctly with the physical product. (see DRUM-794)
+					// whoa thats kind of weird... this is basically the junction between the real and virtual. 
+					// the phantom joint upon which all this silicon and bits rely.
+
+
+					if (i < 4) { 		// if col 0 (bottom sensor)
+						return i + 4;	// move to col 1 (top sensor)
+					}
+					else if (i < 8) { 	// if col 1 (bottom sensor)
+						return i - 4;	// move to col 0 (top sensor)
+					}
+					else { 			// if col 2 (foot pedal)
+						return i;	// do not translate
+					}
+#else
 					return i;
+#endif					
+
  				}
 			}
 		}
