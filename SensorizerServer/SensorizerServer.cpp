@@ -1442,8 +1442,8 @@ int SensorizerServer::getSensorIdxForNote(byte note) {
 			if (sensorInputs[i]->dropdownMidiMappings[0] != NULL) {
 				if (note == sensorInputs[i]->dropdownMidiMappings[0]->note) {
 
-
-#if PRESET >= PRESET_PREPRODUCTION
+/* We have to disable this fix for DRUM-794, since it messes up the Configurator. See DRUM-843 */
+#if FALSE && PRESET >= PRESET_PREPRODUCTION
 					// now we do something really silly. 
 					// the first batch drumpads are wired incorrectly - the drumpads are swapped in position.
 					// so we need to unswap them here, so the apps' graphics line up correctly with the physical product. (see DRUM-794)
