@@ -18,10 +18,16 @@ var // length of the final array we want.
 	roots = [60 - 12 * 2, 60, 60 + 12 * 2],
 	results = {
 		ccode: "",
-		ccodeAlts: ""
-	}
+		ccodeAlts: "",
+		table : "",
+		tableAlt: ""
+	},
 	ccode = "ccode",
 	ccodeAlts = "ccodeAlts",
+	table = "table",
+	tableAlt = 'tableAlt',
+	curTableIdx = 0,
+	curTableAltIdx = 0,
 	printCode = function (dest, str) {
 		console.log(str);
 		results[dest] += str + "\n";
@@ -33,6 +39,29 @@ var // length of the final array we want.
 		arr[fromIdx] = tmp;
 
 		return arr;
+	},
+
+	capitalize = function (text) {
+	    return text.charAt(0).toUpperCase() + text.slice(1).toLowerCase();
+	},
+
+	keylabel = ["B","C","C#/Db","D","D#/Eb","E","F","F#/Gb","G","G#/Ab","A","A#/Bb"],
+	numToKey = function (num) {
+		var idx = (num % 12);
+
+		return keylabel[idx];
+	},
+	numToOctave = function (num) {
+		var octave = 5;
+
+		if (num < 60) {
+			octave = 4;
+		}
+		else if (num > 72) {
+			octave = 6;
+		}
+
+		return octave;
 	};
 
 
@@ -44,7 +73,6 @@ for (var key = 0; key < 12; key++) {
 
 	printCode(ccode, '// Key ' + roots[1]);
 	printCode(ccodeAlts, '// Key ' + roots[1]);
-
 
 	for (var k in scales) { 
 		var notes = scales[k];
@@ -67,6 +95,13 @@ for (var key = 0; key < 12; key++) {
 		    // make pentatonic version (hexatonic, really)
 		    res = swapInArray(res, 3, 6); // take out 4th, replace with 7th
 		    printCode(ccodeAlts, "{" + res.join(", ")  + "},");
+
+		    if (k == 'major') {
+				printCode(table, '<tr><td>' + curTableIdx++ + '</td><td>' + numToKey(roots[r]) + '</td><td>' + numToOctave(roots[r]) + '</td><td>' + capitalize(k) + '</td></tr>');	
+			}
+			else if (roots[1] == 61) {
+				printCode(tableAlt, '<tr><td>' + (39 + curTableAltIdx++) + '</td><td>' + numToKey(roots[r]) + '</td><td>' + numToOctave(roots[r]) + '</td><td>' + capitalize(k) + '</td></tr>');	
+			}
 		}
 
 	}
