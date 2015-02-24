@@ -31,7 +31,7 @@
 			if (isRising) {
 				double delta = abs(lastVal - lowVal);
 					
-				if (delta > sensitivityThreshold) {
+				if (sensitivityThreshold == 0 || delta > sensitivityThreshold) {
 					trigger();
 				}
 
