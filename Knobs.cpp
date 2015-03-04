@@ -453,3 +453,8 @@ void Knobs::check() {
   lcd.check();
 #endif
 }
+
+
+bool Knobs::isKnobPressed() {
+  return (this->lastButtonMode == LOW);
+}

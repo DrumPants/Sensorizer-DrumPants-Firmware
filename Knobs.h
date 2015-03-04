@@ -119,6 +119,8 @@ public:
   Knobs();
   virtual void setup(SensorizerServer* server);
   virtual void check();
+
+  bool isKnobPressed();
 };
 
 

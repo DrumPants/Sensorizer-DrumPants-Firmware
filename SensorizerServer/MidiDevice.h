@@ -123,6 +123,8 @@ public:
 
 	void setVolume(byte channel, byte vol);
 
+	void setReverb(byte level, byte decay);
+
 
 	/*** for looper listeners 
 

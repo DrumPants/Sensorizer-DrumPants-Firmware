@@ -113,8 +113,7 @@ void MidiDevice::setup() {
 	this->setVolume(0, 90); //0xB0 is channel message, set channel volume to non-eardrum-blasting volume
 
 	// give us some reverb!
-	this->talkMIDI(0xB0, 0x0c, 0xEF); // REVERB decay
-	this->talkMIDI(0xB0, 0x5b, 0xA3); // REVERB level
+	this->setReverb(0xA3, 0xEF);
 	
 	this->setBank(0, this->bank); //Select the bank of really fun sounds
 	
@@ -167,6 +166,11 @@ void MidiDevice::setVolume(byte channel, byte vol) {
 	talkMIDI((0xB0 | channel), 0x07, vol); 
 }
 
+void MidiDevice::setReverb(byte level, byte decay) {
+	
+	this->talkMIDI(0xB0, 0x0c, decay); // REVERB decay
+	this->talkMIDI(0xB0, 0x5b, level); // REVERB level 
+}
 
 //Send a MIDI note-on message.  Like pressing a piano key
 //channel ranges from 0-15
