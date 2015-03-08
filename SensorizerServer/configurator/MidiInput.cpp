@@ -83,7 +83,7 @@ void MidiInput::sendResponse(ChannelCommand command, byte value, byte handshakeR
 
 bool MidiInput::updateField(byte sensorIdx, byte fieldIdx, byte val) {
 	// channel holds the sensor idx, so only accept valid values
-	if (sensorIdx < SENSOR_INPUTS_LENGTH) {
+	if (sensorIdx < CONFIGURATOR_SENSOR_INPUTS_LENGTH) {
 	
 		if (Configurator::setField(this->server, sensorIdx, fieldIdx, val)) {
 			store->setSensor(sensorIdx, fieldIdx, val);
@@ -155,7 +155,7 @@ DEBUG_PRINT("SEND FIRMWARE_VERSION");
 	this->updateField(COMMAND_STATUS_CHANNEL, CHANNEL_COMMAND_REPORT_FIRMWARE_VERSION, 1);
 
 	// send all fields for all sensors
-	for (byte sensorIdx = 0; sensorIdx < SENSOR_INPUTS_LENGTH; sensorIdx++) {
+	for (byte sensorIdx = 0; sensorIdx < CONFIGURATOR_SENSOR_INPUTS_LENGTH; sensorIdx++) {
 
 DEBUG_PRINT_NUM("SEND SENSOR CONFIG", sensorIdx);		
 		for (int fieldIdx = CONFIGURATOR_FIELDS_START; fieldIdx <= CONFIGURATOR_FIELDS_END; fieldIdx++) {

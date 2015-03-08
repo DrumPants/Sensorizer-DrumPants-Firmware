@@ -166,10 +166,32 @@ void MidiDevice::setVolume(byte channel, byte vol) {
 	talkMIDI((0xB0 | channel), 0x07, vol); 
 }
 
-void MidiDevice::setReverb(byte level, byte decay) {
-	
-	this->talkMIDI(0xB0, 0x0c, decay); // REVERB decay
+void MidiDevice::setReverbLevel(byte level) {
 	this->talkMIDI(0xB0, 0x5b, level); // REVERB level 
+
+	this->reverbLevel = level;
+}
+
+void MidiDevice::setReverbDecay(byte decay) {
+
+	this->talkMIDI(0xB0, 0x0c, decay); // REVERB decay
+
+	this->reverbDecay = decay;
+}
+
+void MidiDevice::setReverb(byte level, byte decay) {
+	this->setReverbLevel(level);
+	this->setReverbDecay(decay);
+}
+
+
+byte MidiDevice::getReverbLevel() {
+	return this->reverbLevel;
+}
+
+
+byte MidiDevice::getReverbDecay() {
+	return this->reverbDecay;
 }
 
 //Send a MIDI note-on message.  Like pressing a piano key

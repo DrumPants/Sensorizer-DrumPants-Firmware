@@ -6,6 +6,7 @@
 #define ConfigurationStore_h
 
 #include "SensorizerServer.h"
+#include "Configurator.h"
 
 class ConfigurationStore {
 
@@ -53,7 +54,7 @@ private:
 
 	SensorizerServer* server;
 
-	byte dirtySensors[SENSOR_INPUTS_LENGTH];
+	byte dirtySensors[CONFIGURATOR_SENSOR_INPUTS_LENGTH];
 
 	/**
 	 * Marks the given field for the given sensor as needing to be saved to EEPROM.

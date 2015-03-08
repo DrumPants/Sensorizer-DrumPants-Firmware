@@ -8,10 +8,10 @@
 #define GET_ADDRESS_FOR_SENSOR(sensorIdx) (sensorIdx * CONFIGURATOR_FIELDS_LENGTH)
 
 #if EEPROM_SIZE_IN_KBITS < 4
-	// for the first betas, we don't have enough room to save all the sensors. only save half of them
-	#define SENSOR_INPUTS_TO_SAVE_LENGTH (SENSOR_INPUTS_LENGTH / 2)
+	// for the first betas, we don't have enough room to save all the sensors. only save half of them (plus metadata)
+	#define SENSOR_INPUTS_TO_SAVE_LENGTH (CONFIGURATOR_SENSOR_INPUTS_LENGTH / 2 + 1)
 #else 
-	#define SENSOR_INPUTS_TO_SAVE_LENGTH SENSOR_INPUTS_LENGTH
+	#define SENSOR_INPUTS_TO_SAVE_LENGTH CONFIGURATOR_SENSOR_INPUTS_LENGTH
 #endif
 
 ConfigurationStore::ConfigurationStore(SensorizerServer* server) {

@@ -83,7 +83,7 @@ private:
 	SoftwareSerial* mySerial;//(2, 3); //Soft TX on 3, we don't use RX in this code
 #endif
 
-	byte instrument, bank;
+	byte instrument, bank, reverbLevel, reverbDecay;
 
 	MidiListener* listeners[LISTENERS_LENGTH];
 
@@ -125,6 +125,11 @@ public:
 
 	void setReverb(byte level, byte decay);
 
+	void setReverbLevel(byte level);
+	byte getReverbLevel();
+
+	void setReverbDecay(byte decay);
+	byte getReverbDecay();
 
 	/*** for looper listeners 
 

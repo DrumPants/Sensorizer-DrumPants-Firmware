@@ -1,6 +1,11 @@
 #include "Configurator.h"
 
 bool Configurator::setField(SensorizerServer* server, byte sensorIdx, byte fieldIdx, byte value) {
+
+	if (sensorIdx == METADATA_SENSOR_IDX) {
+		return Configurator::setMetadata(server, sensorIdx, fieldIdx, value);
+	}
+
 	SensorOutput* output = server->sensorInputs[sensorIdx];
 	
 	if (output == NULL) {
@@ -170,6 +175,11 @@ bool Configurator::setField(SensorizerServer* server, byte sensorIdx, byte field
 
 
 byte Configurator::getField(SensorizerServer* server, byte sensorIdx, byte fieldIdx) {
+
+	if (sensorIdx == METADATA_SENSOR_IDX) {
+		return Configurator::getMetadata(server, sensorIdx, fieldIdx);
+	}
+
 	SensorOutput* output = server->sensorInputs[sensorIdx];
 	
 	if (output == NULL) {
@@ -334,3 +344,54 @@ byte Configurator::getField(SensorizerServer* server, byte sensorIdx, byte field
 			return CONFIGURATOR_ERROR_RETURN_CODE_FAILURE;
 	}
 }
+
+
+
+
+byte Configurator::getMetadata(SensorizerServer* server, byte sensorIdx, byte fieldIdx) {
+	if (server->midiDevice == NULL) return false;
+
+	switch (fieldIdx) {
+
+
+		case METADATA_FIELD_IDX_REVERB_LEVEL: 
+
+			return server->midiDevice->getReverbLevel();
+			break;
+
+		case METADATA_FIELD_IDX_REVERB_DECAY: 
+
+			return server->midiDevice->getReverbDecay();
+			break;
+
+		default:
+			return CONFIGURATOR_ERROR_RETURN_CODE_FAILURE;
+	}
+}
+
+
+bool Configurator::setMetadata(SensorizerServer* server, byte sensorIdx, byte fieldIdx, byte value) {
+
+	if (server->midiDevice == NULL) return false;
+
+
+	switch (fieldIdx) {
+
+		case METADATA_FIELD_IDX_REVERB_LEVEL: 
+
+			server->midiDevice->setReverbLevel(value);
+
+			return true;
+			break;
+
+		case METADATA_FIELD_IDX_REVERB_DECAY: 
+
+			server->midiDevice->setReverbDecay(value);
+
+			return true;
+			break;
+	}
+
+	return false;
+}
+

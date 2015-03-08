@@ -42,6 +42,23 @@
 #define CONFIGURATOR_FIELDS_START INRANGE_HIGH
 #define CONFIGURATOR_FIELDS_END ONEHITDETECTOR_SENSITIVITYTHRESHOLD
 
+/**** SPECIAL FIELDS FOR METADATA (Global device settings) ****/
+
+/*
+ Store metadata as the 13th sensor - one past the last sensor idx.
+
+ NOTE: if you change this, you must also change it in the Java Sensorizer lib SensorConfig.java file.
+ */
+#define METADATA_SENSOR_IDX (SENSOR_INPUTS_LENGTH)
+
+#define METADATA_FIELD_IDX_REVERB_DECAY 2
+#define METADATA_FIELD_IDX_REVERB_LEVEL 3
+
+/*
+Total number of sensor slots + metadata slots.
+ */
+#define CONFIGURATOR_SENSOR_INPUTS_LENGTH (METADATA_SENSOR_IDX + 1)
+
 
 #define CONFIGURATOR_ERROR_RETURN_CODE_FAILURE 128
 
@@ -50,18 +67,37 @@ class Configurator {
 
 public:
 	/***
-		Sets the indexed field in output to value.
+		Sets the indexed field in output or metadata to value.
+
+		If sensorIdx == METADATA_SENSOR_IDX, setMetadata() is called instead.
 
 	***/
 	static bool setField(SensorizerServer* server, byte sensorIdx, byte fieldIdx, byte byteVal);
 
 	/***
-		Gets the current value for the given field index.
+		Gets the current value for the given field index or metadata index.
+
+		If sensorIdx == METADATA_SENSOR_IDX, getMetadata() is called instead.
 
 		Returns CONFIGURATOR_ERROR_RETURN_CODE_FAILURE if sensor or field is not found.
 
 	***/
 	static byte getField(SensorizerServer* server, byte sensorIdx, byte fieldIdx);
+
+
+	/***
+		Sets the indexed field of the global metadata to value.
+
+	***/
+	static bool setMetadata(SensorizerServer* server, byte sensorIdx, byte fieldIdx, byte byteVal);
+
+	/***
+		Gets the current value for the given field index in the global metadata.
+
+		Returns CONFIGURATOR_ERROR_RETURN_CODE_FAILURE if sensor or field is not found.
+
+	***/
+	static byte getMetadata(SensorizerServer* server, byte sensorIdx, byte fieldIdx);
 
 };
 
