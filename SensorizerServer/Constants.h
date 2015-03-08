@@ -3,7 +3,7 @@
 
 // set to 1 to enable a keyboard-based interface for simulating hits.
 // connect to SerialUSB in with serial monitor to test: type keys '0'-'9' to "hit" various input pins.
-#define ENABLE_TEST_INTERFACE 1
+#define ENABLE_TEST_INTERFACE 0
 
 
 /******* hardware version type presets ********/
@@ -41,9 +41,10 @@
 // or BOARD_SKU_MODIFIER_PRO for Pro/Neil Peart kits (Bluetooth)
 #define BOARD_SKU BOARD_SKU_MODIFIER_PRO
 
+#define FIRMWARE_VERSION_NUM 23
 
 // the firmware version is modifed by SKU flag which is bit 7
-#define FIRMWARE_VERSION (BOARD_SKU | PRESET)
+#define FIRMWARE_VERSION (BOARD_SKU | FIRMWARE_VERSION_NUM)
 
 /******* END hardware version type presets ********/
 
