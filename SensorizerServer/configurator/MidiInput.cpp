@@ -122,6 +122,9 @@ bool MidiInput::updateField(byte sensorIdx, byte fieldIdx, byte val) {
 			case CHANNEL_COMMAND_RESET_TO_DEFAULTS:
 
   				store->eraseAllAndReset();
+
+  				// TODO: Load defaults again from server->loadSensors() (although right now it will create a memory leak)
+
   				// fall through!
 			case CHANNEL_COMMAND_REPORT_ALL_PRESETS:
 				this->sendEntireConfiguration();
