@@ -81,7 +81,14 @@ Heartbeat heartbeat;
   #include "TestInterface.h"
 #endif
 
+#define ENABLE_TIMESTAMP_TEST 0
+#if ENABLE_TIMESTAMP_TEST
 
+#define TEST_TIMESTAMPS_LENGTH 512
+int testTimestampsIdx = 0;
+unsigned long testTimestamps[TEST_TIMESTAMPS_LENGTH];
+
+#endif
 
 void setupServer() {
     // must wait a bit for the MIDI device to boot up before it accepts our messages
@@ -120,7 +127,7 @@ void setupServer() {
 /* timer variables */
 unsigned long currentMillis;        // store the current value from millis()
 unsigned long previousMillis;       // for comparison with currentMillis
-int samplingInterval = 1;//19;          // how often to run the main loop (in ms)
+int samplingInterval = 1;//19;          // how often to run the main loop (in ms). set to 0 to disable samplingThrottle.
 
 
 // -----------------------------------------------------------------------------
@@ -236,12 +243,18 @@ void loop()
   midiIn->check();
 #endif
 
+
+#if ENABLE_TIMESTAMP_TEST
+  unsigned long microTimestamp = micros();
+  
+#endif
+
   /* SEND FTDI WRITE BUFFER - make sure that the FTDI buffer doesn't go over
    * 60 bytes. use a timer to sending an event character every 4 ms to
    * trigger the buffer to dump. */
 
   currentMillis = millis();
-  if (currentMillis - previousMillis > samplingInterval) {
+  if (samplingInterval == 0 || currentMillis - previousMillis > samplingInterval) {
     previousMillis += samplingInterval;
 
     /* ANALOGREAD - do all analogReads() at the configured sampling interval */
@@ -287,6 +300,29 @@ void loop()
 #endif
   }
 
+
+#if ENABLE_TIMESTAMP_TEST
+  unsigned long microTimestampDelta = micros() - microTimestamp;
+  
+
+  if (SerialUSB.getWriteError() > 0) {
+      SerialUSB.println("ERROR WRITING TO USB");
+      SerialUSB.clearWriteError();
+  }
+
+
+  testTimestamps[testTimestampsIdx] = microTimestampDelta;
+
+  if (++testTimestampsIdx >= TEST_TIMESTAMPS_LENGTH) {
+    testTimestampsIdx = 0;
+
+    SerialUSB.println("Timestamps:");
+    unsigned long firstTimestamp = testTimestamps[0];
+    for (int i = 0; i < TEST_TIMESTAMPS_LENGTH; i++) {
+      SerialUSB.println(testTimestamps[i]);
+    }
+  }
+#endif  
 
   // relay all debug messages from BLE 
 #if ENABLE_DEBUG_PRINTING && ENABLE_DEBUG_PRINTING_RELAY_FROM_BLE && defined(BLE_RESET_PIN)
