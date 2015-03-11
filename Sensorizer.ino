@@ -90,6 +90,22 @@ unsigned long testTimestamps[TEST_TIMESTAMPS_LENGTH];
 
 #endif
 
+
+
+
+#define ENABLE_TIMESTAMP_VAL_TEST 1
+#if ENABLE_TIMESTAMP_VAL_TEST
+
+#define TIMSTAMP_VAL_TEST_SENSOR_IDX_TO_LOG 0
+#define TEST_VAL_TIMESTAMPS_LENGTH 256
+
+int testValTimestampsIdx = 0;
+unsigned long testValTimestamps[TEST_VAL_TIMESTAMPS_LENGTH];
+int testVals[TEST_VAL_TIMESTAMPS_LENGTH];
+
+#endif
+
+
 void setupServer() {
     // must wait a bit for the MIDI device to boot up before it accepts our messages
     delay(500);
@@ -246,7 +262,7 @@ void loop()
 
 #if ENABLE_TIMESTAMP_TEST
   unsigned long microTimestamp = micros();
-  
+
 #endif
 
   /* SEND FTDI WRITE BUFFER - make sure that the FTDI buffer doesn't go over
@@ -278,6 +294,29 @@ void loop()
 #if ENABLE_TEST_INTERFACE
         val = getCurrentTestVal(analogPin);
 #endif
+
+
+#if ENABLE_TIMESTAMP_VAL_TEST
+
+        if (pinIdx == TIMSTAMP_VAL_TEST_SENSOR_IDX_TO_LOG) {
+
+          testValTimestamps[testValTimestampsIdx] = micros();
+          testVals[testValTimestampsIdx] = val;
+
+          if (++testValTimestampsIdx >= TEST_VAL_TIMESTAMPS_LENGTH) {
+            testValTimestampsIdx = 0;
+
+            SerialUSB.println("ValTimestamps:");
+            unsigned long firstValTimestamp = testValTimestamps[0];
+            for (int i = 0; i < TEST_VAL_TIMESTAMPS_LENGTH; i++) {
+              SerialUSB.print(testValTimestamps[i]);
+              SerialUSB.print(',');
+              SerialUSB.println(testVals[i]);
+            }
+          }
+        }
+#endif  
+
 
           
         //DEBUG_PRINT_NUM("check pin ", pinIdx);  
