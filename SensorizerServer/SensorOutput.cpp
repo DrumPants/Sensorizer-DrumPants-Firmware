@@ -2,6 +2,11 @@
 #include "filters/OutputFilter.h"
 ////import com.odbol.sensorizer.server.filters.OutputFilter;
 
+#define LOW_PASS_FILTER(lastOut, curIn, k) (lastOut + k * (curIn - lastOut))
+#define HIGH_PASS_FILTER(lastOut, lastIn, curIn, k) ( k * (lastOut + curIn - lastIn) )
+
+
+
 #include "SensorizerServer.h"
 	
 	//cutoff dropdown items
@@ -51,6 +56,9 @@
 		cutoffTypeVal = CUTOFF_TYPE_VAL_NONE;
 		_outputValue = 0;
 		isLogarithmic = true;
+
+		highPassFilterConstant = 0;
+		lowPassFilterConstant = 0;
 		
 		//set current array lengths so we can fill them
 		outputFiltersCurlength = 0;
@@ -130,14 +138,27 @@
 		if (isInvert)
 			val = 1.0 - val;
 
+
+		// run pre filters
+		double lastOutputValue = _outputValue;
+		_outputValue = val;
+		if (lowPassFilterConstant > 0) {
+			_outputValue = LOW_PASS_FILTER(lastOutputValue, _outputValue, lowPassFilterConstant);
+		}
+		if (highPassFilterConstant > 0) {
+			_outputValue = HIGH_PASS_FILTER(lastOutputValue, _inputValue, _outputValue, highPassFilterConstant);
+		}
+
+
 		//save cur raw val
 		_inputValue = val;
 		
+
 		//calculate values!!!!!!
 		//if (inRange == NULL) 
 		//	return;
 
-		_outputValue = scaleRange(val, inRange.low, inRange.high, outRange.low, outRange.high);
+		_outputValue = scaleRange(_outputValue, inRange.low, inRange.high, outRange.low, outRange.high);
 		
 		// boost that fucker
 		if (isLogarithmic) {

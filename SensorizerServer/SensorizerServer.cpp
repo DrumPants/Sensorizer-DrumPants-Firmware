@@ -133,6 +133,7 @@ void SensorizerServer::loadPreset() {
 
 	#define DEFAULT_FOOT_PEDAL_SENSITIVITY_THRESHOLD 0.5
 	#define FOOT_PEDAL_CUTOFF_LOW 0.55
+	#define FOOT_PEDAL_HIGHPASS_FILTER_CONST 0.8
 
 	#if PRESET >= PRESET_PREPRODUCTION	
 
@@ -536,6 +537,7 @@ void SensorizerServer::loadPreset() {
 	s->multiplyVal = 1;
 	s->addVal = 0;
 	s->isInvert = true;
+	s->highPassFilterConstant = FOOT_PEDAL_HIGHPASS_FILTER_CONST;
 
 #if FOOT_PEDAL_CC_ENABLE
 	#if FOOT_PEDAL_CC_SEND_NULLS	
@@ -584,6 +586,7 @@ void SensorizerServer::loadPreset() {
 	s->multiplyVal = 1;
 	s->addVal = 0;
 	s->isInvert = true;
+	s->highPassFilterConstant = FOOT_PEDAL_HIGHPASS_FILTER_CONST;
 
 	filter = new OneHitDetector();
 	filter->retriggerThreshold = DEFAULT_FOOT_PEDAL_RETRIGGER_THRESHOLD;
@@ -618,6 +621,7 @@ void SensorizerServer::loadPreset() {
 	s->multiplyVal = 1;
 	s->addVal = 0;
 	s->isInvert = true;
+	s->highPassFilterConstant = FOOT_PEDAL_HIGHPASS_FILTER_CONST;
 
 	filter = new OneHitDetector();
 	filter->retriggerThreshold = DEFAULT_FOOT_PEDAL_RETRIGGER_THRESHOLD;
@@ -649,6 +653,7 @@ void SensorizerServer::loadPreset() {
 	s->multiplyVal = 1;
 	s->addVal = 0;
 	s->isInvert = true;
+	s->highPassFilterConstant = FOOT_PEDAL_HIGHPASS_FILTER_CONST;
 
 	filter = new OneHitDetector();
 	filter->retriggerThreshold = DEFAULT_FOOT_PEDAL_RETRIGGER_THRESHOLD;
@@ -1028,6 +1033,7 @@ void SensorizerServer::loadPreset() {
 	s->multiplyVal = 1;
 	s->addVal = 0;
 	s->isInvert = true;
+	s->highPassFilterConstant = FOOT_PEDAL_HIGHPASS_FILTER_CONST;
 
 	filter = new OneHitDetector();
 	filter->retriggerThreshold = DEFAULT_RETRIGGER_THRESHOLD;

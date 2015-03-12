@@ -66,6 +66,15 @@ public:
 	public: bool isInvert;
 
 	/**
+	 * Set to > 0 to enable the low or high pass filters.
+	 * They are applied before any other processing, but after inversion.
+	 * 
+	 */
+	float lowPassFilterConstant,
+		  highPassFilterConstant;
+
+
+	/**
 	 * This gives the log of the signal + 1, to boost the low amplitude hits.
 	 * Use for drum triggers.
 	 *

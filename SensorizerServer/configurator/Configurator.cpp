@@ -164,6 +164,21 @@ bool Configurator::setField(SensorizerServer* server, byte sensorIdx, byte field
 
 			break;
 
+		case LOW_PASS_FILTER_CONSTANT: {
+
+				output->lowPassFilterConstant = (float)(value) / 127.0f;
+
+			}
+
+			break;
+
+		case HIGH_PASS_FILTER_CONSTANT: {
+
+				output->highPassFilterConstant = (float)(value) / 127.0f;
+
+			}
+
+			break;
 
 
 		default:
@@ -338,6 +353,22 @@ byte Configurator::getField(SensorizerServer* server, byte sensorIdx, byte field
 
 			break;
 
+
+		case LOW_PASS_FILTER_CONSTANT: {
+
+				return output->lowPassFilterConstant * 127;
+
+			}
+
+			break;
+
+		case HIGH_PASS_FILTER_CONSTANT: {
+
+				return output->highPassFilterConstant * 127
+
+			}
+
+			break;
 
 
 		default:

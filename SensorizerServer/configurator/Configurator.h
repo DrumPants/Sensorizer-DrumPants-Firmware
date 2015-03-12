@@ -17,7 +17,7 @@
  * BUMP THIS whenever the MIDI CC MESSAGE CONSTANTS FOR FIELDS defines change, 
  * or when you want to reset everyone's settings on firmware update.
  */
-#define CONFIGURATOR_VERSION 2
+#define CONFIGURATOR_VERSION 3
 
 /**
  * WHere the version of the config files is stored on a page. Check this against current version to see if it's usable or should be overwritten.
@@ -38,9 +38,11 @@
 #define	MIDIMAPPING_DURATION 10  
 #define	ONEHITDETECTOR_RETRIGGERTHRESHOLD 11  
 #define	ONEHITDETECTOR_SENSITIVITYTHRESHOLD 12  
+#define	LOW_PASS_FILTER_CONSTANT 13 
+#define	HIGH_PASS_FILTER_CONSTANT 14 
 
 #define CONFIGURATOR_FIELDS_START INRANGE_HIGH
-#define CONFIGURATOR_FIELDS_END ONEHITDETECTOR_SENSITIVITYTHRESHOLD
+#define CONFIGURATOR_FIELDS_END HIGH_PASS_FILTER_CONSTANT
 
 /**** SPECIAL FIELDS FOR METADATA (Global device settings) ****/
 
