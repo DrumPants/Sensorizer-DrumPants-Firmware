@@ -100,6 +100,7 @@ public:
 	//current, calculated output 
 	private: double _outputValue;
 	private: double _inputValue;
+	double lastFilterOutputValue;
 
 	////@Expose
 	public: OutputFilter* outputFilters[OUTPUT_FILTERS_LENGTH];

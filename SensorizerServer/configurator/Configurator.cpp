@@ -364,7 +364,7 @@ byte Configurator::getField(SensorizerServer* server, byte sensorIdx, byte field
 
 		case HIGH_PASS_FILTER_CONSTANT: {
 
-				return output->highPassFilterConstant * 127
+				return output->highPassFilterConstant * 127;
 
 			}
 

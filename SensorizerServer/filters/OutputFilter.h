@@ -1,6 +1,11 @@
 #ifndef OutputFilter_h
 #define OutputFilter_h
 
+
+#define LOW_PASS_FILTER(lastOut, curIn, k) (lastOut + k * (curIn - lastOut))
+#define HIGH_PASS_FILTER(lastOut, lastIn, curIn, k) ( k * (lastOut + curIn - lastIn) )
+
+
 class OutputFilter {
 	/**
 	 * this is the class name of the specific filter, so that GSON can make sure to instantiate the correct filter

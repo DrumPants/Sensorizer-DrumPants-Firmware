@@ -8,6 +8,7 @@
 #include "I2CScanner.h"
 #include "TestBLE.h"
 #include <utility/TestConfigurator.h>
+#include <utility/TestFilters.h>
 
 #define TEST_HIT_MAX 1024
 
@@ -36,6 +37,7 @@ void testInterfaceSetup() {
   SerialToComputer.println("a   : test config reporting");
   SerialToComputer.println("b   : test BLE programming");
   SerialToComputer.println("u   : test BLE PUART communication");
+  SerialToComputer.println("n   : run all unit tests");
   SerialToComputer.println("r   : run all tests");
   SerialToComputer.println("========================");
 
@@ -173,6 +175,11 @@ int testSensorJackSwitches() {
   return (numSensorsPluggedIn > 2) ? 0 : 1;
 }
 
+
+int testUnitTests() {
+  return filtersTest_checkPreFilters() ? 0 : 1;
+}
+
 void testInterfaceUpdate() {
 
   // for (int i = 0; i < TESTPINS_LENGTH; i++) {
@@ -211,6 +218,9 @@ void testInterfaceUpdate() {
           break;
         case 'j':
           testSensorJackSwitches();
+          break;
+        case 'n':
+          testUnitTests();
           break;
         case 'r':
 
