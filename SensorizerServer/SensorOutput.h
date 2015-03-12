@@ -65,13 +65,6 @@ public:
 	////@Expose
 	public: bool isInvert;
 
-	/**
-	 * Set to > 0 to enable the low or high pass filters.
-	 * They are applied before any other processing, but after inversion.
-	 * 
-	 */
-	float lowPassFilterConstant,
-		  highPassFilterConstant;
 
 
 	/**
@@ -100,7 +93,6 @@ public:
 	//current, calculated output 
 	private: double _outputValue;
 	private: double _inputValue;
-	double lastFilterOutputValue;
 
 	////@Expose
 	public: OutputFilter* outputFilters[OUTPUT_FILTERS_LENGTH];

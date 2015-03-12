@@ -15,6 +15,13 @@
 		this->retriggerThreshold = 5;
 		this->ticksSinceLastTrigger = 0;
 		this->sensitivityThreshold = DEFAULT_SENSITIVITY_THRESHOLD;
+
+
+
+		highPassFilterConstant = 0;
+		lowPassFilterConstant = 0;
+		lastFilterOutputValue = 0;
+		lastFilterInputValue = 0;
 	}
 	
 	
@@ -26,10 +33,30 @@
 		ticksSinceLastTrigger++;
 		triggeredVal = SensorizerServer::SENSOR_VALUE_NULL;
 
-		//detect peak in signal and trigger one hit if so
-		if (value < lastVal || value == SensorizerServer::SENSOR_VALUE_NULL) {
+
+		// run pre filters
+
+		//save cur raw val
+		double _outputValue = value;
+
+		if (lowPassFilterConstant > 0) {
+			_outputValue = LOW_PASS_FILTER(lastFilterOutputValue, _outputValue, lowPassFilterConstant);
+			DEBUG_PRINT_NUMS("Low pass filter: ", value, _outputValue);
+		}
+		if (highPassFilterConstant > 0) {
+			_outputValue = HIGH_PASS_FILTER(lastFilterOutputValue, lastFilterInputValue, _outputValue, highPassFilterConstant);
+			DEBUG_PRINT_NUMS("High pass lastFilterOutputValue, highPassFilterConstant ", lastFilterOutputValue, lastFilterInputValue);
+			DEBUG_PRINT_NUMS("High pass filter _outputValue, highPassFilterConstant: ", _outputValue, highPassFilterConstant);
+			DEBUG_PRINT_NUMS("High pass filter: ", value, _outputValue);
+		}
+
+
+		// detect peak in signal and trigger one hit if so
+		// we detect peak using the filters, but we want to send out the non-filtered value if a hit is detected,
+		// since the filtered peak is often much lower than the original hit.
+		if (_outputValue < lastFilterOutputValue || value == SensorizerServer::SENSOR_VALUE_NULL) {
 			if (isRising) {
-				double delta = abs(lastVal - lowVal);
+				double delta = abs(lastFilterOutputValue - lowVal);
 					
 				if (sensitivityThreshold == 0 || delta > sensitivityThreshold) {
 					trigger();
@@ -38,13 +65,16 @@
 				isRising = false;
 			}
 			else {
-				lowVal = value;
+				lowVal = _outputValue;
 			}
 		}
 		else {
 			isRising = true;
 		}
 		
+
+		lastFilterInputValue = value;
+		lastFilterOutputValue = _outputValue;
 		lastVal = value;
 	}
 

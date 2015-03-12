@@ -166,7 +166,12 @@ bool Configurator::setField(SensorizerServer* server, byte sensorIdx, byte field
 
 		case LOW_PASS_FILTER_CONSTANT: {
 
-				output->lowPassFilterConstant = (float)(value) / 127.0f;
+				OneHitDetector* filter = (OneHitDetector*)output->getOutputFilter(0); // TODO DERRRP???
+
+				if (filter == NULL)
+					return false;
+
+				filter->lowPassFilterConstant = (float)(value) / 127.0f;
 
 			}
 
@@ -174,7 +179,12 @@ bool Configurator::setField(SensorizerServer* server, byte sensorIdx, byte field
 
 		case HIGH_PASS_FILTER_CONSTANT: {
 
-				output->highPassFilterConstant = (float)(value) / 127.0f;
+				OneHitDetector* filter = (OneHitDetector*)output->getOutputFilter(0); // TODO DERRRP???
+
+				if (filter == NULL)
+					return false;
+
+				filter->highPassFilterConstant = (float)(value) / 127.0f;
 
 			}
 
@@ -356,7 +366,12 @@ byte Configurator::getField(SensorizerServer* server, byte sensorIdx, byte field
 
 		case LOW_PASS_FILTER_CONSTANT: {
 
-				return output->lowPassFilterConstant * 127;
+				OneHitDetector* filter = (OneHitDetector*)output->getOutputFilter(0); // TODO DERRRP???
+
+				if (filter == NULL)
+					return CONFIGURATOR_ERROR_RETURN_CODE_FAILURE;
+
+				return filter->lowPassFilterConstant * 127;
 
 			}
 
@@ -364,7 +379,12 @@ byte Configurator::getField(SensorizerServer* server, byte sensorIdx, byte field
 
 		case HIGH_PASS_FILTER_CONSTANT: {
 
-				return output->highPassFilterConstant * 127;
+				OneHitDetector* filter = (OneHitDetector*)output->getOutputFilter(0); // TODO DERRRP???
+
+				if (filter == NULL)
+					return CONFIGURATOR_ERROR_RETURN_CODE_FAILURE;
+
+				return filter->highPassFilterConstant * 127;
 
 			}
 

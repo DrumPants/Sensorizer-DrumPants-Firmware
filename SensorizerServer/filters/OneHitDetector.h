@@ -26,6 +26,17 @@ class OneHitDetector : public OutputFilter {
 	double sensitivityThreshold;
 	
 
+	/**
+	 * Set to > 0 to enable the low or high pass filters.
+	 * They are applied before any other processing, but after inversion.
+	 * 
+	 */
+	float lowPassFilterConstant,
+		  highPassFilterConstant;
+
+	double 	lastFilterOutputValue,
+		 	lastFilterInputValue;
+
 	// unsigned because it needs to overflow without any major hiccups
 	private: unsigned int ticksSinceLastTrigger;
 

@@ -131,10 +131,10 @@ void SensorizerServer::loadPreset() {
 /**************** BETA PANTS ******************/
 #if PRESET >= PRESET_BETA
 
-	#define DEFAULT_FOOT_PEDAL_SENSITIVITY_THRESHOLD 0.0
-	#define FOOT_PEDAL_CUTOFF_LOW 0.2
-	#define FOOT_PEDAL_HIGHPASS_FILTER_CONST 0.61
-	#define FOOT_PEDAL_INRANGE_HIGH 0.02
+	#define DEFAULT_FOOT_PEDAL_SENSITIVITY_THRESHOLD 0.07
+	#define FOOT_PEDAL_CUTOFF_LOW 0.23
+	#define FOOT_PEDAL_HIGHPASS_FILTER_CONST 0.81
+	#define FOOT_PEDAL_INRANGE_HIGH 0.75
 
 	#if PRESET >= PRESET_PREPRODUCTION	
 
@@ -538,7 +538,7 @@ void SensorizerServer::loadPreset() {
 	s->multiplyVal = 1;
 	s->addVal = 0;
 	s->isInvert = true;
-	s->highPassFilterConstant = FOOT_PEDAL_HIGHPASS_FILTER_CONST;
+
 
 #if FOOT_PEDAL_CC_ENABLE
 	#if FOOT_PEDAL_CC_SEND_NULLS	
@@ -558,6 +558,7 @@ void SensorizerServer::loadPreset() {
 	filter = new OneHitDetector();
 	filter->retriggerThreshold = DEFAULT_FOOT_PEDAL_RETRIGGER_THRESHOLD;
 	filter->sensitivityThreshold = DEFAULT_FOOT_PEDAL_SENSITIVITY_THRESHOLD;
+	filter->highPassFilterConstant = FOOT_PEDAL_HIGHPASS_FILTER_CONST;
 	s->addOutputFilter(filter);
 
 	m = new MidiMapping(this->midiDevice);
@@ -587,10 +588,11 @@ void SensorizerServer::loadPreset() {
 	s->multiplyVal = 1;
 	s->addVal = 0;
 	s->isInvert = true;
-	s->highPassFilterConstant = FOOT_PEDAL_HIGHPASS_FILTER_CONST;
+
 
 	filter = new OneHitDetector();
 	filter->retriggerThreshold = DEFAULT_FOOT_PEDAL_RETRIGGER_THRESHOLD;
+	filter->highPassFilterConstant = FOOT_PEDAL_HIGHPASS_FILTER_CONST;
 	filter->sensitivityThreshold = DEFAULT_FOOT_PEDAL_SENSITIVITY_THRESHOLD;
 	s->addOutputFilter(filter);
 
@@ -622,10 +624,11 @@ void SensorizerServer::loadPreset() {
 	s->multiplyVal = 1;
 	s->addVal = 0;
 	s->isInvert = true;
-	s->highPassFilterConstant = FOOT_PEDAL_HIGHPASS_FILTER_CONST;
+
 
 	filter = new OneHitDetector();
 	filter->retriggerThreshold = DEFAULT_FOOT_PEDAL_RETRIGGER_THRESHOLD;
+	filter->highPassFilterConstant = FOOT_PEDAL_HIGHPASS_FILTER_CONST;
 	filter->sensitivityThreshold = DEFAULT_FOOT_PEDAL_SENSITIVITY_THRESHOLD;
 	s->addOutputFilter(filter);
 
@@ -654,10 +657,11 @@ void SensorizerServer::loadPreset() {
 	s->multiplyVal = 1;
 	s->addVal = 0;
 	s->isInvert = true;
-	s->highPassFilterConstant = FOOT_PEDAL_HIGHPASS_FILTER_CONST;
+
 
 	filter = new OneHitDetector();
 	filter->retriggerThreshold = DEFAULT_FOOT_PEDAL_RETRIGGER_THRESHOLD;
+	filter->highPassFilterConstant = FOOT_PEDAL_HIGHPASS_FILTER_CONST;
 	filter->sensitivityThreshold = DEFAULT_FOOT_PEDAL_SENSITIVITY_THRESHOLD;
 	s->addOutputFilter(filter);
 
@@ -1034,10 +1038,11 @@ void SensorizerServer::loadPreset() {
 	s->multiplyVal = 1;
 	s->addVal = 0;
 	s->isInvert = true;
-	s->highPassFilterConstant = FOOT_PEDAL_HIGHPASS_FILTER_CONST;
+
 
 	filter = new OneHitDetector();
 	filter->retriggerThreshold = DEFAULT_RETRIGGER_THRESHOLD;
+	filter->highPassFilterConstant = FOOT_PEDAL_HIGHPASS_FILTER_CONST;
 	s->addOutputFilter(filter);
 
 	m = new MidiMapping(this->midiDevice);

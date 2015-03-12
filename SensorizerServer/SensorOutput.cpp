@@ -53,11 +53,6 @@
 		cutoffTypeVal = CUTOFF_TYPE_VAL_NONE;
 		_outputValue = 0;
 		isLogarithmic = true;
-
-		highPassFilterConstant = 0;
-		lowPassFilterConstant = 0;
-		lastFilterOutputValue = 0;
-
 		
 		//set current array lengths so we can fill them
 		outputFiltersCurlength = 0;
@@ -138,31 +133,10 @@
 			val = 1.0 - val;
 
 
-		// run pre filters
-		double lastInputValue = _inputValue;
-
 		//save cur raw val
 		_inputValue = val;
 		_outputValue = val;
 
-		if (lowPassFilterConstant > 0) {
-			_outputValue = LOW_PASS_FILTER(lastFilterOutputValue, _outputValue, lowPassFilterConstant);
-			DEBUG_PRINT_NUMS("Low pass filter: ", val, _outputValue);
-		}
-		if (highPassFilterConstant > 0) {
-			_outputValue = HIGH_PASS_FILTER(lastFilterOutputValue, lastInputValue, _outputValue, highPassFilterConstant);
-			DEBUG_PRINT_NUMS("High pass lastFilterOutputValue, highPassFilterConstant ", lastFilterOutputValue, lastInputValue);
-			DEBUG_PRINT_NUMS("High pass filter _outputValue, highPassFilterConstant: ", _outputValue, highPassFilterConstant);
-			DEBUG_PRINT_NUMS("High pass filter: ", val, _outputValue);
-		}
-
-		lastFilterOutputValue = _outputValue;
-
-		// the filters above can generate negative values.
-		if (_outputValue < 0) {
-			_outputValue = 0;
-		}
-		
 
 		//calculate values!!!!!!
 		//if (inRange == NULL) 
