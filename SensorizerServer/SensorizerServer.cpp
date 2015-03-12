@@ -131,9 +131,10 @@ void SensorizerServer::loadPreset() {
 /**************** BETA PANTS ******************/
 #if PRESET >= PRESET_BETA
 
-	#define DEFAULT_FOOT_PEDAL_SENSITIVITY_THRESHOLD 0.5
-	#define FOOT_PEDAL_CUTOFF_LOW 0.55
-	#define FOOT_PEDAL_HIGHPASS_FILTER_CONST 0.8
+	#define DEFAULT_FOOT_PEDAL_SENSITIVITY_THRESHOLD 0.0
+	#define FOOT_PEDAL_CUTOFF_LOW 0.2
+	#define FOOT_PEDAL_HIGHPASS_FILTER_CONST 0.61
+	#define FOOT_PEDAL_INRANGE_HIGH 0.02
 
 	#if PRESET >= PRESET_PREPRODUCTION	
 
@@ -524,7 +525,7 @@ void SensorizerServer::loadPreset() {
 	/// FOOT PEDAL
 	s = new SensorOutput();
 	s->inRange.low = 0;
-	s->inRange.high = 1;
+	s->inRange.high = FOOT_PEDAL_INRANGE_HIGH;  
 	s->outRange.low = 0;
 	s->outRange.high = 1;
 	s->cutoffRange.low = FOOT_PEDAL_CUTOFF_LOW;
@@ -577,7 +578,7 @@ void SensorizerServer::loadPreset() {
 	/// FOOT PEDAL
 	s = new SensorOutput();
 	s->inRange.low = 0;
-	s->inRange.high = 1;
+	s->inRange.high = FOOT_PEDAL_INRANGE_HIGH;  
 	s->outRange.low = 0;
 	s->outRange.high = 1;
 	s->cutoffRange.low = FOOT_PEDAL_CUTOFF_LOW;
@@ -612,7 +613,7 @@ void SensorizerServer::loadPreset() {
 	/// FOOT PEDAL
 	s = new SensorOutput();
 	s->inRange.low = 0;
-	s->inRange.high = 1.0;
+	s->inRange.high = FOOT_PEDAL_INRANGE_HIGH;  
 	s->outRange.low = 0;
 	s->outRange.high = 1;
 	s->cutoffRange.low = FOOT_PEDAL_CUTOFF_LOW;
@@ -644,7 +645,7 @@ void SensorizerServer::loadPreset() {
 	/// FOOT PEDAL
 	s = new SensorOutput();
 	s->inRange.low = 0;
-	s->inRange.high = 1.0;
+	s->inRange.high = FOOT_PEDAL_INRANGE_HIGH;  
 	s->outRange.low = 0;
 	s->outRange.high = 1;
 	s->cutoffRange.low = FOOT_PEDAL_CUTOFF_LOW;
