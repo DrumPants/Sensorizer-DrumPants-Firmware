@@ -142,7 +142,8 @@
 		//if (inRange == NULL) 
 		//	return;
 
-		_outputValue = scaleRange(_outputValue, inRange.low, inRange.high, outRange.low, outRange.high);
+		// scale raw data into acceptable values between 0 and 1.
+		_outputValue = scaleRange(_outputValue, inRange.low, inRange.high, 0., 1.);
 		
 		// boost that fucker
 		if (isLogarithmic) {
@@ -198,6 +199,9 @@
 
 		//EQUATIONS
 		if (_outputValue != SensorizerServer::SENSOR_VALUE_NULL) {
+			_outputValue = scaleRange(_outputValue, 0., 1., outRange.low, outRange.high);
+
+			// for midi, it doesn't make sense to go above 1, but we'll leave this here for legacy support.
 			_outputValue = _outputValue * multiplyVal + addVal;
 		}
 		

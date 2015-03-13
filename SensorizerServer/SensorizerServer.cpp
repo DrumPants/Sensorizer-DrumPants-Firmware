@@ -136,6 +136,10 @@ void SensorizerServer::loadPreset() {
 	#define FOOT_PEDAL_HIGHPASS_FILTER_CONST 0.81
 	#define FOOT_PEDAL_INRANGE_HIGH 0.75
 
+	// always bump foot pedals up to maximum velocity.
+	#define FOOT_PEDAL_OUTRANGE_LOW 0.85
+	#define FOOT_PEDAL_OUTRANGE_HIGH 1.0
+
 	#if PRESET >= PRESET_PREPRODUCTION	
 
 		#define BARE_PIEZOS 0
@@ -526,8 +530,8 @@ void SensorizerServer::loadPreset() {
 	s = new SensorOutput();
 	s->inRange.low = 0;
 	s->inRange.high = FOOT_PEDAL_INRANGE_HIGH;  
-	s->outRange.low = 0;
-	s->outRange.high = 1;
+	s->outRange.low = FOOT_PEDAL_OUTRANGE_LOW;
+	s->outRange.high = FOOT_PEDAL_OUTRANGE_HIGH;
 	s->cutoffRange.low = FOOT_PEDAL_CUTOFF_LOW;
 	s->cutoffRange.high = 1;
 #if FOOT_PEDAL_CC_SEND_NULLS || !FOOT_PEDAL_CC_ENABLE
@@ -580,8 +584,8 @@ void SensorizerServer::loadPreset() {
 	s = new SensorOutput();
 	s->inRange.low = 0;
 	s->inRange.high = FOOT_PEDAL_INRANGE_HIGH;  
-	s->outRange.low = 0;
-	s->outRange.high = 1;
+	s->outRange.low = FOOT_PEDAL_OUTRANGE_LOW;
+	s->outRange.high = FOOT_PEDAL_OUTRANGE_HIGH;
 	s->cutoffRange.low = FOOT_PEDAL_CUTOFF_LOW;
 	s->cutoffRange.high = 1;
 	s->setCutoffType(SensorOutput::CUTOFF_TYPE_VAL_NULLABLE_LOW); //No Cutoff
@@ -616,8 +620,8 @@ void SensorizerServer::loadPreset() {
 	s = new SensorOutput();
 	s->inRange.low = 0;
 	s->inRange.high = FOOT_PEDAL_INRANGE_HIGH;  
-	s->outRange.low = 0;
-	s->outRange.high = 1;
+	s->outRange.low = FOOT_PEDAL_OUTRANGE_LOW;
+	s->outRange.high = FOOT_PEDAL_OUTRANGE_HIGH;
 	s->cutoffRange.low = FOOT_PEDAL_CUTOFF_LOW;
 	s->cutoffRange.high = 1;
 	s->setCutoffType(SensorOutput::CUTOFF_TYPE_VAL_NULLABLE_LOW); //No Cutoff
@@ -649,8 +653,8 @@ void SensorizerServer::loadPreset() {
 	s = new SensorOutput();
 	s->inRange.low = 0;
 	s->inRange.high = FOOT_PEDAL_INRANGE_HIGH;  
-	s->outRange.low = 0;
-	s->outRange.high = 1;
+	s->outRange.low = FOOT_PEDAL_OUTRANGE_LOW;
+	s->outRange.high = FOOT_PEDAL_OUTRANGE_HIGH;
 	s->cutoffRange.low = FOOT_PEDAL_CUTOFF_LOW;
 	s->cutoffRange.high = 1;
 	s->setCutoffType(SensorOutput::CUTOFF_TYPE_VAL_NULLABLE_LOW); //No Cutoff
