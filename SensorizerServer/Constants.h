@@ -33,7 +33,7 @@
 
 
 
-// the firmware version is modifed by SKU flag which is bit 7
+// the firmware version is modifed by SKU flag which is bit 6
 #define BOARD_SKU_MODIFIER_PRO (0x00)
 #define BOARD_SKU_MODIFIER_BASIC (0x40)
 
@@ -43,7 +43,7 @@
 
 #define FIRMWARE_VERSION_NUM 23
 
-// the firmware version is modifed by SKU flag which is bit 7
+// the firmware version is modifed by SKU flag which is bit 6
 #define FIRMWARE_VERSION (BOARD_SKU | FIRMWARE_VERSION_NUM)
 
 /******* END hardware version type presets ********/
