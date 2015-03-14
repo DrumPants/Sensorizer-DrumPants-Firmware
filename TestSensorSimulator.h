@@ -4,6 +4,7 @@
 #include "Debug.h"
 #include "SensorSimulator.h"
 #include "SensorTestData.h"
+#include "Metro.h"
 
 #define TEST_HIT_MAX 1024
 
@@ -13,6 +14,8 @@
 
 SensorSimulator testSensors[TESTPINS_LENGTH];
 
+Metro test_snareMetro;
+bool test_isRhythmOn = false;
 
 void test_initSensorSimulators() {
 	int i = 0;
@@ -30,24 +33,37 @@ void test_initSensorSimulators() {
 
 int testPins[TESTPINS_LENGTH] = {0,0,0,0,0,0,0,0};
 
-void test_sensorSimTick() {
-	
-}
 
 void test_hitSensor(int analogPin) {
-  testPins[analogPin] = TEST_HIT_MAX;
+  testSensors[analogPin].start();
 }
 
 
 int getCurrentTestVal(int analogPin) {
   if (analogPin >= TESTPINS_LENGTH) return 0;
 
-  // make signal creep down if it got hit before
-  if (testPins[analogPin] > 0) {
-    testPins[analogPin] = max(0, testPins[analogPin] - TEST_HIT_INCREMENT);
-  }
-
-  return testPins[analogPin];
+  return testSensors[analogPin].getNextValue() * 1024;
 }
+
+
+
+void test_sensorSimToggleRhythm(int tempo) {
+	test_isRhythmOn = !test_isRhythmOn;
+
+	if (test_isRhythmOn) {
+		test_snareMetro.timePerTick = tempo;
+	}
+}
+
+void test_sensorSimTick() {
+	
+	if (test_isRhythmOn) {
+		
+		if (test_snareMetro.hasTicked()) {
+			test_hitSensor(2);
+		}
+	}
+}
+
 
 #endif

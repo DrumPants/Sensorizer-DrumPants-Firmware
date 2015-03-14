@@ -24,14 +24,13 @@ public:
 		valuesSize = size;
 	}
 
-
-	int getNextValue() {
+	double getNextValue() {
 		if (curIdx < 0) {
 			return 0;
 		}
 
 		if (++curIdx < valuesSize) {
-			return values[curIdx] * 1024;
+			return values[curIdx];
 		}
 		else {
 			curIdx = -1;
@@ -40,7 +39,7 @@ public:
 		return 0;
 	}
 
-	void reset() {
+	void start() {
 		curIdx = 0;
 	};
 };

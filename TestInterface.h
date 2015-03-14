@@ -12,6 +12,9 @@
 
 #include "TestSensorSimulator.h"
 
+// play quarter notes at 130 BPM
+#define TEST_BPM (130 * 4) 
+
 void testInterfaceSetup() {
 
   while (!SerialToComputer) {
@@ -24,6 +27,7 @@ void testInterfaceSetup() {
   SerialToComputer.println("Available key commands:");
   SerialToComputer.println("");
   SerialToComputer.println("0-9 : test drumpad hit");
+  SerialToComputer.println("s   : start/stop autodrummer");
   SerialToComputer.println("j   : test disconnection detector");
   SerialToComputer.println("e   : scan for EEPROM");
   SerialToComputer.println("c   : test configurator");
@@ -218,6 +222,9 @@ void testInterfaceUpdate() {
           break;
         case 'n':
           testUnitTests();
+          break;
+        case 's':
+          test_sensorSimToggleRhythm((1000 * 60) / TEST_BPM);
           break;
         case 'r':
 
