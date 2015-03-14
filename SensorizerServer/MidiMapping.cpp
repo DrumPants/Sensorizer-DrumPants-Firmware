@@ -110,10 +110,14 @@
 			switch (msgType) {
 			case MidiMapping::NOTE:
 				//int dur = duration; //Integer.parseInt(duration);
-				midiDevice->note(true, c, n, vel);
-
+				
 				// schedule note off to be sent later
+				// do this before sending the note on, because 
+				// if there's already a pending note off for it, 
+				// that note off will send immediately to cancel the current note.
 				pendingNoteOffs->add(c, n);
+
+				midiDevice->note(true, c, n, vel);
 
 				break;
 			case MidiMapping::CONTROL_CHANGE:

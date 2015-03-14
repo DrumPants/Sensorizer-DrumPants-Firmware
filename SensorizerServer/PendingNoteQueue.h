@@ -54,12 +54,17 @@ struct PendingNoteQueue {
 		if (!note->isDead() && note->tick()
 				->isDead()) {
 
-			midi->noteOff(note->channel, note->note, 0); //127, 127);//
+			sendNoteOff(note);
 
 			// free this one up to be reused.
 			// we assume that these are added in order
 			startIdx = (noteIdx + 1) % MAX_PENDING_NOTES;
 		}
+	}
+
+
+	void sendNoteOff(PendingNote* note) {
+		midi->noteOff(note->channel, note->note, 0); //127, 127);//
 	}
 
 public: 
@@ -96,6 +101,10 @@ public:
 		for (int i = endIdx - 1; i >= startIdx; i--) {
 			if (pendingNotes[i].note == note && 
 				pendingNotes[i].channel == channel) {
+
+				// finish off the currently playing note to make room for the next one.
+				// this is what the MIDI spec recommends, although not has weird effects on some devices.
+				sendNoteOff(&(pendingNotes[i]));
 
 				pendingNotes[i].timeTillDeath = NOTE_TIME_TILL_DEATH_DEFAULT;		
 				return;

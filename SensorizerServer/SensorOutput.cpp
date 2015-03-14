@@ -222,6 +222,14 @@
 
 	//sends all messages through ALL server mappings
 	void SensorOutput::send() {
+		// tick BEFORE sending the note, 
+		// since pending note offs are sent immediately if there's a new note on from the next loop.
+		for (int i = 0; i < midiMappingsCurlength; i++) {
+			if (dropdownMidiMappings[i] != NULL) {
+				dropdownMidiMappings[i]->tick();
+			}
+		}
+
 		//DEBUG_PRINT("SensorOutput::send")
 		double outvals[1] = {outputValue()}; //only call once!
 		if (outvals[0] != SensorizerServer::SENSOR_VALUE_NULL || cutoffTypeVal == CUTOFF_TYPE_VAL_NULLABLE) {
@@ -238,17 +246,7 @@
 			//}
 		}
 		//DEBUG_PRINT("DONE SensorOutput::send")
-		
-		/// only tick every other time to slow it down.
-		// NO NO NO THIS IS VERY BAD. some things depend on one send being called before one tick, every time.
-		//if (shouldTick) {
-			for (int i = 0; i < midiMappingsCurlength; i++) {
-				if (dropdownMidiMappings[i] != NULL) {
-					dropdownMidiMappings[i]->tick();
-				}
-			}
-		//}
-		//shouldTick = !shouldTick;
+
 	}
 
 	void SensorOutput::addOutputFilter(/*string name, */ OutputFilter* filter) {
