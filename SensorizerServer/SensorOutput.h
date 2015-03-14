@@ -40,7 +40,7 @@ public:
 		int outputFiltersCurlength;
 		int midiMappingsCurlength;
 
-		bool shouldTick;
+		//bool shouldTick;
 
 
 	//hold GSON preset values for ranges

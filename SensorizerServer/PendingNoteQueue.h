@@ -7,10 +7,10 @@
 #include "MidiDevice.h" 
 
 // the number of ticks a note has to live before its corresponding noteOff is sent.
-#define NOTE_TIME_TILL_DEATH_DEFAULT 512
+#define NOTE_TIME_TILL_DEATH_DEFAULT 1024
 
 // let's hope they can't play more than 32 notes at a time (per sensor) before we can turn them back off
-#define MAX_PENDING_NOTES 16
+#define MAX_PENDING_NOTES 32
 
 // this holds note offs that are waiting to be sent.
 class PendingNote {
