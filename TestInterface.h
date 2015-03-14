@@ -10,13 +10,7 @@
 #include <utility/TestConfigurator.h>
 #include <utility/TestFilters.h>
 
-#define TEST_HIT_MAX 1024
-
-#define TEST_HIT_INCREMENT TEST_HIT_MAX / 4
-#define TESTPINS_LENGTH 8
-
-int testPins[TESTPINS_LENGTH] = {0,0,0,0,0,0,0,0};
-
+#include "TestSensorSimulator.h"
 
 void testInterfaceSetup() {
 
@@ -41,6 +35,8 @@ void testInterfaceSetup() {
   SerialToComputer.println("r   : run all tests");
   SerialToComputer.println("========================");
 
+
+  test_initSensorSimulators();
 }
 
 /**
@@ -180,6 +176,7 @@ int testUnitTests() {
   return filtersTest_checkPreFilters() ? 0 : 1;
 }
 
+
 void testInterfaceUpdate() {
 
   // for (int i = 0; i < TESTPINS_LENGTH; i++) {
@@ -194,7 +191,7 @@ void testInterfaceUpdate() {
     byte cmdPin = cmd - '0'; // they type the number of the pin to activate
 
     if (cmdPin >= 0 && cmdPin < TESTPINS_LENGTH) {
-      testPins[cmdPin] = TEST_HIT_MAX;
+      test_hitSensor(cmdPin);
     }
     else {
       switch (cmd) {
@@ -251,18 +248,10 @@ void testInterfaceUpdate() {
       }
     }
   }
+
+  test_sensorSimTick();
 }
 
-int getCurrentTestVal(byte analogPin) {
-  if (analogPin >= TESTPINS_LENGTH) return 0;
-
-  // make signal creep down if it got hit before
-  if (testPins[analogPin] > 0) {
-    testPins[analogPin] = max(0, testPins[analogPin] - TEST_HIT_INCREMENT);
-  }
-
-  return testPins[analogPin];
-}
 
 #endif
 
