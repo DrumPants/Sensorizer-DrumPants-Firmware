@@ -140,7 +140,7 @@ bool Configurator::setField(SensorizerServer* server, byte sensorIdx, byte field
 				if (filter == NULL)
 					return false;
 
-				filter->retriggerThreshold = ((float)(value) / 127.0f) * 300;
+				filter->retriggerThreshold = ((float)(value) / 127.0f) * MAX_RETRIGGER_DELAY;
 			
 
 
@@ -339,7 +339,7 @@ byte Configurator::getField(SensorizerServer* server, byte sensorIdx, byte field
 				if (filter == NULL)
 					return CONFIGURATOR_ERROR_RETURN_CODE_FAILURE;
 
-				return ((float)(filter->retriggerThreshold) / 300.0f) * 127;
+				return ((float)(filter->retriggerThreshold) / (float)MAX_RETRIGGER_DELAY) * 127;
 			
 
 

@@ -69,6 +69,11 @@ Total number of sensor slots + metadata slots.
 
 #define CONFIGURATOR_ERROR_RETURN_CODE_FAILURE 128
 
+/**
+ * Maximum delay (in ms [ms ideally, right now it is in ticks]) to scale the retriggerThreshold.
+ */
+#define MAX_RETRIGGER_DELAY 500
+
 class Configurator {
 
 
