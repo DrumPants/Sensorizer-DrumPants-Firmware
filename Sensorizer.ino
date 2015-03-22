@@ -92,11 +92,14 @@ unsigned long testTimestamps[TEST_TIMESTAMPS_LENGTH];
 
 
 
-
+/**
+ * Set to 1 to send one sensor's data with timestamps as a CSV to the USB.
+ * Used for the sensorizerTester Xcode app.
+ */
 #define ENABLE_TIMESTAMP_VAL_TEST 1
 #if ENABLE_TIMESTAMP_VAL_TEST
 
-#define TIMSTAMP_VAL_TEST_SENSOR_IDX_TO_LOG 0
+#define TIMSTAMP_VAL_TEST_SENSOR_IDX_TO_LOG 8
 #define TEST_VAL_TIMESTAMPS_LENGTH 256
 
 int testValTimestampsIdx = 0;
@@ -306,7 +309,7 @@ void loop()
           if (++testValTimestampsIdx >= TEST_VAL_TIMESTAMPS_LENGTH) {
             testValTimestampsIdx = 0;
 
-            SerialUSB.println("ValTimestamps:");
+            //SerialUSB.println("ValTimestamps:");
             unsigned long firstValTimestamp = testValTimestamps[0];
             for (int i = 0; i < TEST_VAL_TIMESTAMPS_LENGTH; i++) {
               SerialUSB.print(testValTimestamps[i]);
@@ -315,6 +318,8 @@ void loop()
             }
           }
         }
+
+        val = 0; // disable all notes so we don't pollute the CSV with garbage
 #endif  
 
 
