@@ -23,6 +23,11 @@
 		lastFilterOutputValue = 0;
 		lastFilterInputValue = 0;
 	}
+
+    // need this otherwise it's virtual and xcode complains
+    OneHitDetector::~OneHitDetector() {
+        
+    }
 	
 	
 	/* (non-Javadoc)

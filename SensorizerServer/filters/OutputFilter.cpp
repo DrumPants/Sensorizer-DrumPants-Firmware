@@ -16,6 +16,9 @@
 	 * 	NOTE: this can accept SensorizerSystem.SENSOR_VALUE_NULL, which means the sensor value is null and should not be sent.
 	 */
 	//public: virtual void setValue(double value);
+void OutputFilter::setValue(double value) {
+    
+}
 
 	/**
 	 * returns the filtered value
@@ -24,3 +27,6 @@
 	 * NOTE: this can return SensorizerSystem.SENSOR_VALUE_NULL, which means the sensor value is null and should not be sent.
 	 */
 	//public: virtual double value();
+double OutputFilter::value() {
+    
+}

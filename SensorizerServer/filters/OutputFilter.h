@@ -15,7 +15,7 @@ class OutputFilter {
 	 * 
 	 */
 	////@Expose
-	public: const static char* type;
+	//public: const static char* type;
 	
 	/**
 	 * set the input value to process
@@ -24,7 +24,7 @@ class OutputFilter {
 	 * 	NOTE: this can accept SensorizerSystem.SENSOR_VALUE_NULL, which means the sensor value is null and should not be sent.
 	 */
 	public: virtual void setValue(double value);
-
+    
 	/**
 	 * returns the filtered value
 	   

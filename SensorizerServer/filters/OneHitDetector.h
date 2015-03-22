@@ -50,8 +50,9 @@ class OneHitDetector : public OutputFilter {
 	
 	
 	public: void setValue(double value);
-
-	OneHitDetector();
+    
+    OneHitDetector();
+    ~OneHitDetector();
 
 	private: void trigger();
 
