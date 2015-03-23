@@ -11,6 +11,8 @@
 	#define FOOT_PEDAL_OUTRANGE_LOW 0.85
 	#define FOOT_PEDAL_OUTRANGE_HIGH 1.0
 
+	#define PIEZO_OUTRANGE_LOW 0.02
+
 	#if PRESET >= PRESET_PREPRODUCTION	
 
 		#define BARE_PIEZOS 0
@@ -25,7 +27,7 @@
 			#define PIEZO_CUTOFFRANGE_LOW 0.1
 		#else
 			// handle plastic peizos
-			#define PIEZO_INRANGE_HIGH 0.8;
+			#define PIEZO_INRANGE_HIGH 0.41;
 			#define PIEZO_CUTOFFRANGE_LOW 0.1
 		#endif
 	

@@ -151,7 +151,7 @@
 #define DEFAULT_RETRIGGER_THRESHOLD_FOOT_PEDAL 170
 
 // just disable this. it doesn't work very well. (DRUM-1051)
-#define DEFAULT_SENSITIVITY_THRESHOLD 0.00
+#define DEFAULT_SENSITIVITY_THRESHOLD 0.325
 
 #if IS_DUE
 

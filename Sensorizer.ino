@@ -96,10 +96,10 @@ unsigned long testTimestamps[TEST_TIMESTAMPS_LENGTH];
  * Set to 1 to send one sensor's data with timestamps as a CSV to the USB.
  * Used for the sensorizerTester Xcode app.
  */
-#define ENABLE_TIMESTAMP_VAL_TEST 1
+#define ENABLE_TIMESTAMP_VAL_TEST 0
 #if ENABLE_TIMESTAMP_VAL_TEST
 
-#define TIMSTAMP_VAL_TEST_SENSOR_IDX_TO_LOG 8
+#define TIMSTAMP_VAL_TEST_SENSOR_IDX_TO_LOG 0
 #define TEST_VAL_TIMESTAMPS_LENGTH 256
 
 int testValTimestampsIdx = 0;
