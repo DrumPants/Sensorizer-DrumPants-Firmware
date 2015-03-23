@@ -17,7 +17,7 @@
  * BUMP THIS whenever the MIDI CC MESSAGE CONSTANTS FOR FIELDS defines change, 
  * or when you want to reset everyone's settings on firmware update.
  */
-#define CONFIGURATOR_VERSION_NUM 3
+#define CONFIGURATOR_VERSION_NUM 4
 
 // we set bit 7 because we know all field values are 0-127, 
 // so even if the CONFIGURATOR_FIELDS_END changes, 
