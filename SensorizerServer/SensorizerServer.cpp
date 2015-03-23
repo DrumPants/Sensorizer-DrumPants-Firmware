@@ -151,7 +151,7 @@ void SensorizerServer::loadPreset() {
 	s = new SensorOutput();
 	s->inRange.low = 0;
 	s->inRange.high = PIEZO_INRANGE_HIGH;
-	s->outRange.low = 0;
+	s->outRange.low = PIEZO_OUTRANGE_LOW;
 	s->outRange.high = 1;
 	s->cutoffRange.low = PIEZO_CUTOFFRANGE_LOW;
 	s->cutoffRange.high = 1;
@@ -186,7 +186,7 @@ void SensorizerServer::loadPreset() {
 	s = new SensorOutput();
 	s->inRange.low = 0;
 	s->inRange.high = PIEZO_INRANGE_HIGH;
-	s->outRange.low = 0;
+	s->outRange.low = PIEZO_OUTRANGE_LOW;
 	s->outRange.high = 1;
 	s->cutoffRange.low = PIEZO_CUTOFFRANGE_LOW;
 	s->cutoffRange.high = 1;
@@ -216,7 +216,7 @@ void SensorizerServer::loadPreset() {
 	s = new SensorOutput();
 	s->inRange.low = 0;
 	s->inRange.high = PIEZO_INRANGE_HIGH;
-	s->outRange.low = 0;
+	s->outRange.low = PIEZO_OUTRANGE_LOW;
 	s->outRange.high = 1;
 	s->cutoffRange.low = PIEZO_C_D_CUTOFFRANGE_LOW;
 	s->cutoffRange.high = 1;
@@ -246,7 +246,7 @@ void SensorizerServer::loadPreset() {
 	s = new SensorOutput();
 	s->inRange.low = 0;
 	s->inRange.high = PIEZO_INRANGE_HIGH;
-	s->outRange.low = 0;
+	s->outRange.low = PIEZO_OUTRANGE_LOW;
 	s->outRange.high = 1;
 	s->cutoffRange.low = PIEZO_C_D_CUTOFFRANGE_LOW;
 	s->cutoffRange.high = 1;
@@ -281,7 +281,7 @@ void SensorizerServer::loadPreset() {
 #else
 	s->inRange.high = PIEZO_INRANGE_HIGH;
 #endif
-	s->outRange.low = 0;
+	s->outRange.low = PIEZO_OUTRANGE_LOW;
 	s->outRange.high = 1;
 
 #if PRESET == PRESET_BETA_NEIL_PEART	
@@ -316,7 +316,7 @@ void SensorizerServer::loadPreset() {
 	s = new SensorOutput();
 	s->inRange.low = 0;
 	s->inRange.high = PIEZO_INRANGE_HIGH;
-	s->outRange.low = 0;
+	s->outRange.low = PIEZO_OUTRANGE_LOW;
 	s->outRange.high = 1;
 	s->cutoffRange.low = PIEZO_CUTOFFRANGE_LOW;
 	s->cutoffRange.high = 1;
@@ -345,7 +345,7 @@ void SensorizerServer::loadPreset() {
 	s = new SensorOutput();
 	s->inRange.low = 0;
 	s->inRange.high = PIEZO_INRANGE_HIGH;
-	s->outRange.low = 0;
+	s->outRange.low = PIEZO_OUTRANGE_LOW;
 	s->outRange.high = 1;
 	s->cutoffRange.low = PIEZO_C_D_CUTOFFRANGE_LOW;
 	s->cutoffRange.high = 1;
@@ -382,7 +382,7 @@ void SensorizerServer::loadPreset() {
 #else
 	s->inRange.high = 0.16353861;
 #endif
-	s->outRange.low = 0;
+	s->outRange.low = PIEZO_OUTRANGE_LOW;
 	s->outRange.high = 1;
 	s->cutoffRange.low = 0.1;
 	s->cutoffRange.high = 1;
@@ -416,7 +416,7 @@ void SensorizerServer::loadPreset() {
 #else
 	s->inRange.high = 0.16353861;
 #endif
-	s->outRange.low = 0;
+	s->outRange.low = PIEZO_OUTRANGE_LOW;
 	s->outRange.high = 1;
 	s->cutoffRange.low = 0.1;
 	s->cutoffRange.high = 1;
@@ -451,7 +451,7 @@ void SensorizerServer::loadPreset() {
 	s = new SensorOutput();
 	s->inRange.low = 0;
 	s->inRange.high = PIEZO_INRANGE_HIGH;
-	s->outRange.low = 0;
+	s->outRange.low = PIEZO_OUTRANGE_LOW;
 	s->outRange.high = 1;
 	s->cutoffRange.low = PIEZO_C_D_CUTOFFRANGE_LOW;
 	s->cutoffRange.high = 1;
@@ -693,7 +693,7 @@ void SensorizerServer::loadPreset() {
 	s = new SensorOutput();
 	s->inRange.low = 0;
 	s->inRange.high = 1;
-	s->outRange.low = 0;
+	s->outRange.low = PIEZO_OUTRANGE_LOW;
 	s->outRange.high = 1;
 	s->cutoffRange.low = 0.8428571;
 	s->cutoffRange.high = 1;
@@ -722,7 +722,7 @@ void SensorizerServer::loadPreset() {
 	s = new SensorOutput();
 	s->inRange.low = 0;
 	s->inRange.high = 0.21212122;
-	s->outRange.low = 0;
+	s->outRange.low = PIEZO_OUTRANGE_LOW;
 	s->outRange.high = 1;
 	s->cutoffRange.low = 0.094285714;
 	s->cutoffRange.high = 1;
@@ -752,7 +752,7 @@ void SensorizerServer::loadPreset() {
 	s = new SensorOutput();
 	s->inRange.low = 0;
 	s->inRange.high = 0.16353861;
-	s->outRange.low = 0;
+	s->outRange.low = PIEZO_OUTRANGE_LOW;
 	s->outRange.high = 1;
 	s->cutoffRange.low = 0.01;
 	s->cutoffRange.high = 1;
@@ -782,7 +782,7 @@ void SensorizerServer::loadPreset() {
 	s = new SensorOutput();
 	s->inRange.low = 0;
 	s->inRange.high = 0.28739002;
-	s->outRange.low = 0;
+	s->outRange.low = PIEZO_OUTRANGE_LOW;
 	s->outRange.high = 1;
 	s->cutoffRange.low = 0.09;
 	s->cutoffRange.high = 1;
@@ -812,7 +812,7 @@ void SensorizerServer::loadPreset() {
 	s = new SensorOutput();
 	s->inRange.low = 0;
 	s->inRange.high = 0.20821114;
-	s->outRange.low = 0;
+	s->outRange.low = PIEZO_OUTRANGE_LOW;
 	s->outRange.high = 1;
 	s->cutoffRange.low = 0.01;
 	s->cutoffRange.high = 1;
@@ -842,7 +842,7 @@ void SensorizerServer::loadPreset() {
 	s = new SensorOutput();
 	s->inRange.low = 0;
 	s->inRange.high = 0.23851417;
-	s->outRange.low = 0;
+	s->outRange.low = PIEZO_OUTRANGE_LOW;
 	s->outRange.high = 1;
 	s->cutoffRange.low = 0.54285717;
 	s->cutoffRange.high = 1;
@@ -875,7 +875,7 @@ void SensorizerServer::loadPreset() {
 	s = new SensorOutput();
 	s->inRange.low = 0;
 	s->inRange.high = 0.3998045;
-	s->outRange.low = 0;
+	s->outRange.low = PIEZO_OUTRANGE_LOW;
 	s->outRange.high = 1;
 	s->cutoffRange.low = 0;
 	s->cutoffRange.high = 1;
@@ -905,7 +905,7 @@ void SensorizerServer::loadPreset() {
 	s = new SensorOutput();
 	s->inRange.low = 0;
 	s->inRange.high = 0.1544477;
-	s->outRange.low = 0;
+	s->outRange.low = PIEZO_OUTRANGE_LOW;
 	s->outRange.high = 1;
 	s->cutoffRange.low = 0;
 	s->cutoffRange.high = 1;
@@ -935,7 +935,7 @@ void SensorizerServer::loadPreset() {
 	s = new SensorOutput();
 	s->inRange.low = 0;
 	s->inRange.high = 0.0684262;
-	s->outRange.low = 0;
+	s->outRange.low = PIEZO_OUTRANGE_LOW;
 	s->outRange.high = 1;
 	s->cutoffRange.low = 0;
 	s->cutoffRange.high = 1;
@@ -965,7 +965,7 @@ void SensorizerServer::loadPreset() {
 	s = new SensorOutput();
 	s->inRange.low = 0;
 	s->inRange.high = 1;
-	s->outRange.low = 0;
+	s->outRange.low = PIEZO_OUTRANGE_LOW;
 	s->outRange.high = 1;
 	s->cutoffRange.low = 0;
 	s->cutoffRange.high = 1;
@@ -995,7 +995,7 @@ void SensorizerServer::loadPreset() {
 	s = new SensorOutput();
 	s->inRange.low = 0.24340177;
 	s->inRange.high = 1;
-	s->outRange.low = 0;
+	s->outRange.low = PIEZO_OUTRANGE_LOW;
 	s->outRange.high = 1;
 	s->cutoffRange.low = 0;
 	s->cutoffRange.high = 1;
@@ -1027,7 +1027,7 @@ void SensorizerServer::loadPreset() {
 	s = new SensorOutput();
 	s->inRange.low = 0;
 	s->inRange.high = 1;
-	s->outRange.low = 0;
+	s->outRange.low = PIEZO_OUTRANGE_LOW;
 	s->outRange.high = 1;
 	s->cutoffRange.low = 0;
 	s->cutoffRange.high = 1;
@@ -1058,7 +1058,7 @@ void SensorizerServer::loadPreset() {
 	s = new SensorOutput();
 	s->inRange.low = 0;
 	s->inRange.high = 1;
-	s->outRange.low = 0;
+	s->outRange.low = PIEZO_OUTRANGE_LOW;
 	s->outRange.high = 1;
 	s->cutoffRange.low = 0.8428571;
 	s->cutoffRange.high = 1;
@@ -1087,7 +1087,7 @@ void SensorizerServer::loadPreset() {
 	s = new SensorOutput();
 	s->inRange.low = 0;
 	s->inRange.high = 0.40714276;
-	s->outRange.low = 0;
+	s->outRange.low = PIEZO_OUTRANGE_LOW;
 	s->outRange.high = 1;
 	s->cutoffRange.low = 0.22857143;
 	s->cutoffRange.high = 1;
@@ -1117,7 +1117,7 @@ void SensorizerServer::loadPreset() {
 	s = new SensorOutput();
 	s->inRange.low = 0;
 	s->inRange.high = 0.6642857;
-	s->outRange.low = 0;
+	s->outRange.low = PIEZO_OUTRANGE_LOW;
 	s->outRange.high = 1;
 	s->cutoffRange.low = 0.021428572;
 	s->cutoffRange.high = 1;
@@ -1147,7 +1147,7 @@ void SensorizerServer::loadPreset() {
 	s = new SensorOutput();
 	s->inRange.low = 0;
 	s->inRange.high = 0.62142855;
-	s->outRange.low = 0;
+	s->outRange.low = PIEZO_OUTRANGE_LOW;
 	s->outRange.high = 1;
 	s->cutoffRange.low = 0.021428572;
 	s->cutoffRange.high = 1;
@@ -1177,7 +1177,7 @@ void SensorizerServer::loadPreset() {
 	s = new SensorOutput();
 	s->inRange.low = 0;
 	s->inRange.high = 1;
-	s->outRange.low = 0;
+	s->outRange.low = PIEZO_OUTRANGE_LOW;
 	s->outRange.high = 1;
 	s->cutoffRange.low = 0.028571429;
 	s->cutoffRange.high = 1;
@@ -1207,7 +1207,7 @@ void SensorizerServer::loadPreset() {
 	s = new SensorOutput();
 	s->inRange.low = 0;
 	s->inRange.high = 0.23851417;
-	s->outRange.low = 0;
+	s->outRange.low = PIEZO_OUTRANGE_LOW;
 	s->outRange.high = 1;
 	s->cutoffRange.low = 0.54285717;
 	s->cutoffRange.high = 1;
@@ -1252,7 +1252,7 @@ void SensorizerServer::loadPreset() {
 s = new SensorOutput();
 s->inRange.low = 0.028571429;
 s->inRange.high = 0.30;//35;
-s->outRange.low = 0;
+s->outRange.low = PIEZO_OUTRANGE_LOW;
 s->outRange.high = 1;
 s->cutoffRange.low = 0.014285714;
 s->cutoffRange.high = 0.95;
@@ -1273,7 +1273,7 @@ sensorInputs[i++] = s;
 s = new SensorOutput();
 s->inRange.low = 0.021428572;
 s->inRange.high = 0.40;//44285715;
-s->outRange.low = 0;
+s->outRange.low = PIEZO_OUTRANGE_LOW;
 s->outRange.high = 1;
 s->cutoffRange.low = 0.057142872;
 s->cutoffRange.high = 1;
@@ -1299,7 +1299,7 @@ sensorInputs[i++] = s;
 s = new SensorOutput();
 s->inRange.low = 0;
 s->inRange.high = 0.40;//47142863;
-s->outRange.low = 0;
+s->outRange.low = PIEZO_OUTRANGE_LOW;
 s->outRange.high = 1;
 s->cutoffRange.low = 0.1;
 s->cutoffRange.high = 1;
@@ -1325,7 +1325,7 @@ sensorInputs[i++] = s;
 s = new SensorOutput();
 s->inRange.low = 0;
 s->inRange.high = 0.40;//5;
-s->outRange.low = 0;
+s->outRange.low = PIEZO_OUTRANGE_LOW;
 s->outRange.high = 1;
 s->cutoffRange.low = 0.1;
 s->cutoffRange.high = 1;
@@ -1351,7 +1351,7 @@ sensorInputs[i++] = s;
 s = new SensorOutput();
 s->inRange.low = 0;
 s->inRange.high = 0.40;//5;
-s->outRange.low = 0;
+s->outRange.low = PIEZO_OUTRANGE_LOW;
 s->outRange.high = 1;
 s->cutoffRange.low = 0.1;
 s->cutoffRange.high = 1;
@@ -1377,7 +1377,7 @@ sensorInputs[i++] = s;
 s = new SensorOutput();
 s->inRange.low = 0;
 s->inRange.high = 0.4;
-s->outRange.low = 0;
+s->outRange.low = PIEZO_OUTRANGE_LOW;
 s->outRange.high = 1;
 s->cutoffRange.low = 0.1;
 s->cutoffRange.high = 1;
