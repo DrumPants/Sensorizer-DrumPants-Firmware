@@ -148,7 +148,7 @@
 
 // the default num of ticks before a note retriggers
 #define DEFAULT_RETRIGGER_THRESHOLD 30
-#define DEFAULT_RETRIGGER_THRESHOLD_FOOT_PEDAL 100
+#define DEFAULT_RETRIGGER_THRESHOLD_FOOT_PEDAL 170
 
 // just disable this. it doesn't work very well. (DRUM-1051)
 #define DEFAULT_SENSITIVITY_THRESHOLD 0.00
