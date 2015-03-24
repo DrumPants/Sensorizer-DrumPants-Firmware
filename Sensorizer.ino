@@ -225,7 +225,7 @@ void setup()
   
   playIntro(server);
 
-
+server->startMetronome(120 * 4);
 
 #if ENABLE_TEST_INTERFACE
   delay(5000); // wait for them to connect the serial monitor
@@ -382,11 +382,8 @@ void loop()
   #endif  
 #endif
 
-
-#if ENABLE_LOOPER  
-  // loop that shit! 
+  // trigger looper and/or metronome events
   server->tick();
-#endif
   
 #if ENABLE_TEST
   testUpdate();

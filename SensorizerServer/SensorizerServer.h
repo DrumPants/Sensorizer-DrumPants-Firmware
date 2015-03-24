@@ -19,6 +19,14 @@
 
 #include "TranslatingMidiRepeater.h"
 
+//#include "general_midi_sounds.h"
+
+#define METRONOME_MIDI_CHANNEL 10
+// set to MetronomeClick
+#define METRONOME_NOTE 33
+
+// play quarter notes
+#define METRONOME_TIME_DIVSION (1/4)
 
 #define SENSOR_INPUTS_LENGTH ((ANALOG_PIN_END + 1) - ANALOG_PIN_START)
 
@@ -38,6 +46,11 @@ private:
 #endif
 
 	Metro metro;
+
+	Metro metronome;
+
+	// call every tick()
+	void metronomeTick();
 public:
 	//should maybe be private but I don't believe in writing everything twice.
 	MidiDevice* midiDevice;
@@ -61,6 +74,15 @@ public:
 	void loadNotes(byte notes[]);
 
 	void tick();
+
+	/**
+	 * Starts the system metronome at the given BPM.
+	 *
+	 * You must call tick() regularly for this to work.
+	 * @param bpm [description]
+	 */
+	void startMetronome(int bpm);
+	void stopMetronome();
 	
 	/****
 		Returns the sensor index that is sending the given note for the curretnly selected scale.

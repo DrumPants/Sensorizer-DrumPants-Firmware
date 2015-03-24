@@ -64,6 +64,8 @@ void SensorizerServer::init() {
 }
 
 void SensorizerServer::tick() {
+	metronomeTick();
+
 	int curTime = metro.hasTicked();
 
 	if (curTime == 0)
@@ -73,6 +75,34 @@ void SensorizerServer::tick() {
 	this->looper->tick(curTime);
 #endif
 }
+
+void SensorizerServer::metronomeTick() {
+	int curTime = metronome.hasTicked();
+
+	if (curTime == 0)
+		return;
+
+	midiDevice->noteOff(METRONOME_MIDI_CHANNEL, METRONOME_NOTE, 00);
+	midiDevice->noteOn(METRONOME_MIDI_CHANNEL, METRONOME_NOTE, 80);
+}
+
+void SensorizerServer::startMetronome(int bpm) {
+	metronome.timePerTick = (1000 / (bpm / 60));
+
+	// select drums
+    midiDevice->setBank(METRONOME_MIDI_CHANNEL, 0x78); 
+
+	// start the cycle so theres an on for every off.
+	midiDevice->noteOn(METRONOME_MIDI_CHANNEL, METRONOME_NOTE, 80);
+}
+
+void SensorizerServer::stopMetronome() {
+	startMetronome(0);
+
+	// finish the cycle so theres an on for every off
+	midiDevice->noteOff(METRONOME_MIDI_CHANNEL, METRONOME_NOTE, 00);
+}
+
 
 //reads all input devices values into the sensorInput objects.
 //also sends all values from sensor inputs.

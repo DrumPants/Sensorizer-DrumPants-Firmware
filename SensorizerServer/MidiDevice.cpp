@@ -144,7 +144,9 @@ void MidiDevice::setBank(byte channel, byte bank, byte instrument) {
 	DEBUG_PRINT_NUM("setBank: ", bank)
 	talkMIDI((0xB0 | channel), 0, bank); //Select the bank of really fun sounds
 	
-	this->bank = bank;
+	if (channel == 0) {
+		this->bank = bank;
+	}
 	
 	setInstrument(channel, instrument);
 }
@@ -156,7 +158,9 @@ void MidiDevice::setInstrument(byte channel, byte inst) {
 	DEBUG_PRINT_NUM("setInstrument: ", inst)
 	talkMIDI((0xC0 | channel), inst, 0); //Set instrument number. 0xC0 is a 1 data byte command
 	
-	this->instrument = inst;
+	if (channel == 0) {
+		this->instrument = inst;
+	}
 }
 byte MidiDevice::getInstrument() {
 	return this->instrument;
