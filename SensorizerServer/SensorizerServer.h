@@ -21,6 +21,8 @@
 
 //#include "general_midi_sounds.h"
 
+#define ENABLE_SEND_METRONOME_TO_USB_AND_BLE 1
+
 #define METRONOME_MIDI_CHANNEL 10
 // set to MetronomeClick
 #define METRONOME_NOTE 33
