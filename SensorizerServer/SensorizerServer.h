@@ -26,6 +26,8 @@
 #define METRONOME_MIDI_CHANNEL 10
 // set to MetronomeClick
 #define METRONOME_NOTE 33
+// set to MetronomeBell, but that sounds weird, so just do a stronger first beat.
+#define METRONOME_NOTE_START 33
 
 // play quarter notes
 #define METRONOME_TIME_DIVSION (1/4)
@@ -50,6 +52,8 @@ private:
 	Metro metro;
 
 	Metro metronome;
+	byte metronomeCurBeat;
+	byte metronomeTimeSignature;
 
 	// call every tick()
 	void metronomeTick();

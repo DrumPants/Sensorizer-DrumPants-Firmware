@@ -225,7 +225,7 @@ void setup()
   
   playIntro(server);
 
-server->startMetronome(90, 4);
+//server->startMetronome(90, 4);
 
 #if ENABLE_TEST_INTERFACE
   delay(5000); // wait for them to connect the serial monitor

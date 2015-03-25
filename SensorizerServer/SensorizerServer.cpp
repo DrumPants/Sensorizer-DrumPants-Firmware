@@ -25,6 +25,8 @@ SensorizerServer::SensorizerServer() {
 
 	// metronome off by default.
 	metronome.timePerTick = 0;
+	metronomeTimeSignature = 4;
+	metronomeCurBeat = 0;
 
 #if ENABLE_LOOPER
 	//set up looper
@@ -84,11 +86,26 @@ void SensorizerServer::metronomeTick() {
 	if (curTime == 0)
 		return;
 
-	midiDevice->noteOff(METRONOME_MIDI_CHANNEL, METRONOME_NOTE, 00);
-	midiDevice->noteOn(METRONOME_MIDI_CHANNEL, METRONOME_NOTE, 80);
+	int note = METRONOME_NOTE;
+	int lastNote = METRONOME_NOTE;
+	int vel = 80;
+	metronomeCurBeat++;
+	if (metronomeCurBeat >= metronomeTimeSignature) {
+		metronomeCurBeat = 0;
+		note = METRONOME_NOTE_START;
+		vel = 127;
+	}
+	else if (metronomeCurBeat == 1) {
+		lastNote = METRONOME_NOTE_START;
+	}
+
+	midiDevice->noteOff(METRONOME_MIDI_CHANNEL, lastNote, 00);
+	midiDevice->noteOn(METRONOME_MIDI_CHANNEL, note, vel);
 }
 
 void SensorizerServer::startMetronome(int bpm, int divisions) {
+	metronomeTimeSignature = divisions;
+	metronomeCurBeat = 0;
 
 	// metronome was off before, send starting note.
 	if (metronome.timePerTick == 0) {
@@ -96,7 +113,7 @@ void SensorizerServer::startMetronome(int bpm, int divisions) {
 	    midiDevice->setBank(METRONOME_MIDI_CHANNEL, 0x78); 
 
 		// start the cycle so theres an on for every off.
-		midiDevice->noteOn(METRONOME_MIDI_CHANNEL, METRONOME_NOTE, 80);
+		midiDevice->noteOn(METRONOME_MIDI_CHANNEL, METRONOME_NOTE_START, 80);
 	}
 
 	metronome.timePerTick = (1000.0f / ((float)bpm / 60.0f));
@@ -106,7 +123,12 @@ void SensorizerServer::stopMetronome() {
 	startMetronome(0);
 
 	// finish the cycle so theres an on for every off
-	midiDevice->noteOff(METRONOME_MIDI_CHANNEL, METRONOME_NOTE, 00);
+	if (metronomeCurBeat == 0) {
+		midiDevice->noteOff(METRONOME_MIDI_CHANNEL, METRONOME_NOTE_START, 00);
+	}
+	else {
+		midiDevice->noteOff(METRONOME_MIDI_CHANNEL, METRONOME_NOTE, 00);	
+	}
 }
 
 int SensorizerServer::getMetronomeBPM(int divisions) {
