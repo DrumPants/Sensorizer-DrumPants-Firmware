@@ -416,7 +416,7 @@ void Knobs::check() {
   // }
   
   
-  int curPos = (myEnc->read() / ENCODER_POSITION_MULTIPLIER) / ENCODER_RESOLUTION;
+  long curPos = (myEnc->read() / ENCODER_POSITION_MULTIPLIER) / ENCODER_RESOLUTION;
 
   int delta = (curPos - lastPos);
   

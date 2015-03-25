@@ -24,6 +24,9 @@ struct KnobsAndButtons : public Knobs {
   
   long debounceTimer;
 
+  // current bpm of metronome.
+  int bpm;
+
   byte volume;
 
   void setVolume(int vol);

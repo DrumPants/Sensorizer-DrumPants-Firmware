@@ -46,13 +46,13 @@
 
 		if (lowPassFilterConstant > 0) {
 			_outputValue = LOW_PASS_FILTER(lastFilterOutputValue, _outputValue, lowPassFilterConstant);
-			DEBUG_PRINT_NUMS("Low pass filter: ", value, _outputValue);
+			//DEBUG_PRINT_NUMS("Low pass filter: ", value, _outputValue);
 		}
 		if (highPassFilterConstant > 0) {
 			_outputValue = HIGH_PASS_FILTER(lastFilterOutputValue, lastFilterInputValue, _outputValue, highPassFilterConstant);
-			DEBUG_PRINT_NUMS("High pass lastFilterOutputValue, highPassFilterConstant ", lastFilterOutputValue, lastFilterInputValue);
-			DEBUG_PRINT_NUMS("High pass filter _outputValue, highPassFilterConstant: ", _outputValue, highPassFilterConstant);
-			DEBUG_PRINT_NUMS("High pass filter: ", value, _outputValue);
+			// DEBUG_PRINT_NUMS("High pass lastFilterOutputValue, highPassFilterConstant ", lastFilterOutputValue, lastFilterInputValue);
+			// DEBUG_PRINT_NUMS("High pass filter _outputValue, highPassFilterConstant: ", _outputValue, highPassFilterConstant);
+			// DEBUG_PRINT_NUMS("High pass filter: ", value, _outputValue);
 		}
 
 

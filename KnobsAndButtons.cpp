@@ -27,6 +27,7 @@ KnobsAndButtons::KnobsAndButtons() {
 	this->downButtonPressed = false;
 	this->upButtonPressed = false;
 	this->isTurningKnob = false;
+	this->bpm = 0;
 
 	pinMode(VOLUME_UP_PIN, INPUT);
 	pinMode(VOLUME_DOWN_PIN, INPUT);
@@ -72,7 +73,7 @@ void KnobsAndButtons::onKnobTurned(int delta) {
 
 	if (this->upButtonPressed) {
 		// control metronome
-		int bpm = this->server->getMetronomeBPM();
+		//int bpm = this->server->getMetronomeBPM();
 
 		int newBpm = min(max(0, bpm + delta), 299);
 		
@@ -86,7 +87,10 @@ void KnobsAndButtons::onKnobTurned(int delta) {
 				newBpm = 0;
 			}
 		}
-
+		
+		DEBUG_PRINT_NUMS("start metronome: ", newBpm, bpm);
+		bpm = newBpm;
+		
 		this->server->startMetronome(newBpm);
 
 		this->lcd.showTemporarily(newBpm);
