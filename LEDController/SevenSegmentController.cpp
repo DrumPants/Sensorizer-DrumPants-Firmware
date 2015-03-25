@@ -137,7 +137,7 @@ void SevenSegmentController::setDigit(byte digitIndex, byte character) {
 }
 
 
-void SevenSegmentController::print(int num) {
+void SevenSegmentController::print(int num, bool useHex) {
   // byte tens = num / 10;
 
   // charactersForDigits[0] = tens + '0';
@@ -157,7 +157,15 @@ void SevenSegmentController::print(int num) {
     // translate hundreds into hex-ish notation.
     byte tens = num / 10;
 
-    charactersForDigits[0] = ('A' - 10) + tens;
+    if (useHex) {
+      charactersForDigits[0] = ('A' - 10) + tens;
+    }
+    else {
+      charactersForDigits[0] = str.charAt(startChar + 0);
+
+      setDecimalPoint(0, (num >= 100));
+      setDecimalPoint(1, (num >= 200));
+    }
   }
   else {
     charactersForDigits[0] = str.charAt(startChar + 0);

@@ -40,9 +40,10 @@ void LEDInterface::changeScale(ScaleId scaleId) {
 }
 
 void LEDInterface::showTemporarily(int num) {
-  led->print(num);
+  // setting decimals is not necessary since they are set in print()
   led->setDecimalPoint(0, false);
   led->setDecimalPoint(1, false);
+  led->print(num, false); // for metronome, etc., don't use hex-ish display. use dots instead.
 
   this->numTicksLeftForTemporary = NUM_TICKS_FOR_TEMPORARY_DISPLAY;
 }

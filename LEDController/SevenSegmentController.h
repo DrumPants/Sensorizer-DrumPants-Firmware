@@ -85,8 +85,11 @@ public:
 
 	/***
 		Prints the given number as its decimal equivalent.
+
+		If useHex = true, numbers over 100 will be displayed in pseudo-hex notation (e.g. 100 = A0)
+		If useHex = false, the decimal points will be used to mark numbers over 100 and 200, respectively.
 	***/
-	void print(int num);
+	void print(int num, bool useHex = true);
 
 
 	/***
