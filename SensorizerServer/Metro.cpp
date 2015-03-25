@@ -13,6 +13,8 @@ Returns 0 if between ticks.
 
 ***/
 int Metro::hasTicked() {
+	if (timePerTick == 0) return 0;
+	
 	int curTime = millis();
 	int timeEllapsed = curTime - this->lastTimeTicked;
 

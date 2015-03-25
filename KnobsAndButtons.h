@@ -19,10 +19,10 @@
 struct KnobsAndButtons : public Knobs {
 
   bool downButtonPressed,
-        upButtonPressed;
+        upButtonPressed,
+        isTurningKnob;
   
   long debounceTimer;
-  long knobLastTurnedTime;
 
   byte volume;
 

@@ -26,6 +26,7 @@ KnobsAndButtons::KnobsAndButtons() {
 	this->debounceTimer = millis();
 	this->downButtonPressed = false;
 	this->upButtonPressed = false;
+	this->isTurningKnob = false;
 
 	pinMode(VOLUME_UP_PIN, INPUT);
 	pinMode(VOLUME_DOWN_PIN, INPUT);
@@ -46,10 +47,11 @@ void KnobsAndButtons::check() {
 		upPressed != this->upButtonPressed) {
 		
 		this->debounceTimer = curTime; // reset timer
+		isTurningKnob = false;
 	}
 
 	if ((curTime - this->debounceTimer) > DEBOUNCE_DELAY &&
-		(curTime - knobLastTurnedTime) > KNOB_DEBOUNCE_DELAY) {
+		!isTurningKnob) {
 
 		if (downPressed) {
 			//DEBUG_PRINT("down pressed");
@@ -72,12 +74,12 @@ void KnobsAndButtons::onKnobTurned(int delta) {
 		// control metronome
 		int bpm = this->server->getMetronomeBPM();
 
-		int newBpm = min(max(0, bpm + delta), 100);
+		int newBpm = min(max(0, bpm + delta), 110);
 		this->server->startMetronome(newBpm);
 
 		this->lcd.showTemporarily(newBpm);
 
-		knobLastTurnedTime = millis();
+		isTurningKnob = true;
 	}
 	else {
 		Knobs::onKnobTurned(delta);

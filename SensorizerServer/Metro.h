@@ -22,6 +22,8 @@ public:
 
 	/*** 
 		The length of time in milliseconds between ticks.
+
+		Set to 0 to disable Metronome.
 	***/
 	int timePerTick;
 };
