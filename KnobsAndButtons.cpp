@@ -74,7 +74,19 @@ void KnobsAndButtons::onKnobTurned(int delta) {
 		// control metronome
 		int bpm = this->server->getMetronomeBPM();
 
-		int newBpm = min(max(0, bpm + delta), 110);
+		int newBpm = min(max(0, bpm + delta), 299);
+		
+		// start at 60
+		if (newBpm < 60) {
+
+			if (delta > 0) {
+				newBpm = 60; 
+			}
+			else {
+				newBpm = 0;
+			}
+		}
+
 		this->server->startMetronome(newBpm);
 
 		this->lcd.showTemporarily(newBpm);

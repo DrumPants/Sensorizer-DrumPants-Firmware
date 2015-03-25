@@ -23,6 +23,8 @@ SensorizerServer::SensorizerServer() {
 
 #endif
 
+	// metronome off by default.
+	metronome.timePerTick = 0;
 
 #if ENABLE_LOOPER
 	//set up looper
@@ -87,13 +89,17 @@ void SensorizerServer::metronomeTick() {
 }
 
 void SensorizerServer::startMetronome(int bpm, int divisions) {
-	metronome.timePerTick = (1000 / (bpm * divisions / 60));
 
-	// select drums
-    midiDevice->setBank(METRONOME_MIDI_CHANNEL, 0x78); 
+	// metronome was off before, send starting note.
+	if (metronome.timePerTick == 0) {
+		// select drums
+	    midiDevice->setBank(METRONOME_MIDI_CHANNEL, 0x78); 
 
-	// start the cycle so theres an on for every off.
-	midiDevice->noteOn(METRONOME_MIDI_CHANNEL, METRONOME_NOTE, 80);
+		// start the cycle so theres an on for every off.
+		midiDevice->noteOn(METRONOME_MIDI_CHANNEL, METRONOME_NOTE, 80);
+	}
+
+	metronome.timePerTick = (1000.0f / ((float)bpm / 60.0f));
 }
 
 void SensorizerServer::stopMetronome() {
@@ -104,7 +110,9 @@ void SensorizerServer::stopMetronome() {
 }
 
 int SensorizerServer::getMetronomeBPM(int divisions) {
-	return (metronome.timePerTick / 1000) * 60 / divisions;
+	if (metronome.timePerTick == 0) return 0;
+
+	return (1000.0f / (float)metronome.timePerTick) * 60.0f;
 }
 
 //reads all input devices values into the sensorInput objects.

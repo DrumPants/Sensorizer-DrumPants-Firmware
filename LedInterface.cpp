@@ -32,11 +32,13 @@ void LEDInterface::changeBank(const char* label, BankId bankId) {
 
   led->print(bankId);
   led->setDecimalPoint(1, false);
+  led->setDecimalPoint(0, false);
 }
 
 void LEDInterface::changeScale(ScaleId scaleId) {
   led->print(scaleId);
   led->setDecimalPoint(1, true);
+  led->setDecimalPoint(0, false);
 }
 
 void LEDInterface::showTemporarily(int num) {
