@@ -22,6 +22,7 @@ struct KnobsAndButtons : public Knobs {
         upButtonPressed;
   
   long debounceTimer;
+  long knobLastTurnedTime;
 
   byte volume;
 
@@ -32,6 +33,7 @@ public:
 
 
   void check();
+  void onKnobTurned(int delta);
 };
 
 

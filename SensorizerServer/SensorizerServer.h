@@ -81,10 +81,17 @@ public:
 	 * Starts the system metronome at the given BPM.
 	 *
 	 * You must call tick() regularly for this to work.
-	 * @param bpm [description]
+	 * @param bpm Beats per minute
+	 * @param divisions 
 	 */
-	void startMetronome(int bpm);
+	void startMetronome(int bpm, int divisions = 4);
 	void stopMetronome();
+
+	/**
+	 * Returns current BPM of the metronome, or 0 if it's disabled.
+	 * @return [description]
+	 */
+	int getMetronomeBPM(int divisions = 4);
 	
 	/****
 		Returns the sensor index that is sending the given note for the curretnly selected scale.

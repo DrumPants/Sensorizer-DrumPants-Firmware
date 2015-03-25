@@ -2,6 +2,7 @@
 #include "Metro.h"
 
 #define DEBOUNCE_DELAY 110
+#define KNOB_DEBOUNCE_DELAY 1000
 
 #define VOLUME_UP_PIN 27
 #define VOLUME_DOWN_PIN 26
@@ -39,15 +40,16 @@ void KnobsAndButtons::check() {
 	bool downPressed = (digitalRead(VOLUME_DOWN_PIN) == LOW);
 	bool upPressed = (digitalRead(VOLUME_UP_PIN) == LOW);
 
+	long curTime = millis();
 
 	if (downPressed != this->downButtonPressed ||
 		upPressed != this->upButtonPressed) {
 		
-		this->debounceTimer = millis(); // reset timer
+		this->debounceTimer = curTime; // reset timer
 	}
 
-
-	if ((millis() - this->debounceTimer) > DEBOUNCE_DELAY) {
+	if ((curTime - this->debounceTimer) > DEBOUNCE_DELAY &&
+		(curTime - knobLastTurnedTime) > KNOB_DEBOUNCE_DELAY) {
 
 		if (downPressed) {
 			//DEBUG_PRINT("down pressed");
@@ -63,6 +65,24 @@ void KnobsAndButtons::check() {
 	this->upButtonPressed = upPressed;
 }
 
+
+void KnobsAndButtons::onKnobTurned(int delta) {
+
+	if (this->upButtonPressed) {
+		// control metronome
+		int bpm = this->server->getMetronomeBPM();
+
+		int newBpm = min(max(0, bpm + delta), 100);
+		this->server->startMetronome(newBpm);
+
+		this->lcd.showTemporarily(newBpm);
+
+		knobLastTurnedTime = millis();
+	}
+	else {
+		Knobs::onKnobTurned(delta);
+	}
+}
 
 void KnobsAndButtons::setVolume(int vol) {
 

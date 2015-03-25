@@ -86,8 +86,8 @@ void SensorizerServer::metronomeTick() {
 	midiDevice->noteOn(METRONOME_MIDI_CHANNEL, METRONOME_NOTE, 80);
 }
 
-void SensorizerServer::startMetronome(int bpm) {
-	metronome.timePerTick = (1000 / (bpm / 60));
+void SensorizerServer::startMetronome(int bpm, int divisions) {
+	metronome.timePerTick = (1000 / (bpm * divisions / 60));
 
 	// select drums
     midiDevice->setBank(METRONOME_MIDI_CHANNEL, 0x78); 
@@ -103,6 +103,9 @@ void SensorizerServer::stopMetronome() {
 	midiDevice->noteOff(METRONOME_MIDI_CHANNEL, METRONOME_NOTE, 00);
 }
 
+int SensorizerServer::getMetronomeBPM(int divisions) {
+	return (metronome.timePerTick / 1000) * 60 / divisions;
+}
 
 //reads all input devices values into the sensorInput objects.
 //also sends all values from sensor inputs.

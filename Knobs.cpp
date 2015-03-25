@@ -423,7 +423,9 @@ void Knobs::check() {
   lastButtonMode = buttonMode;
   lastPos = curPos;
 
-  onKnobTurned(delta);
+  if (delta != 0) {
+    onKnobTurned(delta);
+  }
 
 #if ENABLE_LCD
   lcd.check();
@@ -436,29 +438,27 @@ void Knobs::onKnobTurned(int delta) {
   if (lastButtonMode == HIGH) {
     // no button, change bank
     int newPos = position + delta;
-    if (newPos != position) {
-      DEBUG_PRINT_NUM("encoder: ", newPos);
-      
-      changeBank(newPos);
+    DEBUG_PRINT_NUM("encoder: ", newPos);
+    
+    changeBank(newPos);
 
-      position = newPos;
-    }
+    position = newPos;
+  
   }
   else { //button is depressed. cheer up, button!
     // change scale
     
     int newPos = positionKey + delta;
-    if (newPos != positionKey) {
-      positionKey = newPos;
-      DEBUG_PRINT_NUM("encoder key: ", positionKey);
-      
-      if (server->midiDevice->getBank() == 0x78) { //DRUMS
-        changeDrumScale(positionKey);
-      }
-      else { //MELODIC
-        changeScale(true, positionKey);
-      }
+    positionKey = newPos;
+    DEBUG_PRINT_NUM("encoder key: ", positionKey);
+    
+    if (server->midiDevice->getBank() == 0x78) { //DRUMS
+      changeDrumScale(positionKey);
     }
+    else { //MELODIC
+      changeScale(true, positionKey);
+    }
+  
   }
 }
 
