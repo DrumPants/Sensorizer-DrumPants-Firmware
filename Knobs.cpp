@@ -418,9 +418,24 @@ void Knobs::check() {
   
   int curPos = (myEnc->read() / ENCODER_POSITION_MULTIPLIER) / ENCODER_RESOLUTION;
 
-  if (buttonMode == HIGH) {
+  int delta = (curPos - lastPos);
+  
+  lastButtonMode = buttonMode;
+  lastPos = curPos;
+
+  onKnobTurned(delta);
+
+#if ENABLE_LCD
+  lcd.check();
+#endif
+}
+
+
+void Knobs::onKnobTurned(int delta) {
+
+  if (lastButtonMode == HIGH) {
     // no button, change bank
-    int newPos = position + (curPos - lastPos);
+    int newPos = position + delta;
     if (newPos != position) {
       DEBUG_PRINT_NUM("encoder: ", newPos);
       
@@ -432,7 +447,7 @@ void Knobs::check() {
   else { //button is depressed. cheer up, button!
     // change scale
     
-    int newPos = positionKey + (curPos - lastPos);
+    int newPos = positionKey + delta;
     if (newPos != positionKey) {
       positionKey = newPos;
       DEBUG_PRINT_NUM("encoder key: ", positionKey);
@@ -445,13 +460,6 @@ void Knobs::check() {
       }
     }
   }
-  
-  lastButtonMode = buttonMode;
-  lastPos = curPos;
-
-#if ENABLE_LCD
-  lcd.check();
-#endif
 }
 
 
