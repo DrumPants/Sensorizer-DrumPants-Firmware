@@ -86,6 +86,7 @@ void SensorizerServer::metronomeTick() {
 	if (curTime == 0)
 		return;
 
+	// all this is to keep track of which note offs we need to send.
 	int note = METRONOME_NOTE;
 	int lastNote = METRONOME_NOTE;
 	int vel = 80;

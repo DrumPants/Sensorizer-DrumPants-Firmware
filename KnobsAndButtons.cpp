@@ -16,6 +16,9 @@
 #define NUM_VOLUME_LEVELS 11
 #define VOLUME_INC (MAX_VOLUME / NUM_VOLUME_LEVELS)
 
+// metronome (really should only go to 299, but this is good for testing.)
+#define METRONOME_TEMPO_MAX 599
+
 Metro met;
 
 KnobsAndButtons::KnobsAndButtons() {
@@ -75,7 +78,7 @@ void KnobsAndButtons::onKnobTurned(int delta) {
 		// control metronome
 		//int bpm = this->server->getMetronomeBPM();
 
-		int newBpm = min(max(0, bpm + delta), 299);
+		int newBpm = min(max(0, bpm + delta), METRONOME_TEMPO_MAX);
 		
 		// start at 60
 		if (newBpm < 60) {
@@ -90,7 +93,7 @@ void KnobsAndButtons::onKnobTurned(int delta) {
 		
 		DEBUG_PRINT_NUMS("start metronome: ", newBpm, bpm);
 		bpm = newBpm;
-		
+
 		this->server->startMetronome(newBpm);
 
 		this->lcd.showTemporarily(newBpm);
