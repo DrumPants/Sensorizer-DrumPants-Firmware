@@ -35,11 +35,15 @@ void TranslatingMidiRepeater::onSendOutput(byte cmd, byte data1, byte data2) {
     	((cmd & 0x0F) == METRONOME_MIDI_CHANNEL)) { // allow metronome to send (for testing)
 
     	// prepare for USB to get it.
-    	idx = 1; // send a phony index just so it will sound in the app.
+    	idx = 61; // send a phony index just so it will sound in the app.
     	cmd = (cmd & 0xF0) | MIDI_CHANNEL;
     } 
     else {
+#if ENABLE_SEND_SENSOR_IDX_OVER_BLE_AND_USE        
     	idx = server->getSensorIdxForNote(data1);
+#else 
+        idx = data1;
+#endif        
     }
 
     if (idx != -1) {
