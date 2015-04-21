@@ -38,17 +38,16 @@ void TranslatingMidiRepeater::onSendOutput(byte cmd, byte data1, byte data2) {
     	idx = 61; // send a phony index just so it will sound in the app.
     	cmd = (cmd & 0xF0) | MIDI_CHANNEL;
     } 
-    else {
-#if ENABLE_SEND_SENSOR_IDX_OVER_BLE_AND_USE        
-    	idx = server->getSensorIdxForNote(data1);
-#else 
-        idx = data1;
-#endif        
+    else {  
+    	idx = server->getSensorIdxForNote(data1);      
     }
+    
+    // send BLE the true MIDI note, not the idx
+    sendTo(true, cmd, data1, data2);
 
     if (idx != -1) {
     	// send a 0 note. sure, why not? it's creepy, but whatevs
-	    MidiRepeater::onSendOutput(cmd, idx, data2);
+	    sendTo(false, cmd, idx, data2);
 	}
 	else {
 		DEBUG_PRINT("Failed to find sensor index");

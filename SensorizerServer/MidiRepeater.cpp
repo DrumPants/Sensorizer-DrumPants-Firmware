@@ -30,6 +30,12 @@ MidiRepeater::MidiRepeater() {
 
 
 void MidiRepeater::onSendOutput(byte cmd, byte data1, byte data2) {
+	sendTo(true, cmd, data1, data2);
+	sendTo(false, cmd, data1, data2);
+}
+
+void MidiRepeater::sendTo(bool isBle, byte cmd, byte data1, byte data2) {
+
     //Some commands only have one data byte. All cmds less than 0xBn have 2 data bytes
     //(sort of: http://253.ccarh.org/handout/midiprotocol/)
     //if( (cmd & 0xF0) <= 0xB0)
@@ -38,13 +44,27 @@ void MidiRepeater::onSendOutput(byte cmd, byte data1, byte data2) {
 	//DEBUG_PRINT_NUM("Send to BLE: ", cmd);
 //#if IS_DRUMPANTS
 
-	// also send to BLE
-	this->writeToSerial(cmd);
-	this->writeToSerial(data1);
+    if (isBle) {
+		// also send to BLE
+		Serial1.write(cmd);
+		Serial1.write(data1);
 
-	if (hasSecondArg) {
-		this->writeToSerial(data2);
+		if (hasSecondArg) {
+			Serial1.write(data2);
+		}
+    }
+
+#if ENABLE_SENDING_MIDI_OVER_USB    
+    else {
+		// also send to BLE
+		SerialUSB.write(cmd);
+		SerialUSB.write(data1);
+
+		if (hasSecondArg) {
+			SerialUSB.write(data2);
+		}
 	}
+#endif
 
 //#endif
 
