@@ -159,7 +159,7 @@
 
 
 // the channel to send midi notes
-#define MIDI_CHANNEL 1
+#define MIDI_CHANNEL 0
 
 #define ENABLE_LOOPER 0
 

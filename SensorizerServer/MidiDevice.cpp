@@ -128,12 +128,12 @@ void MidiDevice::setup() {
 #endif
     
 	// KnobsAndButtons will set this to the real value.
-	this->setVolume(0, 90); //0xB0 is channel message, set channel volume to non-eardrum-blasting volume
+	this->setVolume(MIDI_CHANNEL, 90); //0xB0 is channel message, set channel volume to non-eardrum-blasting volume
 
 	// give us some reverb!
 	this->setReverb(0xA3, 0xEF);
 	
-	this->setBank(0, this->bank); //Select the bank of really fun sounds
+	this->setBank(MIDI_CHANNEL, this->bank); //Select the bank of really fun sounds
 	
 	//For this bank 0x78, the instrument does not matter, only the note
 	//setInstrument(instrument); //Set instrument number. 0xC0 is a 1 data byte command
@@ -141,18 +141,18 @@ void MidiDevice::setup() {
 	/*** PITCH BEND ***/
 	// from http://www.vsdsp-forum.com/phpbb/viewtopic.php?f=9&t=465
 	// indicate we intend to set pitch bend limites
-	talkMIDI(0xB0|0, 0x65, 00);
-	talkMIDI(0xB0|0, 0x64, 00);
+	talkMIDI(0xB0 | MIDI_CHANNEL, 0x65, 00);
+	talkMIDI(0xB0 | MIDI_CHANNEL, 0x64, 00);
 
 	// set the semitone limits
-	talkMIDI(0xB0|0, 0x06, 24); // 24 should give me a full octave of pitch-bending up and down!!!
+	talkMIDI(0xB0 | MIDI_CHANNEL, 0x06, 24); // 24 should give me a full octave of pitch-bending up and down!!!
 
 	// set the cents limits (fine-tuning)
 	//talkMIDI(0xB0|channel, 0x26, 00);
 
 	// reset the RPN controller
-	talkMIDI(0xB0|0, 0x65, 127);
-	talkMIDI(0xB0|0, 0x64, 127);
+	talkMIDI(0xB0 | MIDI_CHANNEL, 0x65, 127);
+	talkMIDI(0xB0 | MIDI_CHANNEL, 0x64, 127);
 	/*** END PITCH BEND ***/
 	
 	//Serial.println("MidiDevice now setup");
@@ -162,7 +162,7 @@ void MidiDevice::setBank(byte channel, byte bank, byte instrument) {
 	DEBUG_PRINT_NUM("setBank: ", bank)
 	talkMIDI((0xB0 | channel), 0, bank); //Select the bank of really fun sounds
 	
-	if (channel == 0) {
+	if (channel == MIDI_CHANNEL) {
 		this->bank = bank;
 	}
 	
@@ -176,7 +176,7 @@ void MidiDevice::setInstrument(byte channel, byte inst) {
 	DEBUG_PRINT_NUM("setInstrument: ", inst)
 	talkMIDI((0xC0 | channel), inst, 0); //Set instrument number. 0xC0 is a 1 data byte command
 	
-	if (channel == 0) {
+	if (channel == MIDI_CHANNEL) {
 		this->instrument = inst;
 	}
 }
@@ -189,14 +189,14 @@ void MidiDevice::setVolume(byte channel, byte vol) {
 }
 
 void MidiDevice::setReverbLevel(byte level) {
-	this->talkMIDI(0xB0, 0x5b, level); // REVERB level 
+	this->talkMIDI(0xB0 | MIDI_CHANNEL, 0x5b, level); // REVERB level 
 
 	this->reverbLevel = level;
 }
 
 void MidiDevice::setReverbDecay(byte decay) {
 
-	this->talkMIDI(0xB0, 0x0c, decay); // REVERB decay
+	this->talkMIDI(0xB0 | MIDI_CHANNEL, 0x0c, decay); // REVERB decay
 
 	this->reverbDecay = decay;
 }
