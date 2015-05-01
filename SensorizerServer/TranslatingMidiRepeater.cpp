@@ -48,6 +48,15 @@ void TranslatingMidiRepeater::onSendOutput(byte cmd, byte data1, byte data2) {
     if (idx != -1) {
     	// send a 0 note. sure, why not? it's creepy, but whatevs
 	    sendTo(false, cmd, idx, data2);
+
+#ifdef MIDI_CHANNEL_SENSOR_IDX
+        // also send the idx as a CC over BLE, so you can use it for loopy.
+        byte status = (cmd & 0xF0);
+        if (status == 0x90) { // only send note ons
+            byte ccCmd = 0xB0 | (MIDI_CHANNEL_SENSOR_IDX);
+            sendTo(true, ccCmd, idx, data2);
+        }
+#endif        
 	}
 	else {
 		DEBUG_PRINT("Failed to find sensor index");
