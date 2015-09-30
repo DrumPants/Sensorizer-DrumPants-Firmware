@@ -1,4 +1,4 @@
-Sensorizer Arduino Library + DrumPants Firmware
+Sensorizer for Arduino + DrumPants Firmware
 ================================================
 
 Sensorizer is an Arduino library for converting analog sensor readings into musical MIDI notes. It is the basis of the firmware for the DrumPants wearable musical instrument, and is designed for creating your own Arduino musical instrument or MIDI drum brain.
@@ -71,7 +71,7 @@ hardware includes a switch on the sensor jacks that disables sensor readings on 
 who's jack is not connected. See `SensorJackSwitches.cpp` for details, or just set ENABLE_JACK_SWITCHES to 0.	
 
 
-BUG REPORTING / CONTRIBUTING
+Bug Reporting / Contributing
 ==========================
 
 Please file a Github issue for any questions or bugs. 
@@ -90,7 +90,7 @@ Upcoming features in DrumPants 2.0:
 
 
 
-LICENSE
+License
 ==========================
 
 Copyright 2011-2015 DrumPants, Inc.
