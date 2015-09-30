@@ -24,17 +24,6 @@ Features
 * Blood, sweat, and beats
 
 
-Roadmap
---------------------------
-
-Upcoming features in DrumPants 2.0:
-
-* Class-compliant USB MIDI device
-* Customizable preset banks
-* Foot pedal control (i.e. switching presets on-the-fly based on sensor output)
-
-
-
 Installation
 ==========================
 
@@ -81,6 +70,23 @@ If you are using your own sensors on an Arduino Due, keep in mind the DrumPants
 hardware includes a switch on the sensor jacks that disables sensor readings on any pin 
 who's jack is not connected. See `SensorJackSwitches.cpp` for details, or just set ENABLE_JACK_SWITCHES to 0.	
 
+
+BUG REPORTING / CONTRIBUTING
+==========================
+
+Please file a Github issue for any questions or bugs. 
+
+Pull requests welcome! Please associate with a related Issue if possible.
+
+
+Roadmap
+--------------------------
+
+Upcoming features in DrumPants 2.0:
+
+* Class-compliant USB MIDI device
+* Customizable preset banks
+* Foot pedal control (i.e. switching presets on-the-fly based on sensor output)
 
 
 
