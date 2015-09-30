@@ -1,3 +1,27 @@
+/**
+ * Copyright 2011-2015 DrumPants, Inc.
+ * 
+ * http://developers.drumpants.com
+ * 
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * 
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+/**
+ * This is the main file. It loads up the SensorizerServer and all the UI classes, 
+ * and coordinates them all. It reads the sensors in a loop and feeds them into
+ * the server which sends them on.
+ */
+
 #include <Constants.h>  
 #include <Debug.h>
 
@@ -17,7 +41,7 @@
   #include <Firmata.h>
 
   // how many ticks it takes before sending a Firmata update. 
-  // this needs to be throttled because otherwise we overload the Serial buffer and shit freezes.
+  // this needs to be throttled because otherwise we overload the Serial buffer and it freezes.
   #define FIRMATA_UPDATE_RATE_THROTTLE 10
 
 // how many ticks it's been since the last Firmata update. 
@@ -268,9 +292,9 @@ void loop()
 
 #endif
 
-  /* SEND FTDI WRITE BUFFER - make sure that the FTDI buffer doesn't go over
-   * 60 bytes. use a timer to sending an event character every 4 ms to
-   * trigger the buffer to dump. */
+  ////////////////////////////
+  // check sensors!
+  ////////////////////////////
 
   currentMillis = millis();
   if (samplingInterval == 0 || currentMillis - previousMillis > samplingInterval) {
@@ -322,8 +346,10 @@ void loop()
         val = 0; // disable all notes so we don't pollute the CSV with garbage
 #endif  
 
-
-          
+        ////////////////////////////
+        // process and send notes!
+        ////////////////////////////
+        
         //DEBUG_PRINT_NUM("check pin ", pinIdx);  
 #if !ENABLE_TEST
         server->readPin(pinIdx, val);
