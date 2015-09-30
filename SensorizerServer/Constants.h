@@ -146,6 +146,10 @@
 #define ENABLE_LOOPER 0
 
 
+// normal:
+#define MIDI_NOTE_DURATION 1024
+
+
 // the default num of ticks before a note retriggers
 #define DEFAULT_RETRIGGER_THRESHOLD 30
 #define DEFAULT_RETRIGGER_THRESHOLD_FOOT_PEDAL 170

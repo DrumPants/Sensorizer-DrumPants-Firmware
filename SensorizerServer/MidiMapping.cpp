@@ -55,7 +55,7 @@
 		this->msgType = MidiMapping::NOTE_ONE_ONLY;
 		this->channel = 1;
 		this->note = 60;
-		this->duration = 127;
+		this->duration = MIDI_NOTE_DURATION;
 		//this->midiDeviceName = "";
 		this->isNoteOn = false;
 		
@@ -115,7 +115,7 @@
 				// do this before sending the note on, because 
 				// if there's already a pending note off for it, 
 				// that note off will send immediately to cancel the current note.
-				pendingNoteOffs->add(c, n);
+				pendingNoteOffs->add(c, n, duration);
 
 				midiDevice->note(true, c, n, vel);
 

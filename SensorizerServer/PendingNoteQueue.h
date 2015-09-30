@@ -7,7 +7,7 @@
 #include "MidiDevice.h" 
 
 // the number of ticks a note has to live before its corresponding noteOff is sent.
-#define NOTE_TIME_TILL_DEATH_DEFAULT 1024
+#define NOTE_TIME_TILL_DEATH_DEFAULT MIDI_NOTE_DURATION
 
 // let's hope they can't play more than 32 notes at a time (per sensor) before we can turn them back off
 #define MAX_PENDING_NOTES 32
@@ -93,7 +93,7 @@ public:
 
 	};	
 
-	void add(byte channel, byte note) {
+	void add(byte channel, byte note, int duration = NOTE_TIME_TILL_DEATH_DEFAULT) {
 
 		// first look for an existing note, and just extend that one's time.
 		// this way, when the hit the same sensor a bunch, the first hit doesn't cut off the subsequent ones.
@@ -106,14 +106,14 @@ public:
 				// this is what the MIDI spec recommends, although not has weird effects on some devices.
 				sendNoteOff(&(pendingNotes[i]));
 
-				pendingNotes[i].timeTillDeath = NOTE_TIME_TILL_DEATH_DEFAULT;		
+				pendingNotes[i].timeTillDeath = duration;		
 				return;
 			}
 		}
 
 		pendingNotes[endIdx].channel = channel;
 		pendingNotes[endIdx].note = note;
-		pendingNotes[endIdx].timeTillDeath = NOTE_TIME_TILL_DEATH_DEFAULT;
+		pendingNotes[endIdx].timeTillDeath = duration;
 
 		// for now, we don't care if we run over other stuff.
 		// TODO: auto-kill things when we run out of space!
