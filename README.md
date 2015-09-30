@@ -52,7 +52,7 @@ Install each of these in your `Arduino/libraries` folder:
 2. `Sensorizer/LEDController/SevenSegmentController` folder (only copy the SevenSegmentController folder)
 3. Rob Tillaart's I2C_EEPROM libary: https://github.com/odbol/Arduino-1.git (just the I2C_EEPROM folder)
 4. Paul Stoffregen's Encoder library: http://www.pjrc.com/teensy/td_libs_Encoder.html
-5. *IMPORTANT*: Copy all files from the `SensorizerServer/**` subfolders into a single folder called `SensorizerServer/utility`. (This is to circumvent the Arduino compile process that ignores source files in any subfolders in a library).
+5. *IMPORTANT*: Copy all files from the `SensorizerServer/**` subfolders into a single folder called `SensorizerServer/utility`. (This is to circumvent the Arduino compile process that ignores source files in any subfolders in a library). For convenience, you can run the `SensorizerServer/fix_utility_dir_for_arduino.sh` script to do it for you.
 
 
 Compile Sketch and Upload
@@ -87,7 +87,7 @@ who's jack is not connected. See `SensorJackSwitches.cpp` for details, or just s
 LICENSE
 ==========================
 
-Copyright 2011-2015 DrumPants Inc / Tyler Freeman.
+Copyright 2011-2015 DrumPants, Inc.
   
 http://www.drumpants.com
 
