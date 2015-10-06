@@ -10,7 +10,7 @@ Currently it is supported on Arduino Due and the DrumPants hardware, although wi
 Features
 --------------------------
 
-* Sends MIDI messages over native USB, 
+* Sends class-compliant MIDI messages over native USB, 
 * As well as the other UARTs to connect to Bluetooth and/or MIDI synthesizers
 * Sensitivity Adjustments for piezo drum pads, and other resistive sensors like pressure and photoresisitors. 
 * Algorithms for detecting drum hits and filtering false triggers and noise
@@ -29,7 +29,7 @@ Installation
 
 You can use Sensorizer like any other Arduino library sketch directly from the Arduino IDE.
 
-Tested on Arduino IDE 1.6.2. 
+Tested on Arduino IDE 1.6.2. **IMPORTANT**: For this DrumPants 2.0 class-compliant MIDI, you will need to use a special branch of the Arduino IDE with MIDI support. Download and compile the modified IDE from here: https://github.com/odbol/Arduino/tree/midi
 
 
 Install Library Dependencies
@@ -84,7 +84,6 @@ Roadmap
 
 Upcoming features in DrumPants 2.0:
 
-* Class-compliant USB MIDI device
 * Customizable preset banks
 * Foot pedal control (i.e. switching presets on-the-fly based on sensor output)
 
