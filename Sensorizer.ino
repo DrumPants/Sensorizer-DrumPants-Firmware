@@ -411,6 +411,12 @@ void loop()
   // trigger looper and/or metronome events
   server->tick();
   
+// for class-compliant USB MIDI support. flush everything that was sent this cycle.  
+#if ENABLE_USB_MIDI
+  MidiUSB.flush();
+#endif
+
+
 #if ENABLE_TEST
   testUpdate();
 #endif

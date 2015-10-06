@@ -25,6 +25,11 @@ MidiRepeater::MidiRepeater() {
 	// also send to BLE
 	Serial1.begin(BAUD_RATE_BLUETOOTH_LE);
 //#endif	
+
+
+#if ENABLE_USB_MIDI
+
+#endif
 }
 
 
@@ -56,13 +61,26 @@ void MidiRepeater::sendTo(bool isBle, byte cmd, byte data1, byte data2) {
 
 #if ENABLE_SENDING_MIDI_OVER_USB    
     else {
-		// also send to BLE
+
+#	if ENABLE_USB_MIDI
+		// support for 32-byte class-compliant USB MIDI packets. (DrumPants 2.0)
+	    byte status = (cmd & 0xF0);
+	    byte header = (status >> 4) & 0x0F;
+
+		// class-compliant USB MIDI packets must ALWAYS be 32-bytes, zero padded. so we send data2 no matter what.
+		uint8_t midiPacket[] = {header, cmd, data1, data2};
+    	MidiUSB.write(midiPacket, 4);
+
+#	else    	
+		// send to USB, normal Serial style. (for DrumPants 1.0 app)
 		SerialUSB.write(cmd);
 		SerialUSB.write(data1);
 
 		if (hasSecondArg) {
 			SerialUSB.write(data2);
 		}
+
+#	endif		
 	}
 #endif
 
@@ -70,11 +88,4 @@ void MidiRepeater::sendTo(bool isBle, byte cmd, byte data1, byte data2) {
 
 }
 
-inline void MidiRepeater::writeToSerial(byte data) {
-	Serial1.write(data);
-
-#if ENABLE_SENDING_MIDI_OVER_USB
-	SerialUSB.write(data);
-#endif	
-}
 

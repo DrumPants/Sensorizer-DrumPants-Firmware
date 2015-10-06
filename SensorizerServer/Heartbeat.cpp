@@ -35,6 +35,17 @@ void Heartbeat::tick() {
 inline void Heartbeat::writeToSerial(byte data) {
 
 #if ENABLE_SENDING_MIDI_OVER_USB
+#	if ENABLE_USB_MIDI
+
+	// TODO, if needed? 
+	// since the OS will now alert us when a MIDI device is disconnected, 
+	// we don't need to send a heartbeat to let the DrumPants app know to not disconnect us.
+
+#	else
+
 	SerialUSB.write(data);
+
+#	endif	
 #endif	
+
 }

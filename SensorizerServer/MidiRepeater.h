@@ -42,10 +42,9 @@ public:
 	***/
 	virtual void onSendOutput(byte cmd, byte data1, byte data2);
 
+protected:
 	void sendTo(bool sendToBle, byte cmd, byte data1, byte data2);
 
-protected:
-	void writeToSerial(byte data);
 };
 
 

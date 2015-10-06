@@ -29,7 +29,7 @@ Installation
 
 You can use Sensorizer like any other Arduino library sketch directly from the Arduino IDE.
 
-Tested on Arduino IDE 1.6.2. **IMPORTANT**: For this DrumPants 2.0 class-compliant MIDI, you will need to use a special branch of the Arduino IDE with MIDI support. Download and compile the modified IDE from here: https://github.com/odbol/Arduino/tree/midi
+Tested on Arduino IDE 1.6.2. **IMPORTANT**: For this DrumPants 2.0 class-compliant MIDI, you will need to use a special branch of the Arduino IDE with MIDI support. Download and compile the modified IDE from here: https://github.com/odbol/Arduino/tree/midi . It may still work with the normal IDE (without class-compliant MIDI support), however it has not been tested.
 
 
 Install Library Dependencies
