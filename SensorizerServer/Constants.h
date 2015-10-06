@@ -157,13 +157,24 @@
   #define BLE_CONFIG_PIN2 7
 #endif
 
+
+
+
+
+
+
+
+
 /*** MIDI ******/
 
 #ifdef MIDI_ENABLED
 
 /**
  * If true, we'll send class-compliant MIDI packets over USB. (Requires special build of Arduino, hence the ifdef above. See README for details.)
- * If false, we'll send non-compliant MIDI messages over the USB Serial, which will only work with the DrumPants 1.0 app.
+ * If false, we'll only send non-compliant MIDI messages over the USB Serial, which will only work with the DrumPants 1.0 app.
+ * 
+ * Note, if true, it will still send the non-compliant messages over USB Serial AS WELL as the class-compliant MIDI messages. 
+ * They show up as separate devices using the Composite USB device magic.
  */
 #  define ENABLE_USB_MIDI 1
 #else
@@ -181,6 +192,15 @@
 
 // normal:
 #define MIDI_NOTE_DURATION 1024
+
+
+
+/*** END MIDI ******/
+
+
+
+
+
 
 
 // the default num of ticks before a note retriggers

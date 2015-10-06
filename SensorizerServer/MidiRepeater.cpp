@@ -71,16 +71,16 @@ void MidiRepeater::sendTo(bool isBle, byte cmd, byte data1, byte data2) {
 		uint8_t midiPacket[] = {header, cmd, data1, data2};
     	MidiUSB.write(midiPacket, 4);
 
-#	else    	
-		// send to USB, normal Serial style. (for DrumPants 1.0 app)
+#	endif    	
+    	
+		// also send to USB, normal Serial style. (for DrumPants 1.0 app)
 		SerialUSB.write(cmd);
 		SerialUSB.write(data1);
 
 		if (hasSecondArg) {
 			SerialUSB.write(data2);
 		}
-
-#	endif		
+	
 	}
 #endif
 
