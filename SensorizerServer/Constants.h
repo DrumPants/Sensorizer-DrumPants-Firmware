@@ -59,7 +59,7 @@
 // or BOARD_SKU_MODIFIER_PRO for Pro/Neil Peart kits (Bluetooth)
 #define BOARD_SKU BOARD_SKU_MODIFIER_PRO
 
-#define FIRMWARE_VERSION_NUM 30
+#define FIRMWARE_VERSION_NUM 31
 
 // the firmware version is modifed by SKU flag which is bit 6
 #define FIRMWARE_VERSION (BOARD_SKU | FIRMWARE_VERSION_NUM)
