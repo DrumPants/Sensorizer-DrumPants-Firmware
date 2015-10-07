@@ -184,8 +184,9 @@
 // the channel to send midi notes
 #define MIDI_CHANNEL 0
 
-// the channel to send midi CC messages of the sensor's index 
-#define MIDI_CHANNEL_SENSOR_IDX (MIDI_CHANNEL + 1)
+// the channel to send midi CC messages of the sensor's index over BLE
+// WARNING: if this is defined, the BLE latency will be much worse.
+//#define MIDI_CHANNEL_SENSOR_IDX (MIDI_CHANNEL + 1)
 
 #define ENABLE_LOOPER 0
 
