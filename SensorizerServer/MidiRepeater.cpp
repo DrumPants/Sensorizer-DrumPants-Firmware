@@ -57,13 +57,11 @@ void MidiRepeater::sendTo(bool isBle, byte cmd, byte data1, byte data2) {
 		if (hasSecondArg) {
 			Serial1.write(data2);
 		}
-    }
 
-#if ENABLE_SENDING_MIDI_OVER_USB    
-    else {
-
-#	if ENABLE_USB_MIDI
+#if ENABLE_USB_MIDI
 		// support for 32-byte class-compliant USB MIDI packets. (DrumPants 2.0)
+		// we send these same as the BLE MIDI, since TranslatingMidiRepeater will send the actual notes, not the sensor IDX, through the MIDI.
+		// we want the actual notes. The sensor IDX should only be sent over serial to the DrumPants 1.0 app.
 	    byte status = (cmd & 0xF0);
 	    byte header = (status >> 4) & 0x0F;
 
@@ -71,8 +69,13 @@ void MidiRepeater::sendTo(bool isBle, byte cmd, byte data1, byte data2) {
 		uint8_t midiPacket[] = {header, cmd, data1, data2};
     	MidiUSB.write(midiPacket, 4);
 
-#	endif    	
-    	
+#endif    	
+
+    }
+
+#if ENABLE_SENDING_MIDI_OVER_USB    
+    else {
+
 		// also send to USB, normal Serial style. (for DrumPants 1.0 app)
 		SerialUSB.write(cmd);
 		SerialUSB.write(data1);
