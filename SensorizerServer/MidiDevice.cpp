@@ -247,14 +247,14 @@ void MidiDevice::talkMIDI(byte cmd, byte data1, byte data2, bool isSilent) {
         midiOut << data2;
     
 #else
-	digitalWrite(LED_PIN, HIGH);
+	//digitalWrite(LED_PIN, HIGH);
 	mySerial->write(cmd);//print(cmd, BYTE);
 	mySerial->write(data1);//print(data1, BYTE);
 
 	if (hasSecondArg)
 		mySerial->write(data2);//print(data2, BYTE);
 
-  	digitalWrite(LED_PIN, LOW);
+  	//digitalWrite(LED_PIN, LOW);
 #endif
 
   if (!isSilent) {
