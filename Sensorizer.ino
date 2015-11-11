@@ -413,7 +413,8 @@ void loop()
   
 // for class-compliant USB MIDI support. flush everything that was sent this cycle.  
 #if ENABLE_USB_MIDI
-  MidiUSB.flush();
+  // with update to Arduino 1.6.6, this now blocks unitl there's a receiving listener. bad idea.
+  //MidiUSB.flush();
 #endif
 
 
